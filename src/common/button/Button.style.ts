@@ -14,9 +14,15 @@ const ButtonStyledContainer = styled(Box)`
     border: 1px solid #d0d5dd;
     box-shadow: 0px 1px 2px rgb(16 24 40 / 5%);
   }
+  .ghost-just-text {
+    color: #344054;
+    background: #ffffff;
+    border: none;
+    box-shadow: none;
+  }
   .primary {
     color: #ffffff;
-    background: #ec4a0a;
+    background: #f1c107;
   }
   .secondary {
     background: #fff6ed;

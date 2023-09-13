@@ -3,7 +3,7 @@ import { Box } from '@mui/material';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import clsx from 'clsx';
-import { ChevronDown } from 'react-feather';
+import { Airplay, ChevronDown } from 'react-feather';
 import { Control, Controller, FieldValues, Path } from 'react-hook-form';
 
 import SelectSearchContainerStyled from './SelectSearch.style';
@@ -20,6 +20,7 @@ interface SelectSearchPropsI<T extends FieldValues> {
   loading?: boolean;
   disabled?: boolean;
   errorMessage?: string;
+  icon?: React.ReactElement;
 }
 
 export default function SelectSearch<T extends FieldValues>({
@@ -34,20 +35,21 @@ export default function SelectSearch<T extends FieldValues>({
   errorMessage,
   disabled,
   textSearched,
+  icon,
 }: SelectSearchPropsI<T>) {
   return (
-    <Box>
+    <Box className={className}>
       {!!label && (
         <p className="text-sm font-medium mb-2 text-gray-700">{label}</p>
       )}
-      <SelectSearchContainerStyled
-        className={clsx('cursor-pointer', className)}
-      >
+      <SelectSearchContainerStyled className="cursor-pointer relative">
+        <div className="absolute top-2.5 left-3">{icon}</div>
         <Controller
           name={name}
           control={control}
           render={({ field }) => (
             <Autocomplete
+              className="w-full"
               disabled={disabled}
               {...field}
               placeholder={placeholder}
@@ -64,6 +66,7 @@ export default function SelectSearch<T extends FieldValues>({
                   placeholder={placeholder}
                   onChange={(e) => setTextSearched(e.target.value)}
                   value={textSearched}
+                  className={clsx({ hasIcon: icon })}
                 />
               )}
               popupIcon={

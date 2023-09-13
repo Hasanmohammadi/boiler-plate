@@ -7,6 +7,10 @@ const SelectSearchContainerStyled = styled(Box)`
     border-radius: 8px;
     padding-left: 8px;
   }
+
+  .hasIcon > .MuiInputBase-root {
+    padding-left: 40px;
+  }
 ` as typeof Box;
 
 export default SelectSearchContainerStyled;

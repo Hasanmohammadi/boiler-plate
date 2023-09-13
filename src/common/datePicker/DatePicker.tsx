@@ -11,7 +11,7 @@ interface DatePickerPropsI<T extends FieldValues> {
   label?: string;
   className?: string;
   placeholder?: string;
-  control?: Control<T>;
+  control: Control<T>;
   name: Path<T>;
   size?: 'md' | 'sm';
   iconPosition?: 'left' | 'right';
@@ -27,12 +27,12 @@ export default function DatePicker<T extends FieldValues>({
   name,
   size,
   placeholder,
-  iconPosition = 'right',
+  iconPosition,
   position = 'bottom',
   minimumDate,
 }: DatePickerPropsI<T>) {
   return (
-    <DatePickerStyledContainer>
+    <DatePickerStyledContainer className="w-full">
       {!!label && (
         <p className="text-sm font-medium mb-2 text-gray-700">{label}</p>
       )}
@@ -42,7 +42,7 @@ export default function DatePicker<T extends FieldValues>({
         render={({ field: { onChange, value } }) => (
           <DatePickerStyledContainer
             className={clsx(
-              'flex cursor-pointer flex-wrap gap-2 border pl-3 pr-1 border-gray-300 rounded-lg items-center',
+              'flex cursor-pointer flex-wrap gap-2 border pl-3 pr-1 border-gray-300 rounded-lg items-center place-content-center',
               className,
               size,
             )}
@@ -50,7 +50,7 @@ export default function DatePicker<T extends FieldValues>({
             {iconPosition === 'left' && (
               <Calendar
                 size={20}
-                className="cursor-default"
+                className="cursor-default ml-1"
                 color="#667085"
               />
             )}
@@ -62,7 +62,7 @@ export default function DatePicker<T extends FieldValues>({
                   value={value}
                   inputPlaceholder={placeholder}
                   shouldHighlightWeekends
-                  colorPrimary="#EC4A0A"
+                  colorPrimary="#f1c107"
                   colorPrimaryLight="#FFF6ED"
                   inputClassName={size}
                   calendarPopperPosition={position}
@@ -76,7 +76,7 @@ export default function DatePicker<T extends FieldValues>({
                 value={value}
                 inputPlaceholder={placeholder}
                 shouldHighlightWeekends
-                colorPrimary="#EC4A0A"
+                colorPrimary="#f1c107"
                 colorPrimaryLight="#FFF6ED"
                 calendarPopperPosition={position}
               />

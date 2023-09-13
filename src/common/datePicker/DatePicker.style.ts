@@ -16,18 +16,18 @@ const DatePickerStyledContainer = styled(Box)`
     border: none;
   }
   .RangeDay > .DatePicker {
-    width: 15rem;
+    width: 100%;
   }
   .SingleDay > .DatePicker {
-    width: 12rem;
+    width: 100%;
   }
   .sm > .RangeDay > .DatePicker {
-    width: 13rem;
+    width: 100%;
   }
   .sm > .RangeDay > .DatePicker > .datepicker-input {
     padding: 0;
     margin: 0;
-    width: 11.5rem;
+    width: 100%;
   }
   .sm {
     font-size: 12px;

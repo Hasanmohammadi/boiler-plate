@@ -1,3 +1,9 @@
-import ContextContainer, { useAppContext } from './Context';
+import BodyContextContainer, { useAppBodyContext } from './BodyContext';
+import ContextContainer, { useAppHeaderContext } from './HeaderContext';
 
-export { ContextContainer, useAppContext };
+export {
+  ContextContainer,
+  useAppHeaderContext,
+  BodyContextContainer,
+  useAppBodyContext,
+};

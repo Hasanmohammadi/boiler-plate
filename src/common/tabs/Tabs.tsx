@@ -3,6 +3,7 @@ import Box from '@mui/material/Box';
 import Tab from '@mui/material/Tab';
 import TabsCP from '@mui/material/Tabs';
 import Typography from '@mui/material/Typography';
+import clsx from 'clsx';
 
 import TabsStyledContainer from './Tabs.style';
 
@@ -48,6 +49,7 @@ interface TabsPropsI {
   className?: string;
   activeTab: number;
   setActiveTabIndex: React.Dispatch<React.SetStateAction<number>>;
+  tabsPosition?: 'center' | 'start' | 'end';
 }
 
 export default function Tabs({
@@ -55,6 +57,7 @@ export default function Tabs({
   className,
   activeTab,
   setActiveTabIndex,
+  tabsPosition,
 }: TabsPropsI) {
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setActiveTabIndex(newValue);
@@ -67,6 +70,10 @@ export default function Tabs({
           value={activeTab}
           onChange={handleChange}
           aria-label="basic tabs example"
+          className={clsx({
+            'tabs-position-center': tabsPosition === 'center',
+            'tabs-position-end': tabsPosition === 'end',
+          })}
         >
           {tabs?.map((tab, index) => (
             <Tab

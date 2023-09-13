@@ -1,57 +1,78 @@
-import { Box } from '@mui/material';
 import MenuCP from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
+import { Button } from 'common';
 import * as React from 'react';
+import { Check, ChevronDown, ChevronUp } from 'react-feather';
 
-interface MenuItemI {
-  children: React.ReactElement;
+interface MenuItemsI {
+  text: string | React.ReactElement;
   onClick: () => void;
 }
 
 interface MenuPropsI {
-  children: React.ReactElement | string;
-  items: MenuItemI[];
+  menuItems: MenuItemsI[];
+  btnText: string | React.ReactElement;
+  className?: string;
 }
 
-export default function Menu({ children, items }: MenuPropsI) {
+export default function Menu({
+  className,
+  menuItems,
+  btnText,
+}: MenuPropsI) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
-  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event?.currentTarget);
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
     setAnchorEl(null);
   };
 
   return (
-    <Box>
-      <Box onClick={handleClick}>{children}</Box>
+    <div className={className}>
+      <Button
+        onClick={(event) =>
+          handleClick(event as React.MouseEvent<HTMLButtonElement>)
+        }
+        className="text-gray-900 flex justify-between w-full"
+        color="ghost-just-text"
+      >
+        <>
+          <span>{btnText}</span>
+          {open ? (
+            <ChevronUp className="ml-1" />
+          ) : (
+            <ChevronDown className="ml-1" />
+          )}
+        </>
+      </Button>
       <MenuCP
-        id="demo-positioned-menu"
-        aria-labelledby="demo-positioned-button"
+        id="basic-menu"
         anchorEl={anchorEl}
         open={open}
         onClose={handleClose}
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'center',
-        }}
-        transformOrigin={{
-          vertical: 'center',
-          horizontal: 'right',
+        MenuListProps={{
+          'aria-labelledby': 'basic-button',
         }}
       >
-        {items?.map((item: MenuItemI) => (
+        {menuItems.map(({ onClick, text }) => (
           <MenuItem
             onClick={() => {
-              setAnchorEl(null);
-              item?.onClick();
+              onClick();
+              if (typeof text === 'string') {
+                setAnchorEl(null);
+              }
             }}
+            sx={{ background: text === btnText ? '#f8e495' : '' }}
           >
-            {item?.children}
+            <div className="flex gap-2 w-full">
+              {text === btnText && <Check size={20} className="mt-0.5" />}
+              {text}
+            </div>
           </MenuItem>
         ))}
       </MenuCP>
-    </Box>
+    </div>
   );
 }

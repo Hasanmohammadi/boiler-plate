@@ -1,6 +1,6 @@
 import IrsaLogo from 'assets/image/Logo.png';
 import { ListItemsI } from 'common/list';
-import { useAppContext } from 'context';
+import { useAppHeaderContext } from 'context';
 import 'flag-icons/css/flag-icons.min.css';
 import Cookies from 'js-cookie';
 import { useEffect, useState } from 'react';
@@ -100,7 +100,7 @@ const ListItems = ({ isAdmin }: { isAdmin: boolean }): ListItemsI[] => [
 
 function App() {
   const navigate = useNavigate();
-  const { setVendorIdSelected } = useAppContext();
+  // const { setVendorIdSelected } = useAppHeaderContext();
 
   const userInfo: LoginResultI = JSON.parse(
     localStorage.getItem('userInfo') as string,
@@ -112,7 +112,7 @@ function App() {
 
   useEffect(() => {
     if (!isAdmin) {
-      setVendorIdSelected(userInfo?.id);
+      // setVendorIdSelected(userInfo?.id);
     }
   }, [isAdmin]);
 

@@ -1,6 +1,6 @@
 import { ThemeProvider } from '@mui/material/styles';
 import { AxiosError } from 'axios';
-import { ContextContainer } from 'context';
+import { BodyContextContainer, ContextContainer } from 'context';
 import Cookies from 'js-cookie';
 import ReactDOM from 'react-dom/client';
 import { QueryClient, QueryClientProvider } from 'react-query';
@@ -61,14 +61,16 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   // <React.StrictMode>
-  <ContextContainer>
-    <QueryClientProvider client={queryClient}>
-      <ToastContainer hideProgressBar position="top-center" />
-      <ThemeProvider theme={theme}>
-        <RouterProvider router={Router} />
-      </ThemeProvider>
-    </QueryClientProvider>
-  </ContextContainer>,
+  <BodyContextContainer>
+    <ContextContainer>
+      <QueryClientProvider client={queryClient}>
+        <ToastContainer hideProgressBar position="top-center" />
+        <ThemeProvider theme={theme}>
+          <RouterProvider router={Router} />
+        </ThemeProvider>
+      </QueryClientProvider>
+    </ContextContainer>
+  </BodyContextContainer>,
   // </React.StrictMode>,
 );
 

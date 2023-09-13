@@ -9,6 +9,13 @@ const TabsStyledContainer = styled(Box)`
   .sc-bcXHqe {
     padding: 0;
   }
+
+  .tabs-position-center > .MuiTabs-scroller > .MuiTabs-flexContainer {
+    place-content: center;
+  }
+  .tabs-position-end > .MuiTabs-scroller > .MuiTabs-flexContainer {
+    place-content: end;
+  }
 ` as typeof Box;
 
 export default TabsStyledContainer;

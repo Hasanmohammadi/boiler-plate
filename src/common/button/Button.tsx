@@ -10,8 +10,14 @@ interface ButtonPropsI {
   children: React.ReactElement | string;
   className?: string;
   type?: ButtonType;
-  color?: 'primary' | 'ghost' | 'secondary' | 'success' | 'error';
-  onClick?: () => void;
+  color?:
+    | 'primary'
+    | 'ghost'
+    | 'secondary'
+    | 'success'
+    | 'error'
+    | 'ghost-just-text';
+  onClick?: (event?: React.MouseEvent<HTMLButtonElement>) => void;
   disabled?: boolean;
   containerClassName?: string;
   loading?: boolean;
@@ -54,6 +60,7 @@ export default function Buttons({
               secondary: color === 'secondary',
               success: color === 'success',
               error: color === 'error',
+              'ghost-just-text': color === 'ghost-just-text',
               'disabled cursor-default': disabled,
             })}
           >
