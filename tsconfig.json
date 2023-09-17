@@ -21,8 +21,5 @@
     "strictNullChecks": true,
     "downlevelIteration": true
   },
-  "include": [
-    "src",
-    "src/pages/auth/forgotPassword/ForgotPassword.style.ts"
-  ]
+  "include": ["src"]
 }
