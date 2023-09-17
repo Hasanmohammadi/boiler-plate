@@ -1,4 +1,4 @@
-import { Login } from 'pages';
+import { Home } from 'pages';
 import { createBrowserRouter } from 'react-router-dom';
 
 import App from '../App';
@@ -14,5 +14,5 @@ export default createBrowserRouter([
       },
     ],
   },
-  { path: '/login', element: <Login /> },
+  { path: '/home', element: <Home /> },
 ]);

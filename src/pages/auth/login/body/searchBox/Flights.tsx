@@ -1,35 +1,77 @@
 import { AirplaneLanding, Swap } from 'assets/svg';
 import AirplaneTakeoff from 'assets/svg/AirplaneTakeoff';
 import { Button, DatePicker, Menu, SelectSearch } from 'common';
+import { isDepartureDateBigger } from 'helpers';
 import defaultDate from 'helpers/defaultDate';
-import { useState } from 'react';
-import {
-  Airplay,
-  ArrowLeft,
-  ArrowRight,
-  MinusSquare,
-  PlusSquare,
-} from 'react-feather';
+import { useGetPlaces } from 'hooks/airport';
+import { useEffect, useState } from 'react';
+import { MinusSquare, PlusSquare } from 'react-feather';
 import { useForm } from 'react-hook-form';
+
+interface SearchBoxFormI {
+  departure: {
+    id: string;
+    label: string;
+  };
+  arrival: {
+    id: string;
+    label: string;
+  };
+  departureDate: {
+    year: number;
+    month: number;
+    day: number;
+  };
+  arrivalDate: {
+    year: number;
+    month: number;
+    day: number;
+  };
+}
 
 export default function Flights() {
   const [wayType, setWayType] = useState<'Round-trip' | 'One Way'>(
     'One Way',
   );
   const [flightClass, setFightClass] = useState<string>('ECONOMY');
-  const [textSearched, setTextSearched] = useState<string>('');
+  const [originSearched, setOriginSearched] = useState<string>('');
+  const [arrivalSearched, setArrivalSearched] = useState<string>('');
   const [adultCount, setAdultCount] = useState<number>(1);
   const [children, setChildren] = useState<number>(0);
   const [infants, setInfants] = useState<number>(0);
 
-  const { control } = useForm({
-    defaultValues: {
-      departure: { id: '', label: '' },
-      arrival: { id: '', label: '' },
-      departureDate: defaultDate().from,
-      arrivalDate: defaultDate().from,
-    },
+  const { control, watch, setValue, handleSubmit } =
+    useForm<SearchBoxFormI>({
+      defaultValues: {
+        departure: { id: '', label: '' },
+        arrival: { id: '', label: '' },
+        departureDate: defaultDate().from,
+        arrivalDate: defaultDate().from,
+      },
+    });
+  const { departureDate, arrivalDate } = watch();
+
+  const { getPlacesData: originPlaces } = useGetPlaces({
+    count: 10,
+    name: originSearched,
+    queryKey: 'originPlaces',
   });
+
+  const { getPlacesData: destinationPlaces } = useGetPlaces({
+    count: 10,
+    name: arrivalSearched,
+    queryKey: 'destinationPlaces',
+  });
+
+  useEffect(() => {
+    if (isDepartureDateBigger({ arrivalDate, departureDate })) {
+      setValue('arrivalDate', departureDate);
+    }
+  }, [departureDate]);
+
+  const onSubmit = (data: SearchBoxFormI) => {
+    console.log('🚀 ~ file: Flights.tsx:51 ~ onSubmit ~ data:', data);
+  };
 
   return (
     <div className="w-full">
@@ -165,16 +207,27 @@ export default function Flights() {
           ]}
         />
       </div>
-      <div className="w-full flex gap-4">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="w-full flex gap-4"
+      >
         <div className="flex w-3/5 justify-between gap-4 mt-3 pl-4">
           <SelectSearch
             className="w-1/2 "
             control={control}
             name="departure"
-            setTextSearched={setTextSearched}
-            textSearched={textSearched}
+            setTextSearched={setOriginSearched}
+            textSearched={originSearched}
             placeholder="Departing from?"
             icon={<AirplaneTakeoff />}
+            items={originPlaces?.map(({ iataCode, isCity, title }) => ({
+              id: iataCode,
+              label: title,
+              isCity,
+            }))}
+            initialValue={[
+              { id: '0', label: 'No Itemsssss', isCity: false },
+            ]}
           />
           <div className="mt-1.5">
             <Swap />
@@ -183,10 +236,20 @@ export default function Flights() {
             className="w-1/2 "
             control={control}
             name="arrival"
-            setTextSearched={setTextSearched}
-            textSearched={textSearched}
+            setTextSearched={setArrivalSearched}
+            textSearched={arrivalSearched}
             placeholder="Going to?"
             icon={<AirplaneLanding />}
+            items={destinationPlaces?.map(
+              ({ iataCode, isCity, title }) => ({
+                id: iataCode,
+                label: title,
+                isCity,
+              }),
+            )}
+            initialValue={[
+              { id: '0', label: 'No Itemsssss', isCity: false },
+            ]}
           />
         </div>
         <div className="w-2/5 flex mt-3 gap-4 ">
@@ -207,14 +270,18 @@ export default function Flights() {
               control={control}
               size="md"
               placeholder="Select date"
-              minimumDate={defaultDate()?.from}
+              minimumDate={departureDate}
             />
           )}
-          <Button containerClassName="w-1/2" className="w-full">
+          <Button
+            containerClassName="w-1/2"
+            className="w-full"
+            type="submit"
+          >
             Search
           </Button>
         </div>
-      </div>
+      </form>
     </div>
   );
 }

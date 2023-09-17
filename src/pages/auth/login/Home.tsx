@@ -2,7 +2,7 @@ import Body from './body/Body';
 import ChangeStyleBox from './changeStyleBox/ChangeStyleBox';
 import Header from './header/Header';
 
-export default function Login() {
+export default function Home() {
   return (
     <div
       className="w-screen h-screen relative mb-48"

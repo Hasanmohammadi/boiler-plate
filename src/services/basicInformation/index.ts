@@ -1,3 +1,3 @@
-import getPlaces from './getPlaces'
+import getPlaces from './getPlaces';
 
-export { getPlaces }
+export { getPlaces };

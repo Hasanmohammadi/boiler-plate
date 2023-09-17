@@ -1,3 +1,4 @@
 import calculateSkip from './calculateSkip';
+import isDepartureDateBigger from './isDepartureDateBigger';
 
-export { calculateSkip };
+export { calculateSkip, isDepartureDateBigger };

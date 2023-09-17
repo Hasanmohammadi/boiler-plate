@@ -3,16 +3,16 @@ import { Box } from '@mui/material';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import clsx from 'clsx';
-import { Airplay, ChevronDown } from 'react-feather';
+import { ChevronDown } from 'react-feather';
 import { Control, Controller, FieldValues, Path } from 'react-hook-form';
 
 import SelectSearchContainerStyled from './SelectSearch.style';
 
-interface SelectSearchPropsI<T extends FieldValues> {
+interface SelectSearchPropsI<T extends FieldValues, U> {
   className?: string;
   label?: string;
   placeholder?: string;
-  items?: { label: string; id: string }[];
+  items?: U[];
   name: Path<T>;
   control: Control<T>;
   setTextSearched: React.Dispatch<React.SetStateAction<string>>;
@@ -21,9 +21,10 @@ interface SelectSearchPropsI<T extends FieldValues> {
   disabled?: boolean;
   errorMessage?: string;
   icon?: React.ReactElement;
+  initialValue: U[];
 }
 
-export default function SelectSearch<T extends FieldValues>({
+export default function SelectSearch<T extends FieldValues, U>({
   className,
   label,
   placeholder,
@@ -36,7 +37,8 @@ export default function SelectSearch<T extends FieldValues>({
   disabled,
   textSearched,
   icon,
-}: SelectSearchPropsI<T>) {
+  initialValue,
+}: SelectSearchPropsI<T, U>) {
   return (
     <Box className={className}>
       {!!label && (
@@ -54,7 +56,7 @@ export default function SelectSearch<T extends FieldValues>({
               {...field}
               placeholder={placeholder}
               id="combo-box-demo"
-              options={items || [{ id: '', label: '' }]}
+              options={items || initialValue}
               sx={{
                 '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
                   border: '1px solid black',

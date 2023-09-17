@@ -1,6 +1,5 @@
-import { Button, DatePicker, Tabs } from 'common';
+import { Tabs } from 'common';
 import { useState } from 'react';
-import { ArrowLeft, ArrowRight } from 'react-feather';
 import { useForm } from 'react-hook-form';
 
 import Flights from './Flights';

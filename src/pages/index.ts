@@ -1,3 +1,3 @@
-import Login from './auth/login';
+import Home from './auth/login';
 
-export { Login };
+export { Home };
