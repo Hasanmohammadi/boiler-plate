@@ -10,6 +10,7 @@ import Router from 'router';
 
 import './assets/styles/index.css';
 import theme from './assets/theme';
+import './i18n';
 import reportWebVitals from './reportWebVitals';
 
 export interface MyErrorI {
@@ -59,6 +60,7 @@ const queryClient = new QueryClient({
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
 );
+
 root.render(
   // <React.StrictMode>
   <BodyContextContainer>
