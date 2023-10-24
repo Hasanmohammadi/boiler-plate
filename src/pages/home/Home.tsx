@@ -15,10 +15,10 @@ export default function Home() {
   };
   return (
     <div
-      className="w-screen h-screen relative mb-48"
+      className="min-w-screen w-full h-full min-h-screen relative mb-48"
       // style={{ direction: 'rtl' }}
     >
-      <header className="App-header">
+      {/* <header className="App-header">
         <p>{t('paragraph')}</p>
         <button className="btn" onClick={() => changeLanguage('en')}>
           english
@@ -32,7 +32,7 @@ export default function Home() {
         <button className="btn" onClick={() => changeLanguage('fr')}>
           french
         </button>
-      </header>
+      </header> */}
       <Header />
       <Body />
       <ChangeStyleBox />

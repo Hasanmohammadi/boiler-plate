@@ -1,3 +1,3 @@
-import Home from './auth/login';
+import Home from './home';
 
 export { Home };

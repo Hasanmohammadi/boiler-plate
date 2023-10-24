@@ -98,7 +98,7 @@ const Drawer = styled(MuiDrawer, {
 
 export default function ChangeStyleBox() {
   const [open, setOpen] = React.useState(false);
-  const [containerHeight, setContainerHeight] = React.useState('30%');
+  const [containerWidth, setContainerWidth] = React.useState('30%');
   const [searchParams, setSearchParams] = useSearchParams();
 
   const handleDrawerOpen = () => {
@@ -110,23 +110,23 @@ export default function ChangeStyleBox() {
   };
 
   const onMinimize = () => {
-    if (containerHeight === '30%') {
-      setContainerHeight('1%');
+    if (containerWidth === '30%') {
+      setContainerWidth('1%');
     } else {
-      setContainerHeight('30%');
+      setContainerWidth('30%');
     }
   };
   return (
     <div
-      className="bg-gray-300 border-2 border-gray-800 w-full fixed bottom-0 flex justify-between "
+      className="bg-gray-300 border-2 border-gray-800 w-1/5 h-full min-h-screen fixed right-0 top-0"
       style={{
         direction: 'ltr',
-        transition: 'height 1s',
-        height: containerHeight,
+        transition: 'width 0.7s',
+        width: containerWidth,
       }}
     >
       <button
-        className="absolute px-4 py-2 bg-white rounded-lg right-0 left-0 m-auto z-10 -top-7 border-2 border-red-500 w-fit"
+        className="absolute px-4 py-2 bg-white rounded-lg z-10 -left-14 border-2 border-red-500 w-fit rotate-90 top-7"
         onClick={onMinimize}
       >
         Minimize

@@ -80,7 +80,7 @@ export default function HeaderStyleSection() {
 
   return (
     <div
-      className="bg-gray-300 w-[94%] absolute top-0 flex justify-between mt-4"
+      className="bg-gray-300 w-[94%] absolute top-0 mt-4"
       style={{ direction: 'ltr' }}
     >
       <div className="px-6">

@@ -1,6 +1,6 @@
 {
-  "short_name": "Hotel inventory",
-  "name": "Hotel inventory",
+  "short_name": "WL",
+  "name": "White Label",
   "icons": [
     {
       "src": "../src/Assets/image/Logo.png",

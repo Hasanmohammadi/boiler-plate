@@ -63,6 +63,8 @@ export default function SelectSearch<T extends FieldValues, U>({
                 },
               }}
               renderInput={(params) => (
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                // @ts-ignore
                 <TextField
                   {...params}
                   placeholder={placeholder}

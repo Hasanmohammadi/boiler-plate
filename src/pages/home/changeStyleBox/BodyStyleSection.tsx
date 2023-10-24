@@ -81,7 +81,7 @@ export default function BodyStyleSection() {
                   <p className="text-center font-semibold text-gray-600 ">
                     Texts
                   </p>
-                  <div className="flex justify-between gap-10">
+                  <div className=" gap-10">
                     <div className="flex flex-col">
                       <div className="flex gap-2 mt-2">
                         <p>Texts position</p>
@@ -177,7 +177,7 @@ export default function BodyStyleSection() {
             children: (
               <>
                 {' '}
-                <div className="mt-2 flex justify-between gap-10">
+                <div className="mt-2">
                   <div className="flex flex-col gap-4">
                     <p className="m-auto font-semibold text-gray-600">
                       Background Image
