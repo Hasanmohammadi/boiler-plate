@@ -25,7 +25,13 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import { CSSObject, Theme, styled } from '@mui/material/styles';
 import * as React from 'react';
-import { ArrowLeft, CreditCard, Layout, Menu } from 'react-feather';
+import {
+  ArrowLeft,
+  ArrowRight,
+  CreditCard,
+  Layout,
+  Menu,
+} from 'react-feather';
 import { useSearchParams } from 'react-router-dom';
 
 import BodyStyleSection from './BodyStyleSection';
@@ -126,10 +132,10 @@ export default function ChangeStyleBox() {
       }}
     >
       <button
-        className="absolute px-4 py-2 bg-white rounded-lg z-10 -left-14 border-2 border-red-500 w-fit rotate-90 top-7"
+        className="absolute  bg-white rounded-lg z-10 -left-9 p-2 border-2 border-red-500 w-fit top-56"
         onClick={onMinimize}
       >
-        Minimize
+        {containerWidth === '30%' ? <ArrowRight /> : <ArrowLeft />}
       </button>
       <ContainerStyled sx={{ display: 'flex' }}>
         <CssBaseline />

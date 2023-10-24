@@ -16,8 +16,8 @@ interface ContextI {
   setBgColor: (color: string) => void;
   logoSize: number;
   setLogoSize: (size: number) => void;
-  btns: BtnsI[];
-  setBtns: (btns: BtnsI[]) => void;
+  btns: BtnAndLinks[];
+  setBtns: (btns: BtnAndLinks[]) => void;
 }
 
 const Context = createContext<ContextI>({
@@ -29,19 +29,20 @@ const Context = createContext<ContextI>({
   setBgColor: (color: string) => {},
   logoSize: 36,
   setLogoSize: (size: number) => {},
-  btns: [{ link: '', text: '', type: 'primary' }],
-  setBtns: (btns: BtnsI[]) => {},
+  btns: [{ type: 'link', text: 'Contact us', hidden: true }],
+  setBtns: (btns: BtnAndLinks[]) => {},
 });
 
 interface HeaderContextPropsI {
   children: React.ReactElement;
 }
 
-export interface BtnsI {
-  text: string;
-  type: 'primary' | 'ghost' | 'secondary' | 'success' | 'error';
-  link: string;
+export interface BtnAndLinks {
+  type: 'link' | 'button';
+  color?: string;
   size?: string;
+  text: string;
+  hidden: boolean;
 }
 
 export default function HeaderContext({ children }: HeaderContextPropsI) {
@@ -50,8 +51,10 @@ export default function HeaderContext({ children }: HeaderContextPropsI) {
   const [paddingY, setPaddingY] = useState<string>('0');
   const [bgColor, setBgColor] = useState<string>('');
   const [logoSize, setLogoSize] = useState<number>(36);
-  const [btns, setBtns] = useState<BtnsI[]>([
-    { link: '', text: '', type: 'primary' },
+  const [btns, setBtns] = useState<BtnAndLinks[]>([
+    { type: 'link', text: 'About us', hidden: true },
+    { type: 'link', text: 'Contact us', hidden: true },
+    { type: 'button', text: 'Sign In', hidden: true },
   ]);
   const value = useMemo(
     () => ({

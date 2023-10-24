@@ -14,6 +14,7 @@ const DatePickerStyledContainer = styled(Box)`
   }
   .DatePicker {
     border: none;
+    z-index: 0;
   }
   .RangeDay > .DatePicker {
     width: 100%;

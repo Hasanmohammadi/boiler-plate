@@ -1,7 +1,7 @@
 import CheckboxCp from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import clsx from 'clsx';
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 
 import CheckBoxStyledContainer from './Checkbox.Style';
 
@@ -9,8 +9,8 @@ interface CheckboxPropsI {
   className?: string;
   label?: string;
   checked?: boolean;
-  onChecked?: () => void;
-  onUnChecked?: () => void;
+  onChecked?: (e?: ChangeEvent<HTMLInputElement>) => void;
+  onUnChecked?: (e?: ChangeEvent<HTMLInputElement>) => void;
   disable?: boolean;
 }
 
@@ -30,7 +30,7 @@ export default function Checkbox({
           'py-4 px-6 border border-gray-200 rounded-lg',
 
           {
-            'border-Primary/200 bg-Primary/50': isCheck,
+            // 'border-Primary/200 bg-Primary/50': isCheck,
             'border-gray-300 bg-gray-50': disable,
           },
           className,
@@ -41,11 +41,11 @@ export default function Checkbox({
             <CheckboxCp
               onChange={(e) => {
                 if (onChecked && e.target.checked) {
-                  onChecked();
+                  onChecked(e);
                   setIsCheck(true);
                 } else if (onUnChecked && !e.target.checked) {
                   setIsCheck(false);
-                  onUnChecked();
+                  onUnChecked(e);
                 }
               }}
               checked={checked}

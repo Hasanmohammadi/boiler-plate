@@ -1,6 +1,7 @@
 import logo from 'assets/image/Logo.png';
 import { Button } from 'common';
 import { useAppHeaderContext } from 'context';
+import { Link } from 'react-router-dom';
 
 import HeaderStyledContainer from './Header.style';
 
@@ -15,12 +16,20 @@ export default function Header() {
       sx={{ backgroundColor: bgColor }}
     >
       <img src={logo} width={logoSize} height={logoSize} alt="logo" />
-      <div className="flex gap-4 items-center">
-        {btns.map(({ link, text, type }) => (
-          <>
-            <Button color={type}>{text}</Button>
-          </>
-        ))}
+      <div className="flex gap-10 items-center">
+        {btns.map(
+          ({ type, color, size, text, hidden }) =>
+            !hidden && (
+              <div className="flex gap-3">
+                {type === 'button' && <Button>{text}</Button>}
+                {type === 'link' && (
+                  <Link to={text?.toLowerCase().replaceAll(' ', '-')}>
+                    {text}
+                  </Link>
+                )}
+              </div>
+            ),
+        )}
       </div>
     </HeaderStyledContainer>
   );
