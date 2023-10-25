@@ -27,7 +27,7 @@ export default function Checkbox({
     <CheckBoxStyledContainer>
       <div
         className={clsx(
-          'py-4 px-6 border border-gray-200 rounded-lg',
+          'border border-gray-200 rounded-lg',
 
           {
             // 'border-Primary/200 bg-Primary/50': isCheck,

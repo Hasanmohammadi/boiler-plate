@@ -1,3 +1,4 @@
 import Home from './home';
+import SiteInformation from './siteInformation';
 
-export { Home };
+export { Home, SiteInformation };

@@ -1,11 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import {
-  createContext,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react';
+import { createContext, useContext, useMemo, useState } from 'react';
 
 interface ContextI {
   paddingX: string;
@@ -25,7 +19,7 @@ const Context = createContext<ContextI>({
   setPaddingX: (paddingX: string) => {},
   paddingY: '',
   setPaddingY: (paddingY: string) => {},
-  bgColor: '',
+  bgColor: '#ec2222',
   setBgColor: (color: string) => {},
   logoSize: 36,
   setLogoSize: (size: number) => {},
@@ -40,7 +34,7 @@ interface HeaderContextPropsI {
 export interface BtnAndLinks {
   type: 'link' | 'button';
   color?: string;
-  size?: string;
+  size?: string | number;
   text: string;
   hidden: boolean;
 }
@@ -50,10 +44,22 @@ export default function HeaderContext({ children }: HeaderContextPropsI) {
   const [paddingX, setPaddingX] = useState<string>('0');
   const [paddingY, setPaddingY] = useState<string>('0');
   const [bgColor, setBgColor] = useState<string>('');
-  const [logoSize, setLogoSize] = useState<number>(36);
+  const [logoSize, setLogoSize] = useState<number>(84);
   const [btns, setBtns] = useState<BtnAndLinks[]>([
-    { type: 'link', text: 'About us', hidden: true },
-    { type: 'link', text: 'Contact us', hidden: true },
+    {
+      type: 'link',
+      text: 'About us',
+      hidden: true,
+      size: 14,
+      color: '#000000',
+    },
+    {
+      type: 'link',
+      text: 'Contact us',
+      hidden: true,
+      size: 14,
+      color: '#000000',
+    },
     { type: 'button', text: 'Sign In', hidden: true },
   ]);
   const value = useMemo(

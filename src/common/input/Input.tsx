@@ -72,7 +72,7 @@ export default function Input<T extends FieldValues>({
 
   return (
     <InputStyledContainer
-      className={clsx(className, { 'mb-3': errorMessage })}
+      className={clsx(className, 'mb-1', { 'mb-3': errorMessage })}
     >
       <div className="flex">
         <p className="text-sm font-medium mb-2 text-gray-700">{label}</p>

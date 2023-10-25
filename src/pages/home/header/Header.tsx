@@ -21,9 +21,15 @@ export default function Header() {
           ({ type, color, size, text, hidden }) =>
             !hidden && (
               <div className="flex gap-3">
-                {type === 'button' && <Button>{text}</Button>}
+                {type === 'button' && <Button size="md">{text}</Button>}
                 {type === 'link' && (
-                  <Link to={text?.toLowerCase().replaceAll(' ', '-')}>
+                  <Link
+                    to={`/${text?.toLowerCase().replaceAll(' ', '-')}`}
+                    style={{
+                      fontSize: `${size as number}px`,
+                      color,
+                    }}
+                  >
                     {text}
                   </Link>
                 )}

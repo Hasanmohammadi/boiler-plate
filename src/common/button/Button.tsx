@@ -21,6 +21,7 @@ interface ButtonPropsI {
   disabled?: boolean;
   containerClassName?: string;
   loading?: boolean;
+  size?: 'xs' | 'sm' | 'md' | 'lg';
 }
 
 export default function Buttons({
@@ -32,6 +33,7 @@ export default function Buttons({
   disabled,
   containerClassName,
   loading,
+  size = 'md',
 }: ButtonPropsI) {
   return (
     <>
@@ -62,6 +64,7 @@ export default function Buttons({
               error: color === 'error',
               'ghost-just-text': color === 'ghost-just-text',
               'disabled cursor-default': disabled,
+              [size]: size,
             })}
           >
             {children}

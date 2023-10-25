@@ -13,8 +13,11 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-import { Button, Checkbox } from 'common';
+import { MenuItem } from '@mui/material';
+import { Button, Checkbox, Select } from 'common';
 import { useAppHeaderContext } from 'context';
+import { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
 
 export default function HeaderStyleSection() {
   const {
@@ -25,9 +28,14 @@ export default function HeaderStyleSection() {
     paddingX,
     paddingY,
     setLogoSize,
+    logoSize,
     setBtns,
     btns,
   } = useAppHeaderContext();
+  console.log(
+    '🚀 ~ file: HeaderStyleSection.tsx:35 ~ HeaderStyleSection ~ btns:',
+    btns,
+  );
 
   const onInputChange = (e: any) => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -39,11 +47,6 @@ export default function HeaderStyleSection() {
     }
   };
 
-  const onColorChange = (e: any) => {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    setBgColor(e.target.value);
-  };
   const onSizeLogoChange = (e: any) => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
@@ -69,13 +72,93 @@ export default function HeaderStyleSection() {
       }
       return item;
     });
-    console.log(
-      '🚀 ~ file: HeaderStyleSection.tsx:72 ~ newBtns ~ newBtns:',
-      newBtns,
-    );
 
     setBtns(newBtns);
   };
+
+  const { control, watch, register } = useForm({
+    defaultValues: {
+      btnSize: 'md',
+      headerBgColor: '#ec2222',
+      aboutUsSize: 14,
+      contactUsSize: 14,
+      aboutUsColor: '#ffffff',
+      contactUsColor: '#ffffff',
+    },
+  });
+
+  const {
+    btnSize,
+    aboutUsSize,
+    contactUsSize,
+    headerBgColor,
+    aboutUsColor,
+    contactUsColor,
+  } = watch();
+
+  useEffect(() => {
+    const x = [...btns];
+    const newBtns = x.map((item) => {
+      if (item.type === 'button') {
+        return { ...item, size: btnSize };
+      }
+      return item;
+    });
+
+    setBtns(newBtns);
+  }, [btnSize]);
+
+  useEffect(() => {
+    const x = [...btns];
+    const newBtns = x.map((item) => {
+      if (item.text === 'Contact us') {
+        return { ...item, size: contactUsSize };
+      }
+      return item;
+    });
+
+    setBtns(newBtns);
+  }, [contactUsSize]);
+
+  useEffect(() => {
+    const x = [...btns];
+    const newBtns = x.map((item) => {
+      if (item.text === 'About us') {
+        return { ...item, color: aboutUsColor };
+      }
+      return item;
+    });
+
+    setBtns(newBtns);
+  }, [aboutUsColor]);
+
+  useEffect(() => {
+    const x = [...btns];
+    const newBtns = x.map((item) => {
+      if (item.text === 'Contact us') {
+        return { ...item, color: contactUsColor };
+      }
+      return item;
+    });
+
+    setBtns(newBtns);
+  }, [contactUsColor]);
+
+  useEffect(() => {
+    const x = [...btns];
+    const newBtns = x.map((item) => {
+      if (item.text === 'About us') {
+        return { ...item, size: aboutUsSize };
+      }
+      return item;
+    });
+
+    setBtns(newBtns);
+  }, [aboutUsSize]);
+
+  useEffect(() => {
+    setBgColor(headerBgColor);
+  }, [headerBgColor]);
 
   return (
     <div
@@ -112,15 +195,14 @@ export default function HeaderStyleSection() {
         </div>
         <div className="border-b border-b-gray-50 py-4">
           <div className="flex gap-2 mt-2">
-            <span>Background color</span>
-            <input
-              type="color"
-              id="favcolor"
-              name="favcolor"
-              value={bgColor}
-              onChange={onColorChange}
-              className="rounded-lg"
-            />
+            <label htmlFor="favcolor">
+              Background color{' '}
+              <input
+                type="color"
+                {...register('headerBgColor')}
+                className="rounded-lg"
+              />
+            </label>
           </div>
         </div>
       </div>
@@ -145,6 +227,7 @@ export default function HeaderStyleSection() {
               onChange={onSizeLogoChange}
               type="number"
               min={0}
+              defaultValue={logoSize}
             />
             px
           </div>
@@ -157,30 +240,86 @@ export default function HeaderStyleSection() {
           </p>
         </div>
 
-        <div className="mt-2">
-          <div className="flex items-center">
+        <div className="mt-2 pt-2">
+          <div className="flex items-center w-full justify-between mt-2 gap-2">
             <Checkbox
-              className="border-none p-0"
+              className="w-1 border-none p-0"
               onChecked={() => onCheckBoxSelect('Sign In')}
               onUnChecked={() => onUnCheckBoxSelect('Sign In')}
+              checked={
+                !btns.find(({ text }) => text === 'Sign In')?.hidden
+              }
             />
-            <Button>Sign In</Button>
+            <Button className="h-8">Sign In</Button>
+            <div className="flex gap-1">
+              <span className="self-center">Size:</span>
+              <Select
+                control={control}
+                name="btnSize"
+                className="h-8 w-28 bg-white"
+              >
+                <MenuItem value="xs">xs</MenuItem>
+                <MenuItem value="sm">sm</MenuItem>
+                <MenuItem value="md">md</MenuItem>
+                <MenuItem value="lg">lg</MenuItem>
+              </Select>
+            </div>
           </div>
-          <div className="flex items-center">
+          <div className="flex items-center w-full justify-between mt-2">
             <Checkbox
-              className="border-none p-0"
+              className="w-1 border-none p-0"
               onChecked={() => onCheckBoxSelect('Contact us')}
               onUnChecked={() => onUnCheckBoxSelect('Contact us')}
+              checked={
+                !btns.find(({ text }) => text === 'Contact us')?.hidden
+              }
             />
             <p>Contact us</p>
+            <div className="flex gap-1">
+              <span className="self-center">Size:</span>
+              <input
+                className="border-2 border-red-500 rounded-lg w-14 text-center"
+                type="number"
+                min={0}
+                {...register('contactUsSize')}
+                value={
+                  btns.find(({ text }) => text === 'Contact us')?.size
+                }
+              />
+              px
+            </div>
+            <input
+              type="color"
+              {...register('contactUsColor')}
+              className="rounded-lg"
+            />
           </div>
-          <div className="flex items-center">
+          <div className="flex items-center w-full justify-between mt-2">
             <Checkbox
-              className="border-none p-0"
+              className="w-1 border-none p-0"
               onChecked={() => onCheckBoxSelect('About us')}
               onUnChecked={() => onUnCheckBoxSelect('About us')}
+              checked={
+                !btns.find(({ text }) => text === 'About us')?.hidden
+              }
             />
             <p>About us</p>
+            <div className="flex gap-1">
+              <span className="self-center">Size:</span>
+              <input
+                className="border-2 border-red-500 rounded-lg w-14 text-center"
+                type="number"
+                min={0}
+                value={btns.find(({ text }) => text === 'About us')?.size}
+                {...register('aboutUsSize')}
+              />
+              px
+            </div>
+            <input
+              type="color"
+              {...register('aboutUsColor')}
+              className="rounded-lg"
+            />
           </div>
         </div>
       </div>

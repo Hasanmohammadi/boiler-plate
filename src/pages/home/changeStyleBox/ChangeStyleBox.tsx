@@ -24,6 +24,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import { CSSObject, Theme, styled } from '@mui/material/styles';
+import clsx from 'clsx';
 import * as React from 'react';
 import {
   ArrowLeft,
@@ -104,7 +105,7 @@ const Drawer = styled(MuiDrawer, {
 
 export default function ChangeStyleBox() {
   const [open, setOpen] = React.useState(false);
-  const [containerWidth, setContainerWidth] = React.useState('30%');
+  const [containerWidth, setContainerWidth] = React.useState('0%');
   const [searchParams, setSearchParams] = useSearchParams();
 
   const handleDrawerOpen = () => {
@@ -117,7 +118,7 @@ export default function ChangeStyleBox() {
 
   const onMinimize = () => {
     if (containerWidth === '30%') {
-      setContainerWidth('1%');
+      setContainerWidth('0%');
     } else {
       setContainerWidth('30%');
     }
@@ -137,18 +138,23 @@ export default function ChangeStyleBox() {
       >
         {containerWidth === '30%' ? <ArrowRight /> : <ArrowLeft />}
       </button>
+
       <ContainerStyled sx={{ display: 'flex' }}>
         <CssBaseline />
 
-        <Drawer variant="permanent" open={open}>
-          <DrawerHeader>
+        <Drawer variant="permanent" open={open} className="h-full">
+          <DrawerHeader
+            className={clsx('', {
+              'w-0': containerWidth === '0%',
+            })}
+          >
             {!open ? (
               <IconButton sx={{ marginRight: '5px' }}>
-                <Menu onClick={handleDrawerOpen} />
+                <ArrowLeft onClick={handleDrawerOpen} />
               </IconButton>
             ) : (
               <IconButton>
-                <ArrowLeft onClick={handleDrawerClose} />
+                <ArrowRight onClick={handleDrawerClose} />
               </IconButton>
             )}
           </DrawerHeader>
@@ -163,6 +169,7 @@ export default function ChangeStyleBox() {
                   searchParams.delete('section');
                   searchParams.append('section', text.toLocaleLowerCase());
                   setSearchParams(searchParams);
+                  setOpen(false);
                 }}
               >
                 <ListItemButton
