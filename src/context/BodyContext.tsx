@@ -18,6 +18,8 @@ interface ContextI {
   setTitle: (text: string) => void;
   subTitle: string;
   setSubTitle: (text: string) => void;
+  textAlgin: 'left' | 'right' | 'center';
+  setTextAlign: (align: 'left' | 'right' | 'center') => void;
 }
 
 const Context = createContext<ContextI>({
@@ -37,6 +39,8 @@ const Context = createContext<ContextI>({
   setTitle: (text: string) => {},
   subTitle: '',
   setSubTitle: (color: string) => {},
+  textAlgin: 'left',
+  setTextAlign: (align: 'left' | 'right' | 'center') => {},
 });
 
 interface BodyContextPropsI {
@@ -54,6 +58,9 @@ export default function BodyContext({ children }: BodyContextPropsI) {
   const [titleColor, setTitleColor] = useState<string>('');
   const [subTitleColor, setSubTitleColor] = useState<string>('');
   const [backgroundImage, setBackgroundImage] = useState<string>('');
+  const [textAlgin, setTextAlign] = useState<'left' | 'right' | 'center'>(
+    'left',
+  );
 
   const value = useMemo(
     () => ({
@@ -73,6 +80,8 @@ export default function BodyContext({ children }: BodyContextPropsI) {
       setTitle,
       subTitle,
       setSubTitle,
+      textAlgin,
+      setTextAlign,
     }),
     [
       backgroundImage,
@@ -80,6 +89,7 @@ export default function BodyContext({ children }: BodyContextPropsI) {
       marginY,
       subTitle,
       subTitleColor,
+      textAlgin,
       textPosition,
       title,
       titleColor,

@@ -4,6 +4,7 @@ import { AboutI, ContactI, SiteColorsI } from 'context/WebsiteInfoContext';
 import { SetStateAction, useEffect, useState } from 'react';
 import { Delete, PlusCircle, Trash } from 'react-feather';
 import { useFieldArray, useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
 
 interface SiteInformationFormI {
   siteName: string;
@@ -44,13 +45,17 @@ export default function SiteInformation() {
   };
 
   const onNumberSave = () => {
-    if (!otherNumbers.includes(otherNumberInput)) {
-      const x = [...otherNumbers];
-      x.push(otherNumberInput);
-      setOtherNumbers(x);
-      setOtherNumberInput('');
+    if (otherNumbers.length <= 3) {
+      if (!otherNumbers.includes(otherNumberInput)) {
+        const x = [...otherNumbers];
+        x.push(otherNumberInput);
+        setOtherNumbers(x);
+        setOtherNumberInput('');
+      } else {
+        toast.error('This number already existed');
+      }
     } else {
-      alert('This number already existed');
+      toast.warning('You can only add three phone numbers');
     }
   };
 
@@ -125,7 +130,7 @@ export default function SiteInformation() {
                 />
               </div>
               <div>
-                <span className="text-xs">Email</span>
+                <p className="text-xs">Email</p>
                 <Input
                   control={control}
                   className="h-8"

@@ -2,8 +2,6 @@ import { Tabs } from 'common';
 import { useAppBodyContext } from 'context/BodyContext';
 import { useState } from 'react';
 
-import SearchBox from '../body/searchBox/SearchBox';
-
 export default function BodyStyleSection() {
   const [bgUrl, setBgUrl] = useState('');
   const [activeTab, setActiveTab] = useState(0);
@@ -23,6 +21,8 @@ export default function BodyStyleSection() {
     setTitle,
     subTitle,
     title,
+    setTextAlign,
+    textAlgin,
   } = useAppBodyContext();
 
   const onColorChange = (e: {
@@ -46,6 +46,10 @@ export default function BodyStyleSection() {
 
   const onTextPositionChange = (e: { target: { value: string } }) => {
     setTextPosition(e.target.value as 'start' | 'center' | 'end');
+  };
+
+  const onTextAlignChange = (e: { target: { value: string } }) => {
+    setTextAlign(e.target.value as 'left' | 'center' | 'right');
   };
 
   const onInputChange = (e: {
@@ -83,7 +87,7 @@ export default function BodyStyleSection() {
                   </p>
                   <div className=" gap-10">
                     <div className="flex flex-col">
-                      <div className="flex gap-2 mt-2">
+                      <div className="flex justify-between mt-2">
                         <p>Texts position</p>
                         <select
                           name="logoSize"
@@ -127,7 +131,7 @@ export default function BodyStyleSection() {
                     </div>
                     <div>
                       <div className="flex gap-3 mt-2 justify-between">
-                        <span>Title color</span>
+                        <span>Title text</span>
                         <input
                           name="title"
                           value={title}
@@ -136,7 +140,7 @@ export default function BodyStyleSection() {
                         />
                       </div>
                       <div className="flex gap-3 mt-2">
-                        <span>Subtitle color</span>
+                        <span>Subtitle text</span>
                         <input
                           name="subTitle"
                           value={subTitle}
@@ -144,9 +148,22 @@ export default function BodyStyleSection() {
                           className="rounded-lg border-2 border-red-500 pl-1"
                         />
                       </div>
+                      <div className="flex justify-between mt-2">
+                        <p>Align</p>
+                        <select
+                          name="logoSize"
+                          className="h-6 border-2 border-red-500 rounded-lg"
+                          onChange={onTextAlignChange}
+                          value={textAlgin}
+                        >
+                          <option value="left">Left</option>
+                          <option value="center">Center</option>
+                          <option value="right">Right</option>
+                        </select>
+                      </div>
                     </div>
                     <div>
-                      <div className="flex gap-2 mt-2 w-40 justify-between">
+                      <div className="flex mt-2 justify-between">
                         <span>Title color</span>
                         <input
                           type="color"
@@ -156,7 +173,7 @@ export default function BodyStyleSection() {
                           className="rounded-lg"
                         />
                       </div>
-                      <div className="flex gap-2 mt-2">
+                      <div className="flex justify-between mt-2">
                         <span>Subtitle color</span>
                         <input
                           type="color"

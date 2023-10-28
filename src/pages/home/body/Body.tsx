@@ -14,6 +14,7 @@ export default function Body() {
     subTitleColor,
     title,
     subTitle,
+    textAlgin,
   } = useAppBodyContext();
   return (
     <Box
@@ -32,7 +33,13 @@ export default function Body() {
           'justify-end': textPosition === 'end',
         })}
       >
-        <div>
+        <div
+          className={clsx({
+            'text-left': textAlgin === 'left',
+            'text-center': textAlgin === 'center',
+            'text-end': textAlgin === 'right',
+          })}
+        >
           <Typography
             sx={{
               color: titleColor,
