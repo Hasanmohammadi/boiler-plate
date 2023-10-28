@@ -32,7 +32,7 @@ export default function DatePicker<T extends FieldValues>({
   minimumDate,
 }: DatePickerPropsI<T>) {
   return (
-    <DatePickerStyledContainer className="w-full">
+    <DatePickerStyledContainer className="w-24">
       {!!label && (
         <p className="text-sm font-medium mb-2 text-gray-700">{label}</p>
       )}

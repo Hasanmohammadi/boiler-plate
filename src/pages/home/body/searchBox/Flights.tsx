@@ -1,11 +1,13 @@
+import { Box } from '@mui/material';
 import { AirplaneLanding, Swap } from 'assets/svg';
 import AirplaneTakeoff from 'assets/svg/AirplaneTakeoff';
-import { Button, DatePicker, Menu, SelectSearch } from 'common';
+import clsx from 'clsx';
+import { Button, Checkbox, DatePicker, Menu, SelectSearch } from 'common';
 import { isDepartureDateBigger } from 'helpers';
 import defaultDate from 'helpers/defaultDate';
 import { useGetPlaces } from 'hooks/airport';
 import { useEffect, useState } from 'react';
-import { MinusSquare, PlusSquare } from 'react-feather';
+import { Calendar, MinusSquare, PlusSquare } from 'react-feather';
 import { useForm } from 'react-hook-form';
 
 interface SearchBoxFormI {
@@ -23,9 +25,8 @@ interface SearchBoxFormI {
     day: number;
   };
   arrivalDate: {
-    year: number;
-    month: number;
-    day: number;
+    from: { day: number; month: number; year: number };
+    to: { day: number; month: number; year: number };
   };
 }
 
@@ -46,7 +47,7 @@ export default function Flights() {
         departure: { id: '', label: '' },
         arrival: { id: '', label: '' },
         departureDate: defaultDate().from,
-        arrivalDate: defaultDate().from,
+        arrivalDate: defaultDate(),
       },
     });
   const { departureDate, arrivalDate } = watch();
@@ -64,8 +65,13 @@ export default function Flights() {
   });
 
   useEffect(() => {
-    if (isDepartureDateBigger({ arrivalDate, departureDate })) {
-      setValue('arrivalDate', departureDate);
+    if (
+      isDepartureDateBigger({
+        arrivalDate: arrivalDate.from,
+        departureDate,
+      })
+    ) {
+      setValue('arrivalDate.from', departureDate);
     }
   }, [departureDate]);
 
@@ -77,7 +83,7 @@ export default function Flights() {
     <div className="w-full">
       <div className="flex mt-2">
         <Menu
-          className="w-36"
+          btnClassName="w-fit px-0"
           btnText={wayType}
           menuItems={[
             {
@@ -95,7 +101,7 @@ export default function Flights() {
           ]}
         />
         <Menu
-          className="w-36"
+          btnClassName="w-fit px-0"
           btnText={flightClass}
           menuItems={[
             {
@@ -124,95 +130,14 @@ export default function Flights() {
             },
           ]}
         />
-        <Menu
-          btnText={`${`Adult ${adultCount} ${
-            children ? `- Children ${children}` : ''
-          } ${infants ? `- Infants ${infants}` : ''}`}`}
-          menuItems={[
-            {
-              text: (
-                <div className="flex gap-8 justify-between w-full">
-                  <span>Adult</span>
-                  <div className="flex gap-3">
-                    <MinusSquare
-                      color="#ffcc00"
-                      onClick={() => {
-                        if (adultCount > 1) {
-                          setAdultCount((pre) => pre - 1);
-                        }
-                      }}
-                    />
-                    <span className="w-4 text-center">{adultCount}</span>
-                    <PlusSquare
-                      color="#ffcc00"
-                      onClick={() => setAdultCount((pre) => pre + 1)}
-                    />
-                  </div>
-                </div>
-              ),
-              onClick: () => {
-                setWayType('Round-trip');
-              },
-            },
-            {
-              text: (
-                <div className="flex gap-8 justify-between w-full">
-                  <span>Children</span>
-                  <div className="flex gap-3">
-                    <MinusSquare
-                      color="#ffcc00"
-                      onClick={() => {
-                        if (children > 0) {
-                          setChildren((pre) => pre - 1);
-                        }
-                      }}
-                    />
-                    <span className="w-4 text-center">{children}</span>
-                    <PlusSquare
-                      color="#ffcc00"
-                      onClick={() => setChildren((pre) => pre + 1)}
-                    />
-                  </div>
-                </div>
-              ),
-              onClick: () => {
-                setWayType('Round-trip');
-              },
-            },
-            {
-              text: (
-                <div className="flex gap-8 justify-between w-full">
-                  <span>Infants</span>
-                  <div className="flex gap-3">
-                    <MinusSquare
-                      color="#ffcc00"
-                      onClick={() => {
-                        if (infants > 0) {
-                          setInfants((pre) => pre - 1);
-                        }
-                      }}
-                    />
-                    <span className="w-4 text-center">{infants}</span>
-                    <PlusSquare
-                      color="#ffcc00"
-                      onClick={() => setInfants((pre) => pre + 1)}
-                    />
-                  </div>
-                </div>
-              ),
-              onClick: () => {
-                setWayType('Round-trip');
-              },
-            },
-          ]}
-        />
       </div>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="w-full flex gap-4"
+        className="w-full flex gap-2"
       >
-        <div className="flex w-3/5 justify-between gap-4 mt-3 pl-4">
+        <div className="flex w-1/2 justify-between mt-3 border border-gray-300 rounded-lg">
           <SelectSearch
+            hasBorder={false}
             className="w-1/2 "
             control={control}
             name="departure"
@@ -229,10 +154,11 @@ export default function Flights() {
               { id: '0', label: 'No Itemsssss', isCity: false },
             ]}
           />
-          <div className="mt-1.5">
+          <div className="mt-2 cursor-pointer">
             <Swap />
           </div>
           <SelectSearch
+            hasBorder={false}
             className="w-1/2 "
             control={control}
             name="arrival"
@@ -253,26 +179,149 @@ export default function Flights() {
           />
         </div>
         <div className="w-2/5 flex mt-3 gap-4 ">
-          <DatePicker
-            type="RangeDay"
-            className="h-11 w-full"
-            name="departureDate"
-            control={control}
-            size="md"
-            placeholder="Select date"
-            minimumDate={defaultDate()?.from}
-          />
-          {wayType === 'Round-trip' && (
-            <DatePicker
-              type="RangeDay"
-              className="h-11 w-full"
-              name="arrivalDate"
-              control={control}
-              size="md"
-              placeholder="Select date"
-              minimumDate={departureDate}
+          <div className="border border-gray-300 rounded-lg text-center gap-2 items-center px-2 flex">
+            <Calendar size={18} />
+            <div>
+              <p className="text-xs">Departure Date</p>
+              <DatePicker
+                type="RangeDay"
+                className="h-5 w-full border-none"
+                name="departureDate"
+                control={control}
+                size="md"
+                placeholder="Select date"
+                position="auto"
+                minimumDate={defaultDate()?.from}
+              />
+            </div>
+          </div>
+          <div
+            className={clsx(
+              'border border-gray-300 rounded-lg text-center gap-2 items-center px-2 flex',
+              {
+                'opacity-30': wayType === 'One Way',
+              },
+            )}
+          >
+            <Calendar size={18} />
+            <Box onClick={() => setWayType('Round-trip')}>
+              <p className="text-xs">Arrival Date</p>
+              <DatePicker
+                type="RangeDay"
+                className="h-5 w-full border-none"
+                name="arrivalDate"
+                control={control}
+                size="md"
+                placeholder="Select date"
+                minimumDate={departureDate}
+                position="auto"
+              />
+            </Box>
+            <input
+              type="checkbox"
+              className="w-5 h-5 cursor-pointer accent-yellow-500"
+              checked={wayType === 'Round-trip'}
+              onChange={(e) => {
+                if (e.target.checked) {
+                  setWayType('Round-trip');
+                } else if (!e.target.checked) {
+                  setWayType('One Way');
+                }
+              }}
             />
-          )}
+          </div>
+          <Menu
+            className="border border-gray-300 rounded-lg"
+            btnClassName="h-[42px]"
+            hasArrow={false}
+            btnText={
+              <>
+                <p>{adultCount + children + infants}</p>
+                <p className="-mt-2">
+                  {adultCount + children + infants > 1
+                    ? 'Passengers'
+                    : 'Passenger'}
+                </p>
+              </>
+            }
+            menuItems={[
+              {
+                text: (
+                  <div className="flex gap-8 justify-between w-full">
+                    <span>Adult</span>
+                    <div className="flex gap-3">
+                      <MinusSquare
+                        color="#ffcc00"
+                        onClick={() => {
+                          if (adultCount > 1) {
+                            setAdultCount((pre) => pre - 1);
+                          }
+                        }}
+                      />
+                      <span className="w-4 text-center">{adultCount}</span>
+                      <PlusSquare
+                        color="#ffcc00"
+                        onClick={() => setAdultCount((pre) => pre + 1)}
+                      />
+                    </div>
+                  </div>
+                ),
+                onClick: () => {
+                  setWayType('Round-trip');
+                },
+              },
+              {
+                text: (
+                  <div className="flex gap-8 justify-between w-full">
+                    <span>Children</span>
+                    <div className="flex gap-3">
+                      <MinusSquare
+                        color="#ffcc00"
+                        onClick={() => {
+                          if (children > 0) {
+                            setChildren((pre) => pre - 1);
+                          }
+                        }}
+                      />
+                      <span className="w-4 text-center">{children}</span>
+                      <PlusSquare
+                        color="#ffcc00"
+                        onClick={() => setChildren((pre) => pre + 1)}
+                      />
+                    </div>
+                  </div>
+                ),
+                onClick: () => {
+                  setWayType('Round-trip');
+                },
+              },
+              {
+                text: (
+                  <div className="flex gap-8 justify-between w-full">
+                    <span>Infants</span>
+                    <div className="flex gap-3">
+                      <MinusSquare
+                        color="#ffcc00"
+                        onClick={() => {
+                          if (infants > 0) {
+                            setInfants((pre) => pre - 1);
+                          }
+                        }}
+                      />
+                      <span className="w-4 text-center">{infants}</span>
+                      <PlusSquare
+                        color="#ffcc00"
+                        onClick={() => setInfants((pre) => pre + 1)}
+                      />
+                    </div>
+                  </div>
+                ),
+                onClick: () => {
+                  setWayType('Round-trip');
+                },
+              },
+            ]}
+          />
           <Button
             containerClassName="w-1/2"
             className="w-full"

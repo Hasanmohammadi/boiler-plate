@@ -51,9 +51,9 @@ export default function BodyContext({ children }: BodyContextPropsI) {
   const [textPosition, setTextPosition] = useState<
     'center' | 'end' | 'start'
   >('start');
+  const [title, setTitle] = useState<string>('');
   const [marginX, setMarginX] = useState<string>('0');
   const [marginY, setMarginY] = useState<string>('0');
-  const [title, setTitle] = useState<string>('');
   const [subTitle, setSubTitle] = useState<string>('');
   const [titleColor, setTitleColor] = useState<string>('');
   const [subTitleColor, setSubTitleColor] = useState<string>('');

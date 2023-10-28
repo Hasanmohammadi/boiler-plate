@@ -1,5 +1,6 @@
 import MenuCP from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
+import clsx from 'clsx';
 import { Button } from 'common';
 import * as React from 'react';
 import { Check, ChevronDown, ChevronUp } from 'react-feather';
@@ -13,12 +14,16 @@ interface MenuPropsI {
   menuItems: MenuItemsI[];
   btnText: string | React.ReactElement;
   className?: string;
+  btnClassName?: string;
+  hasArrow?: boolean;
 }
 
 export default function Menu({
   className,
   menuItems,
   btnText,
+  btnClassName,
+  hasArrow = true,
 }: MenuPropsI) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -35,16 +40,20 @@ export default function Menu({
         onClick={(event) =>
           handleClick(event as React.MouseEvent<HTMLButtonElement>)
         }
-        className="text-gray-900 flex justify-between w-full"
+        className={clsx(
+          'text-gray-900 flex justify-between w-full',
+          btnClassName,
+        )}
         color="ghost-just-text"
       >
         <>
           <span>{btnText}</span>
-          {open ? (
-            <ChevronUp className="ml-1" />
-          ) : (
-            <ChevronDown className="ml-1" />
-          )}
+          {hasArrow &&
+            (open ? (
+              <ChevronUp className="ml-1" />
+            ) : (
+              <ChevronDown className="ml-1" />
+            ))}
         </>
       </Button>
       <MenuCP

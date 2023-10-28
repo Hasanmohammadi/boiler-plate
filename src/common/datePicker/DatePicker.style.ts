@@ -5,12 +5,13 @@ const DatePickerStyledContainer = styled(Box)`
   .DatePicker__input {
     width: 100%;
     border: none;
-    padding: 0.4em 0.8em;
+    padding: 0em 0em;
     text-align: center;
     font-size: 14px;
     font-weight: 500;
     cursor: pointer;
     color: #344054;
+    outline: none;
   }
   .DatePicker {
     border: none;

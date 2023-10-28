@@ -22,6 +22,7 @@ interface SelectSearchPropsI<T extends FieldValues, U> {
   errorMessage?: string;
   icon?: React.ReactElement;
   initialValue: U[];
+  hasBorder?: boolean;
 }
 
 export default function SelectSearch<T extends FieldValues, U>({
@@ -37,6 +38,7 @@ export default function SelectSearch<T extends FieldValues, U>({
   disabled,
   textSearched,
   icon,
+  hasBorder = true,
   initialValue,
 }: SelectSearchPropsI<T, U>) {
   return (
@@ -70,7 +72,10 @@ export default function SelectSearch<T extends FieldValues, U>({
                   placeholder={placeholder}
                   onChange={(e) => setTextSearched(e.target.value)}
                   value={textSearched}
-                  className={clsx({ hasIcon: icon })}
+                  className={clsx({
+                    hasIcon: icon,
+                    deleteBorder: !hasBorder,
+                  })}
                 />
               )}
               popupIcon={

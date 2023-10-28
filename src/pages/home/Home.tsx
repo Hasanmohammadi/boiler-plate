@@ -15,7 +15,7 @@ export default function Home() {
   };
   return (
     <div
-      className="min-w-screen w-full h-full min-h-screen relative mb-48"
+      className="min-w-screen w-full relative"
       // style={{ direction: 'rtl' }}
     >
       {/* <header className="App-header">

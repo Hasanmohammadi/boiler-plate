@@ -12,6 +12,8 @@ interface CheckboxPropsI {
   onChecked?: (e?: ChangeEvent<HTMLInputElement>) => void;
   onUnChecked?: (e?: ChangeEvent<HTMLInputElement>) => void;
   disable?: boolean;
+  hasBorder?: boolean;
+  size?: 'medium' | 'small';
 }
 
 export default function Checkbox({
@@ -21,16 +23,16 @@ export default function Checkbox({
   onChecked,
   onUnChecked,
   disable,
+  hasBorder = true,
+  size,
 }: CheckboxPropsI) {
   const [isCheck, setIsCheck] = useState(checked);
   return (
     <CheckBoxStyledContainer>
       <div
         className={clsx(
-          'border border-gray-200 rounded-lg',
-
           {
-            // 'border-Primary/200 bg-Primary/50': isCheck,
+            'border border-gray-200 rounded-lg': hasBorder,
             'border-gray-300 bg-gray-50': disable,
           },
           className,
@@ -39,6 +41,7 @@ export default function Checkbox({
         <FormControlLabel
           control={
             <CheckboxCp
+              size={size}
               onChange={(e) => {
                 if (onChecked && e.target.checked) {
                   onChecked(e);
@@ -48,7 +51,7 @@ export default function Checkbox({
                   onUnChecked(e);
                 }
               }}
-              checked={checked}
+              checked={isCheck}
             />
           }
           label={label}

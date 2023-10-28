@@ -23,7 +23,7 @@ export default function Body() {
         backgroundRepeat: 'no-repeat',
         backgroundSize: 'cover',
       }}
-      className={clsx('w-full h-full flex flex-col ')}
+      className="w-full flex flex-col"
     >
       <Box
         margin={`${marginY}px ${marginX}px`}

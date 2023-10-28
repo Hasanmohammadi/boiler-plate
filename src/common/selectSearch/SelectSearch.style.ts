@@ -11,6 +11,13 @@ const SelectSearchContainerStyled = styled(Box)`
   .hasIcon > .MuiInputBase-root {
     padding-left: 40px;
   }
+  .deleteBorder > .MuiInputBase-root > fieldset {
+    border: none;
+  }
+  .MuiAutocomplete-hasPopupIcon.MuiAutocomplete-hasClearIcon.MuiAutocomplete-root-fQzWHe
+    .MuiOutlinedInput-root {
+    padding-right: 45px;
+  }
 ` as typeof Box;
 
 export default SelectSearchContainerStyled;
