@@ -47,7 +47,10 @@ export default function Flights() {
         departure: { id: '', label: '' },
         arrival: { id: '', label: '' },
         departureDate: defaultDate().from,
-        arrivalDate: defaultDate(),
+        arrivalDate: {
+          from: defaultDate().from,
+          to: { day: 0, month: 0, year: 0 },
+        },
       },
     });
   const { departureDate, arrivalDate } = watch();
@@ -150,9 +153,7 @@ export default function Flights() {
               label: title,
               isCity,
             }))}
-            initialValue={[
-              { id: '0', label: 'No Itemsssss', isCity: false },
-            ]}
+            initialValue={[{ id: '', label: '', isCity: false }]}
           />
           <div className="mt-2 cursor-pointer">
             <Swap />
@@ -173,9 +174,7 @@ export default function Flights() {
                 isCity,
               }),
             )}
-            initialValue={[
-              { id: '0', label: 'No Itemsssss', isCity: false },
-            ]}
+            initialValue={[{ id: '', label: '', isCity: false }]}
           />
         </div>
         <div className="w-2/5 flex mt-3 gap-4 ">
@@ -266,9 +265,7 @@ export default function Flights() {
                     </div>
                   </div>
                 ),
-                onClick: () => {
-                  setWayType('Round-trip');
-                },
+                onClick: () => {},
               },
               {
                 text: (
@@ -291,9 +288,7 @@ export default function Flights() {
                     </div>
                   </div>
                 ),
-                onClick: () => {
-                  setWayType('Round-trip');
-                },
+                onClick: () => {},
               },
               {
                 text: (
@@ -316,9 +311,7 @@ export default function Flights() {
                     </div>
                   </div>
                 ),
-                onClick: () => {
-                  setWayType('Round-trip');
-                },
+                onClick: () => {},
               },
             ]}
           />
