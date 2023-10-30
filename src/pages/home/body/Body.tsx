@@ -1,5 +1,6 @@
 import { Box, Typography } from '@mui/material';
 import clsx from 'clsx';
+import { useAppHeaderContext } from 'context';
 import { useAppBodyContext } from 'context/BodyContext';
 
 import SearchBox from './searchBox/SearchBox';
@@ -16,12 +17,16 @@ export default function Body() {
     subTitle,
     textAlgin,
   } = useAppBodyContext();
+
+  const { paddingY } = useAppHeaderContext();
+
   return (
     <Box
       sx={{
         backgroundImage: `url(${backgroundImage})`,
         backgroundRepeat: 'no-repeat',
         backgroundSize: 'cover',
+        height: `calc(100vh - ${+paddingY}px)`,
       }}
       className="w-full flex flex-col"
     >

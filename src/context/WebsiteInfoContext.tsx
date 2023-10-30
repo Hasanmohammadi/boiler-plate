@@ -2,6 +2,8 @@
 import { createContext, useContext, useMemo, useState } from 'react';
 
 interface ContextI {
+  siteName: string;
+  setSiteName: (siteName: string) => void;
   siteUrl: string;
   setSiteUrl: (siteUrl: string) => void;
   contactInfo: ContactI;
@@ -10,9 +12,13 @@ interface ContextI {
   setSiteColors: (colors: SiteColorsI) => void;
   about: AboutI[];
   setAbout: (siteAbout: AboutI[]) => void;
+  generalAbout: string;
+  setGeneralAbout: (generalAbout: string) => void;
+  otherPhoneNumbers: string[];
+  setOtherPhoneNumbers: (otherPhoneNumbers: string[]) => void;
 }
 
-interface HeaderContextPropsI {
+interface WebInfoContextPropsI {
   children: React.ReactElement;
 }
 
@@ -37,6 +43,8 @@ export interface AboutI {
 }
 
 const Context = createContext<ContextI>({
+  siteName: '',
+  setSiteName: (siteName: string) => {},
   siteUrl: '',
   setSiteUrl: (siteUrl: string) => {},
   contactInfo: {
@@ -52,11 +60,19 @@ const Context = createContext<ContextI>({
   setSiteColors: (siteUrl: SiteColorsI) => {},
   about: [{ description: '', title: '' }],
   setAbout: (siteUrl: AboutI[]) => {},
+  generalAbout: '',
+  setGeneralAbout: (generalAbout: string) => {},
+  otherPhoneNumbers: [],
+  setOtherPhoneNumbers: (otherPhoneNumbers: string[]) => {},
 });
 
-export default function HeaderContext({ children }: HeaderContextPropsI) {
+export default function WebInfoContextContainer({
+  children,
+}: WebInfoContextPropsI) {
   const [siteName, setSiteName] = useState<string>('');
   const [siteUrl, setSiteUrl] = useState<string>('');
+  const [generalAbout, setGeneralAbout] = useState<string>('');
+  const [otherPhoneNumbers, setOtherPhoneNumbers] = useState<string[]>([]);
   const [siteColors, setSiteColors] = useState<SiteColorsI>({
     primary: '',
     secondary: '',
@@ -88,11 +104,23 @@ export default function HeaderContext({ children }: HeaderContextPropsI) {
       setSiteColors,
       about,
       setAbout,
+      generalAbout,
+      setGeneralAbout,
+      otherPhoneNumbers,
+      setOtherPhoneNumbers,
     }),
-    [siteName, siteUrl, contactInfo, siteColors, about],
+    [
+      siteName,
+      siteUrl,
+      contactInfo,
+      siteColors,
+      about,
+      generalAbout,
+      otherPhoneNumbers,
+    ],
   );
 
   return <Context.Provider value={value}>{children}</Context.Provider>;
 }
 
-export const useAppHeaderContext = () => useContext(Context);
+export const useAppWebInfoContext = () => useContext(Context);

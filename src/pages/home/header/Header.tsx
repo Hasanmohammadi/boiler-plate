@@ -1,7 +1,7 @@
 import logo from 'assets/image/Logo.png';
 import { Button } from 'common';
 import { useAppHeaderContext } from 'context';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 
 import HeaderStyledContainer from './Header.style';
 
@@ -15,7 +15,9 @@ export default function Header() {
       padding={`${paddingY}px ${paddingX}px`}
       sx={{ backgroundColor: bgColor }}
     >
-      <img src={logo} width={logoSize} height={logoSize} alt="logo" />
+      <NavLink to="/" className="p-0 cursor-pointer">
+        <img src={logo} width={logoSize} height={logoSize} alt="logo" />
+      </NavLink>
       <div className="flex gap-10 items-center">
         {btns.map(
           ({ type, color, size, text, hidden }) =>

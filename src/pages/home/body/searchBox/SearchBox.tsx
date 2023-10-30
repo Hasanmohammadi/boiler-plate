@@ -26,7 +26,7 @@ export default function SearchBox() {
   });
 
   return (
-    <div className="px-5 pt-4 pb-10 rounded-lg w-3/4 flex gap-3 m-auto bg-white">
+    <div className="px-5 pt-4 pb-10 rounded-lg max-w-[1300px] w-3/4 flex gap-3 m-auto bg-white">
       <Tabs
         className="w-full"
         activeTab={activeTab}

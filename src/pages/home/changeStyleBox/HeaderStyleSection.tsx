@@ -33,8 +33,8 @@ export default function HeaderStyleSection() {
     btns,
   } = useAppHeaderContext();
   console.log(
-    '🚀 ~ file: HeaderStyleSection.tsx:35 ~ HeaderStyleSection ~ btns:',
-    btns,
+    '🚀 ~ file: HeaderStyleSection.tsx:35 ~ HeaderStyleSection ~ setBtns:',
+    setBtns,
   );
 
   const onInputChange = (e: any) => {

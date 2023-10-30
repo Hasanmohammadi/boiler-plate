@@ -2,13 +2,25 @@ import { Box } from '@mui/material';
 import { AirplaneLanding, Swap } from 'assets/svg';
 import AirplaneTakeoff from 'assets/svg/AirplaneTakeoff';
 import clsx from 'clsx';
-import { Button, Checkbox, DatePicker, Menu, SelectSearch } from 'common';
-import { isDepartureDateBigger } from 'helpers';
+import { Button, Checkbox, Menu, SelectSearch } from 'common';
+import {
+  isDepartureDateBigger,
+  todayDate,
+  todayDateObject,
+} from 'helpers';
 import defaultDate from 'helpers/defaultDate';
 import { useGetPlaces } from 'hooks/airport';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Calendar, MinusSquare, PlusSquare } from 'react-feather';
 import { useForm } from 'react-hook-form';
+import DatePicker, { DateObject } from 'react-multi-date-picker';
+import Toolbar from 'react-multi-date-picker/plugins/toolbar';
+
+export interface DateI {
+  year: number;
+  month: number;
+  day: number;
+}
 
 interface SearchBoxFormI {
   departure: {
@@ -19,14 +31,10 @@ interface SearchBoxFormI {
     id: string;
     label: string;
   };
-  departureDate: {
-    year: number;
-    month: number;
-    day: number;
-  };
+  departureDate: DateI;
   arrivalDate: {
-    from: { day: number; month: number; year: number };
-    to: { day: number; month: number; year: number };
+    from: DateI;
+    to: DateI;
   };
 }
 
@@ -35,11 +43,21 @@ export default function Flights() {
     'One Way',
   );
   const [flightClass, setFightClass] = useState<string>('ECONOMY');
+  const [departureDateInput, setDepartureDateInput] = useState<DateI>(
+    todayDateObject(),
+  );
+  const [returnDateInput, setReturnDateInput] = useState<DateI>({
+    day: 0,
+    month: 0,
+    year: 0,
+  });
   const [originSearched, setOriginSearched] = useState<string>('');
   const [arrivalSearched, setArrivalSearched] = useState<string>('');
   const [adultCount, setAdultCount] = useState<number>(1);
   const [children, setChildren] = useState<number>(0);
   const [infants, setInfants] = useState<number>(0);
+
+  const datePickerRef = useRef<{ openCalendar: () => void } | null>(null);
 
   const { control, watch, setValue, handleSubmit } =
     useForm<SearchBoxFormI>({
@@ -53,7 +71,6 @@ export default function Flights() {
         },
       },
     });
-  const { departureDate, arrivalDate } = watch();
 
   const { getPlacesData: originPlaces } = useGetPlaces({
     count: 10,
@@ -67,21 +84,50 @@ export default function Flights() {
     queryKey: 'destinationPlaces',
   });
 
-  useEffect(() => {
-    if (
-      isDepartureDateBigger({
-        arrivalDate: arrivalDate.from,
-        departureDate,
-      })
-    ) {
-      setValue('arrivalDate.from', departureDate);
-    }
-  }, [departureDate]);
+  // useEffect(() => {
+  //   if (
+  //     isDepartureDateBigger({
+  //       arrivalDate: arrivalDate.from,
+  //       departureDate,
+  //     })
+  //   ) {
+  //     setValue('arrivalDate.from', departureDate);
+  //   }
+  // }, [departureDate]);
 
   const onSubmit = (data: SearchBoxFormI) => {
     console.log('🚀 ~ file: Flights.tsx:51 ~ onSubmit ~ data:', data);
   };
 
+  function handleDepartureDate({
+    day,
+    year,
+    month,
+  }: {
+    day: number;
+    year: number;
+    month: { number: number };
+  }) {
+    setDepartureDateInput({
+      day,
+      month: month?.number,
+      year,
+    });
+  }
+
+  function handleReturnDate(
+    data: {
+      day: number;
+      year: number;
+      month: { number: number };
+    }[],
+  ) {
+    setReturnDateInput({
+      day: data?.[1]?.day || data?.[0]?.day,
+      month: data?.[1]?.month?.number || data?.[0]?.month?.number,
+      year: data?.[1]?.year || data?.[0]?.year,
+    });
+  }
   return (
     <div className="w-full">
       <div className="flex mt-2">
@@ -136,7 +182,7 @@ export default function Flights() {
       </div>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="w-full flex gap-2"
+        className="w-full flex justify-between gap-2"
       >
         <div className="flex w-1/2 justify-between mt-3 border border-gray-300 rounded-lg">
           <SelectSearch
@@ -177,57 +223,118 @@ export default function Flights() {
             initialValue={[{ id: '', label: '', isCity: false }]}
           />
         </div>
-        <div className="w-2/5 flex mt-3 gap-4 ">
-          <div className="border border-gray-300 rounded-lg text-center gap-2 items-center px-2 flex">
-            <Calendar size={18} />
-            <div>
-              <p className="text-xs">Departure Date</p>
-              <DatePicker
-                type="RangeDay"
-                className="h-5 w-full border-none"
-                name="departureDate"
-                control={control}
-                size="md"
-                placeholder="Select date"
-                position="auto"
-                minimumDate={defaultDate()?.from}
-              />
+        <div className="flex mt-3 gap-2">
+          <div className="flex gap-2">
+            <div className="flex border border-gray-300 bg-white h-11 rounded-lg">
+              <div className="self-center px-2">
+                <Calendar />
+              </div>
+              <div className="w-full inline-grid self-center">
+                <p className="text-justify text-sm w-28">Departure Date</p>
+                <DatePicker
+                  plugins={[<Toolbar position="bottom" />]}
+                  minDate={todayDate()}
+                  value={
+                    new Date(
+                      departureDateInput.year,
+                      departureDateInput.month - 1,
+                      departureDateInput.day,
+                    )
+                  }
+                  onChange={(date) =>
+                    handleDepartureDate(date as DateObject)
+                  }
+                  numberOfMonths={1}
+                  inputMode="text"
+                  range={false}
+                  placeholder="dateHitPoint"
+                  className="cursor-pointer"
+                />
+              </div>
             </div>
-          </div>
-          <div
-            className={clsx(
-              'border border-gray-300 rounded-lg text-center gap-2 items-center px-2 flex',
-              {
-                'opacity-30': wayType === 'One Way',
-              },
-            )}
-          >
-            <Calendar size={18} />
-            <Box onClick={() => setWayType('Round-trip')}>
-              <p className="text-xs">Arrival Date</p>
-              <DatePicker
-                type="RangeDay"
-                className="h-5 w-full border-none"
-                name="arrivalDate"
-                control={control}
-                size="md"
-                placeholder="Select date"
-                minimumDate={departureDate}
-                position="auto"
+            <div className=" h-11  rounded-lg relative">
+              <input
+                className="absolute right-2 top-6 w-4 h-4 cursor-pointer"
+                type="checkbox"
+                checked={wayType === 'Round-trip'}
+                onChange={(e) => {
+                  if (e.target.checked) {
+                    setWayType('Round-trip');
+                  } else {
+                    setWayType('One Way');
+                  }
+                }}
               />
-            </Box>
-            <input
-              type="checkbox"
-              className="w-5 h-5 cursor-pointer accent-yellow-500"
-              checked={wayType === 'Round-trip'}
-              onChange={(e) => {
-                if (e.target.checked) {
-                  setWayType('Round-trip');
-                } else if (!e.target.checked) {
-                  setWayType('One Way');
-                }
-              }}
-            />
+
+              <div
+                className={clsx(
+                  'flex w-40 h-11 border border-gray-300 rounded-lg bg-white ',
+                  {
+                    'text-gray-300 cursor-pointer': wayType === 'One Way',
+                  },
+                )}
+              >
+                <div className="self-center px-2">
+                  <Calendar />
+                </div>
+                <div className="w-full inline-grid self-center">
+                  <div
+                    className="text-justify text-sm"
+                    onClick={() => {
+                      datePickerRef?.current?.openCalendar();
+                    }}
+                    role="presentation"
+                  >
+                    Return Date
+                  </div>
+
+                  {wayType === 'One Way' ? (
+                    <p className="">
+                      {returnDateInput.day
+                        ? `${returnDateInput.year}/${returnDateInput.month}/${returnDateInput.day}`
+                        : `${departureDateInput.year}/${departureDateInput.month}/${departureDateInput.day}`}
+                    </p>
+                  ) : (
+                    <DatePicker
+                      plugins={[<Toolbar position="bottom" />]}
+                      minDate={`${departureDateInput.year}-${departureDateInput.month}-${departureDateInput.day}`}
+                      ref={datePickerRef}
+                      render={() => (
+                        <Box
+                          className="cursor-pointer text-start"
+                          onClick={() =>
+                            datePickerRef?.current?.openCalendar()
+                          }
+                        >
+                          {returnDateInput.day
+                            ? `${returnDateInput.year}/${returnDateInput.month}/${returnDateInput.day}`
+                            : `${departureDateInput.year}/${departureDateInput.month}/${departureDateInput.day}`}{' '}
+                        </Box>
+                      )}
+                      value={[
+                        new Date(
+                          departureDateInput.year,
+                          departureDateInput.month - 1,
+                          departureDateInput.day,
+                        ),
+                        new Date(
+                          returnDateInput.year,
+                          returnDateInput.month - 1,
+                          returnDateInput.day,
+                        ),
+                      ]}
+                      onChange={(date) =>
+                        handleReturnDate(date as DateObject[])
+                      }
+                      numberOfMonths={1}
+                      inputMode="text"
+                      range
+                      placeholder="dateHitPoint"
+                    />
+                  )}
+                </div>
+              </div>
+            </div>
           </div>
           <Menu
             className="border border-gray-300 rounded-lg"
@@ -236,7 +343,7 @@ export default function Flights() {
             btnText={
               <>
                 <p>{adultCount + children + infants}</p>
-                <p className="-mt-2">
+                <p className=" text-xs">
                   {adultCount + children + infants > 1
                     ? 'Passengers'
                     : 'Passenger'}

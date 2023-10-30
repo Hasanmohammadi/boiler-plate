@@ -1,7 +1,8 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { Button, Input, Modal, TextArea } from 'common';
+import { useAppWebInfoContext } from 'context';
 import { AboutI, ContactI, SiteColorsI } from 'context/WebsiteInfoContext';
-import { SetStateAction, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Delete, PlusCircle, Trash } from 'react-feather';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
@@ -13,12 +14,42 @@ interface SiteInformationFormI {
   contactInfo: ContactI;
   about: AboutI[];
   otherPhoneNumber: string[];
+  generalAbout: string;
 }
 
 export default function SiteInformation() {
+  const {
+    setOtherPhoneNumbers,
+    otherPhoneNumbers,
+    about,
+    contactInfo,
+    generalAbout,
+    setAbout,
+    setContactInfo,
+    setGeneralAbout,
+    setSiteColors,
+    setSiteName,
+    setSiteUrl,
+    siteColors,
+    siteName,
+    siteUrl,
+  } = useAppWebInfoContext();
+  console.log(
+    '🚀 ~ file: SiteInformation.tsx:37 ~ SiteInformation ~ siteUrl:',
+    {
+      siteColors,
+      siteName,
+      siteUrl,
+      about,
+      contactInfo,
+      generalAbout,
+    },
+  );
+
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [otherNumberInput, setOtherNumberInput] = useState('');
-  const [otherNumbers, setOtherNumbers] = useState(['']);
+  const [otherNumberInput, setOtherNumberInput] = useState<string>('');
+  const [otherNumbers, setOtherNumbers] =
+    useState<string[]>(otherPhoneNumbers);
   const { control, handleSubmit, register } =
     useForm<SiteInformationFormI>();
 
@@ -31,20 +62,11 @@ export default function SiteInformation() {
     append({ description: '', title: '' });
   }, []);
 
-  const onSubmit = (data: SiteInformationFormI) => {
-    console.log(
-      '🚀 ~ file: siteInformation.tsx:20 ~ onSubmit ~ data:',
-      data,
-    );
-  };
-
-  const otherNumberChange = (e: {
-    target: { value: SetStateAction<string> };
-  }) => {
+  const otherNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setOtherNumberInput(e.target.value);
   };
 
-  const onNumberSave = () => {
+  const onNumberAdd = () => {
     if (otherNumbers.length <= 3) {
       if (!otherNumbers.includes(otherNumberInput)) {
         const x = [...otherNumbers];
@@ -59,10 +81,27 @@ export default function SiteInformation() {
     }
   };
 
+  const onNumberSave = () => {
+    setOtherPhoneNumbers(otherNumbers);
+  };
+
   const onDeleteNumber = (number: string) => {
     const x = [...otherNumbers];
     const y = x.filter((n) => n !== number);
     setOtherNumbers(y);
+  };
+
+  const onSubmit = (data: SiteInformationFormI) => {
+    console.log(
+      '🚀 ~ file: siteInformation.tsx:20 ~ onSubmit ~ data:',
+      data,
+    );
+    setSiteUrl(data.siteUrl);
+    setSiteName(data.siteName);
+    setSiteColors(data.siteColors);
+    setGeneralAbout(data.generalAbout);
+    setContactInfo(data.contactInfo);
+    setAbout(data.about);
   };
 
   return (
@@ -162,8 +201,10 @@ export default function SiteInformation() {
             </div>
           </div>
           <div className="mt-2">
-            <div className="flex gap-2 place-items-center">
-              <p className="font-medium text-lg">About</p>
+            <p className="font-medium text-lg">General About:</p>
+            <TextArea control={control} name="generalAbout" />
+            <div className="flex gap-2 place-items-center mt-4">
+              <p className="font-medium text-lg">Detail About</p>
               <PlusCircle
                 className="cursor-pointer"
                 color="green"
@@ -201,7 +242,7 @@ export default function SiteInformation() {
             ))}
           </div>
         </div>
-        <div className="mt-2">
+        <div className="mt-2 flex justify-end">
           <Button color="success" type="submit">
             Save
           </Button>
@@ -214,11 +255,12 @@ export default function SiteInformation() {
                 value={otherNumberInput}
                 onChange={otherNumberChange}
                 className="h-8 mt-2 border-gray-300 border rounded-lg outline-none px-4"
+                type="number"
               />
               <Button
                 className="w-full h-8"
                 containerClassName="mt-4"
-                onClick={onNumberSave}
+                onClick={onNumberAdd}
               >
                 Add
               </Button>
@@ -244,6 +286,7 @@ export default function SiteInformation() {
                 color="success"
                 className="h-9"
                 containerClassName="mt-4 text-end"
+                onClick={onNumberSave}
               >
                 Save
               </Button>
