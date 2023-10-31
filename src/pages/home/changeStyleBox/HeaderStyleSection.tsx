@@ -24,18 +24,14 @@ export default function HeaderStyleSection() {
     setPaddingX,
     setPaddingY,
     setBgColor,
+    setLogoSize,
+    setBtns,
     bgColor,
     paddingX,
     paddingY,
-    setLogoSize,
     logoSize,
-    setBtns,
     btns,
   } = useAppHeaderContext();
-  console.log(
-    '🚀 ~ file: HeaderStyleSection.tsx:35 ~ HeaderStyleSection ~ setBtns:',
-    setBtns,
-  );
 
   const onInputChange = (e: any) => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -76,14 +72,17 @@ export default function HeaderStyleSection() {
     setBtns(newBtns);
   };
 
+  const aboutUsInfo = btns.find(({ text }) => text === 'About us');
+  const contactUsInfo = btns.find(({ text }) => text === 'Contact us');
+
   const { control, watch, register } = useForm({
     defaultValues: {
       btnSize: 'md',
-      headerBgColor: '#ec2222',
-      aboutUsSize: 14,
-      contactUsSize: 14,
-      aboutUsColor: '#ffffff',
-      contactUsColor: '#ffffff',
+      headerBgColor: bgColor,
+      aboutUsSize: aboutUsInfo?.size,
+      contactUsSize: contactUsInfo?.size,
+      aboutUsColor: aboutUsInfo?.color,
+      contactUsColor: contactUsInfo?.color,
     },
   });
 

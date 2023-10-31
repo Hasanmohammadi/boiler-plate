@@ -8,6 +8,7 @@ import HeaderStyledContainer from './Header.style';
 export default function Header() {
   const { paddingX, paddingY, bgColor, logoSize, btns } =
     useAppHeaderContext();
+  console.log('🚀 ~ file: Header.tsx:10 ~ Header ~ logoSize:', logoSize);
 
   return (
     <HeaderStyledContainer
