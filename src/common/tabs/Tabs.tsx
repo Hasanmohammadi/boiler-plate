@@ -50,6 +50,8 @@ interface TabsPropsI {
   activeTab: number;
   setActiveTabIndex: React.Dispatch<React.SetStateAction<number>>;
   tabsPosition?: 'center' | 'start' | 'end';
+  primaryColor?: string;
+  secondaryColor?: string;
 }
 
 export default function Tabs({
@@ -58,13 +60,22 @@ export default function Tabs({
   activeTab,
   setActiveTabIndex,
   tabsPosition,
+  primaryColor,
+  secondaryColor,
 }: TabsPropsI) {
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setActiveTabIndex(newValue);
   };
 
   return (
-    <TabsStyledContainer className={className}>
+    <TabsStyledContainer
+      className={className}
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      primary={primaryColor}
+      secondary={secondaryColor}
+      component="div"
+    >
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <TabsCP
           value={activeTab}
@@ -74,6 +85,7 @@ export default function Tabs({
             'tabs-position-center': tabsPosition === 'center',
             'tabs-position-end': tabsPosition === 'end',
           })}
+          indicatorColor="primary"
         >
           {tabs?.map((tab, index) => (
             <Tab

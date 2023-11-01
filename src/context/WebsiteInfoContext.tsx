@@ -74,9 +74,9 @@ export default function WebInfoContextContainer({
   const [generalAbout, setGeneralAbout] = useState<string>('');
   const [otherPhoneNumbers, setOtherPhoneNumbers] = useState<string[]>([]);
   const [siteColors, setSiteColors] = useState<SiteColorsI>({
-    primary: '',
-    secondary: '',
-    tertiary: '',
+    primary: '#000000',
+    secondary: '#000000',
+    tertiary: '#000000',
   });
 
   const [contactInfo, setContactInfo] = useState<ContactI>({

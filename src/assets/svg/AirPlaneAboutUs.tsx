@@ -1,6 +1,14 @@
 import { memo } from 'react';
 
-function AirPlaneAboutUs({ className }: { className?: string }) {
+function AirPlaneAboutUs({
+  className,
+  primaryColor,
+  secondaryColor,
+}: {
+  className?: string;
+  primaryColor?: string;
+  secondaryColor?: string;
+}) {
   return (
     <svg
       className={className}
@@ -29,27 +37,27 @@ function AirPlaneAboutUs({ className }: { className?: string }) {
         />
         <path
           d="M12.8716 23.5374C12.8716 23.5374 19.1576 34.5707 25.5588 42.1125C26.6023 43.3411 28.687 42.394 28.0649 40.9048C24.5456 32.4811 24.9519 26.015 24.9519 26.015L12.8716 23.5374Z"
-          fill="#FF0000"
+          fill={primaryColor}
           fillOpacity="0.7"
         />
         <path
           d="M13.2602 22.1254C13.2602 22.1254 23.1291 14.1347 31.8352 9.43819C33.2542 8.67335 34.8515 10.3139 33.7303 11.4748C27.3878 18.0412 25.4141 24.2121 25.4141 24.2121L13.2602 22.1254Z"
-          fill="#FF0000"
+          fill={primaryColor}
           fillOpacity="0.7"
         />
         <path
           d="M33.2241 26.5638L41.3481 21.015C42.2631 20.39 43.4368 21.3254 43.0302 22.3558L40.883 27.8039L33.2241 26.5638Z"
-          fill="#FF0000"
+          fill={primaryColor}
           fillOpacity="0.7"
         />
         <path
           d="M33.224 26.5608L38.7729 34.6848C39.3979 35.5999 40.8314 35.1555 40.8275 34.0478L40.8093 28.1918L33.224 26.5608Z"
-          fill="#FF0000"
+          fill={primaryColor}
           fillOpacity="0.7"
         />
         <path
           d="M11.6741 18.5927L37.0354 24.039C37.7405 24.1905 38.3605 24.6072 38.767 25.203L39.6982 26.5663C40.2232 27.335 40.0252 28.3865 39.2565 28.9115L37.8932 29.8427C37.2986 30.2488 36.5695 30.413 35.8568 30.297L10.2518 26.1445C9.05764 25.9519 7.9575 25.3784 7.11537 24.5095L5.37826 22.7192C4.56457 21.882 4.82823 20.4928 5.88842 20.0105L8.15778 18.9747C9.2583 18.4717 10.4917 18.3377 11.6741 18.5927Z"
-          fill="#FFC5C5"
+          fill={secondaryColor}
         />
         <path
           d="M31.7933 26.4717L41.907 28.3886C41.907 28.3886 39.2062 25.6012 31.7933 26.4717Z"
@@ -57,12 +65,12 @@ function AirPlaneAboutUs({ className }: { className?: string }) {
         />
         <path
           d="M31.7933 26.4717L41.907 28.3886C41.907 28.3886 38.4522 30.0126 31.7933 26.4717Z"
-          fill="#FF0000"
+          fill={primaryColor}
           fillOpacity="0.7"
         />
         <path
           d="M9.85966 20.2792L9.28974 20.5867C8.08143 21.286 7.95777 22.9849 9.0534 23.851"
-          stroke="#FF0000"
+          stroke={primaryColor}
           strokeOpacity="0.7"
           strokeWidth="0.375"
           strokeMiterlimit="10"

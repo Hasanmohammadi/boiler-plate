@@ -2,6 +2,7 @@ import MenuCP from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import clsx from 'clsx';
 import { Button } from 'common';
+import { useAppWebInfoContext } from 'context';
 import * as React from 'react';
 import { Check, ChevronDown, ChevronUp } from 'react-feather';
 
@@ -25,6 +26,7 @@ export default function Menu({
   btnClassName,
   hasArrow = true,
 }: MenuPropsI) {
+  const { siteColors } = useAppWebInfoContext();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -73,7 +75,9 @@ export default function Menu({
                 setAnchorEl(null);
               }
             }}
-            sx={{ background: text === btnText ? '#f8e495' : '' }}
+            sx={{
+              background: text === btnText ? siteColors.secondary : '',
+            }}
           >
             <div className="flex gap-2 w-full">
               {text === btnText && <Check size={20} className="mt-0.5" />}

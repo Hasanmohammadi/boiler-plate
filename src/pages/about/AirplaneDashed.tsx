@@ -1,7 +1,9 @@
+import { useAppWebInfoContext } from 'context';
 import { useEffect, useRef } from 'react';
 
 export default function AirplaneDashed() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const { siteColors } = useAppWebInfoContext();
 
   useEffect(() => {
     if (canvasRef.current) {
@@ -25,7 +27,7 @@ export default function AirplaneDashed() {
         context.setLineDash([7, 7]);
 
         // Set the line color to red
-        context.strokeStyle = 'red';
+        context.strokeStyle = siteColors.secondary;
 
         // Set the line width to a thicker value (e.g., 3 pixels)
         context.lineWidth = 1;

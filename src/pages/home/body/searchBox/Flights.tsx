@@ -2,16 +2,12 @@ import { Box } from '@mui/material';
 import { AirplaneLanding, Swap } from 'assets/svg';
 import AirplaneTakeoff from 'assets/svg/AirplaneTakeoff';
 import clsx from 'clsx';
-import { Button, Checkbox, Menu, SelectSearch } from 'common';
+import { Button, Menu, SelectSearch } from 'common';
 import { useAppWebInfoContext } from 'context';
-import {
-  isDepartureDateBigger,
-  todayDate,
-  todayDateObject,
-} from 'helpers';
+import { todayDate, todayDateObject } from 'helpers';
 import defaultDate from 'helpers/defaultDate';
 import { useGetPlaces } from 'hooks/airport';
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { Calendar, MinusSquare, PlusSquare } from 'react-feather';
 import { useForm } from 'react-hook-form';
 import DatePicker, { DateObject } from 'react-multi-date-picker';
@@ -86,17 +82,6 @@ export default function Flights() {
     name: arrivalSearched,
     queryKey: 'destinationPlaces',
   });
-
-  // useEffect(() => {
-  //   if (
-  //     isDepartureDateBigger({
-  //       arrivalDate: arrivalDate.from,
-  //       departureDate,
-  //     })
-  //   ) {
-  //     setValue('arrivalDate.from', departureDate);
-  //   }
-  // }, [departureDate]);
 
   const onSubmit = (data: SearchBoxFormI) => {
     console.log('🚀 ~ file: Flights.tsx:51 ~ onSubmit ~ data:', data);
@@ -360,7 +345,7 @@ export default function Flights() {
                     <span>Adult</span>
                     <div className="flex gap-3">
                       <MinusSquare
-                        color="#ffcc00"
+                        color={siteColors.secondary}
                         onClick={() => {
                           if (adultCount > 1) {
                             setAdultCount((pre) => pre - 1);
@@ -369,7 +354,7 @@ export default function Flights() {
                       />
                       <span className="w-4 text-center">{adultCount}</span>
                       <PlusSquare
-                        color="#ffcc00"
+                        color={siteColors.secondary}
                         onClick={() => setAdultCount((pre) => pre + 1)}
                       />
                     </div>
@@ -383,7 +368,7 @@ export default function Flights() {
                     <span>Children</span>
                     <div className="flex gap-3">
                       <MinusSquare
-                        color="#ffcc00"
+                        color={siteColors.secondary}
                         onClick={() => {
                           if (children > 0) {
                             setChildren((pre) => pre - 1);
@@ -392,7 +377,7 @@ export default function Flights() {
                       />
                       <span className="w-4 text-center">{children}</span>
                       <PlusSquare
-                        color="#ffcc00"
+                        color={siteColors.secondary}
                         onClick={() => setChildren((pre) => pre + 1)}
                       />
                     </div>
@@ -406,7 +391,7 @@ export default function Flights() {
                     <span>Infants</span>
                     <div className="flex gap-3">
                       <MinusSquare
-                        color="#ffcc00"
+                        color={siteColors.secondary}
                         onClick={() => {
                           if (infants > 0) {
                             setInfants((pre) => pre - 1);
@@ -415,7 +400,7 @@ export default function Flights() {
                       />
                       <span className="w-4 text-center">{infants}</span>
                       <PlusSquare
-                        color="#ffcc00"
+                        color={siteColors.secondary}
                         onClick={() => setInfants((pre) => pre + 1)}
                       />
                     </div>

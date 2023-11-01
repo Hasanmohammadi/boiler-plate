@@ -1,10 +1,13 @@
 import { Tabs } from 'common';
+import { useAppWebInfoContext } from 'context';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import Flights from './Flights';
 
 export default function SearchBox() {
+  const { siteColors } = useAppWebInfoContext();
+
   const [searchBoxSize, setSearchBoxSize] = useState<'sm' | 'md' | 'lg'>();
   const [activeTab, setaActiveTab] = useState<number>(0);
 
@@ -32,6 +35,8 @@ export default function SearchBox() {
         activeTab={activeTab}
         setActiveTabIndex={setaActiveTab}
         tabsPosition="center"
+        primaryColor={siteColors.primary}
+        secondaryColor={siteColors.secondary}
         tabs={[
           { name: 'Flight', children: <Flights /> },
           { name: 'Stays', children: <div>Stays</div> },
