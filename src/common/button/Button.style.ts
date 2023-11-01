@@ -7,7 +7,7 @@ interface ButtonPropsI {
   className?: string;
 }
 
-const ButtonStyledContainer = styled.div<ButtonPropsI>`
+const ButtonStyledContainer = styled(Box)<ButtonPropsI>`
   button {
     text-transform: none;
     padding: 10px 16px;
@@ -60,6 +60,6 @@ const ButtonStyledContainer = styled.div<ButtonPropsI>`
     background: #ffffff;
     color: #d0d5dd;
   }
-` as React.ComponentType<ButtonPropsI>;
+` as typeof Box;
 
 export default ButtonStyledContainer;

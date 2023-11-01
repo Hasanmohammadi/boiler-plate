@@ -35,7 +35,7 @@ export default function ChangeStyleBox() {
     <div
       className="bg-gray-100 border-2 border-gray-800 w-1/5 h-full min-h-screen fixed right-0 top-0 flex"
       style={{
-        transition: 'width 0.7s',
+        transition: 'width 0.5s',
         width: containerWidth,
       }}
     >

@@ -41,10 +41,7 @@ interface SearchBoxFormI {
 
 export default function Flights() {
   const { siteColors } = useAppWebInfoContext();
-  console.log(
-    '🚀 ~ file: Flights.tsx:44 ~ Flights ~ siteColors:',
-    siteColors,
-  );
+
   const [wayType, setWayType] = useState<'Round-trip' | 'One Way'>(
     'One Way',
   );

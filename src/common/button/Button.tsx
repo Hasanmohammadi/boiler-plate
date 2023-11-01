@@ -55,8 +55,11 @@ export default function Buttons({
           className={clsx(containerClassName, {
             'disabled cursor-default': disabled,
           })}
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
           primary={primaryColor}
           secondary={secondaryColor}
+          component="div"
         >
           <ButtonCP
             type={type}
