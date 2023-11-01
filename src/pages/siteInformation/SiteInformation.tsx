@@ -34,24 +34,23 @@ export default function SiteInformation() {
     siteName,
     siteUrl,
   } = useAppWebInfoContext();
-  console.log(
-    '🚀 ~ file: SiteInformation.tsx:37 ~ SiteInformation ~ siteUrl:',
-    {
-      siteColors,
-      siteName,
-      siteUrl,
-      about,
-      contactInfo,
-      generalAbout,
-    },
-  );
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [otherNumberInput, setOtherNumberInput] = useState<string>('');
   const [otherNumbers, setOtherNumbers] =
     useState<string[]>(otherPhoneNumbers);
+
   const { control, handleSubmit, register } =
-    useForm<SiteInformationFormI>();
+    useForm<SiteInformationFormI>({
+      defaultValues: {
+        about,
+        contactInfo,
+        generalAbout,
+        siteColors,
+        siteName,
+        siteUrl,
+      },
+    });
 
   const { append, fields, remove } = useFieldArray<SiteInformationFormI>({
     control,
@@ -92,10 +91,6 @@ export default function SiteInformation() {
   };
 
   const onSubmit = (data: SiteInformationFormI) => {
-    console.log(
-      '🚀 ~ file: siteInformation.tsx:20 ~ onSubmit ~ data:',
-      data,
-    );
     setSiteUrl(data.siteUrl);
     setSiteName(data.siteName);
     setSiteColors(data.siteColors);

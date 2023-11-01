@@ -161,7 +161,7 @@ export default function HeaderStyleSection() {
 
   return (
     <div
-      className="bg-gray-300 w-[80%] absolute top-0 mt-4"
+      className="w-[80%] absolute top-0 mt-4"
       style={{ direction: 'ltr' }}
     >
       <h1 className="text-center text-xl font-extrabold">Header</h1>
@@ -232,7 +232,7 @@ export default function HeaderStyleSection() {
           </div>
         </div>
       </div>
-      <div className="border-b border-b-gray-50 py-4">
+      <div className="border-b border-b-gray-50 py-4 px-4">
         <div className="flex justify-center gap-2">
           <p className="text-center font-semibold text-gray-600">
             Buttons & Links
