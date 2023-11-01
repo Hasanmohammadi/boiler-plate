@@ -1,6 +1,6 @@
 import logo from 'assets/image/Logo.png';
 import { Button } from 'common';
-import { useAppHeaderContext } from 'context';
+import { useAppHeaderContext, useAppWebInfoContext } from 'context';
 import { Link, NavLink } from 'react-router-dom';
 
 import HeaderStyledContainer from './Header.style';
@@ -9,6 +9,11 @@ export default function Header() {
   const { paddingX, paddingY, bgColor, logoSize, btns } =
     useAppHeaderContext();
   console.log('🚀 ~ file: Header.tsx:10 ~ Header ~ logoSize:', logoSize);
+  const { siteColors } = useAppWebInfoContext();
+  console.log(
+    '🚀 ~ file: HeaderContext.tsx:46 ~ HeaderContext ~ siteColors:',
+    siteColors,
+  );
 
   return (
     <HeaderStyledContainer
@@ -24,7 +29,15 @@ export default function Header() {
           ({ type, color, size, text, hidden }) =>
             !hidden && (
               <div className="flex gap-3">
-                {type === 'button' && <Button size="md">{text}</Button>}
+                {type === 'button' && (
+                  <Button
+                    primaryColor={siteColors.primary}
+                    secondaryColor={siteColors.secondary}
+                    size="md"
+                  >
+                    {text}
+                  </Button>
+                )}
                 {type === 'link' && (
                   <Link
                     to={`/${text?.toLowerCase().replaceAll(' ', '-')}`}

@@ -57,10 +57,6 @@ export default function SiteInformation() {
     name: 'about',
   });
 
-  useEffect(() => {
-    append({ description: '', title: '' });
-  }, []);
-
   const otherNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setOtherNumberInput(e.target.value);
   };
@@ -244,9 +240,9 @@ export default function SiteInformation() {
             </div>
           </div>
           <div className="mt-2 flex justify-end">
-            <Button color="success" type="submit">
+            <button color="success" type="submit">
               Save
-            </Button>
+            </button>
           </div>
           <Modal open={modalIsOpen} onClose={() => setModalIsOpen(false)}>
             <div className="h-80">
@@ -258,13 +254,13 @@ export default function SiteInformation() {
                   className="h-8 mt-2 border-gray-300 border rounded-lg outline-none px-4"
                   type="number"
                 />
-                <Button
+                <button
                   className="w-full h-8"
-                  containerClassName="mt-4"
+                  // containerClassName="mt-4"
                   onClick={onNumberAdd}
                 >
                   Add
-                </Button>
+                </button>
               </div>
               <div className="mt-4">
                 {otherNumbers.map(
@@ -283,14 +279,14 @@ export default function SiteInformation() {
                 )}
               </div>
               <div>
-                <Button
+                <button
                   color="success"
                   className="h-9"
-                  containerClassName="mt-4 text-end"
+                  // containerClassName="mt-4 text-end"
                   onClick={onNumberSave}
                 >
                   Save
-                </Button>
+                </button>
               </div>
             </div>
           </Modal>

@@ -1,6 +1,13 @@
 import { Box, styled } from '@mui/material';
 
-const ButtonStyledContainer = styled(Box)`
+interface ButtonPropsI {
+  primary?: string;
+  secondary?: string;
+  children: React.ReactElement;
+  className?: string;
+}
+
+const ButtonStyledContainer = styled.div<ButtonPropsI>`
   button {
     text-transform: none;
     padding: 10px 16px;
@@ -22,7 +29,7 @@ const ButtonStyledContainer = styled(Box)`
   }
   .primary {
     color: #ffffff;
-    background: #f1c107;
+    background: ${(props: ButtonPropsI) => props.primary};
   }
   .secondary {
     background: #fff6ed;
@@ -53,6 +60,6 @@ const ButtonStyledContainer = styled(Box)`
     background: #ffffff;
     color: #d0d5dd;
   }
-` as typeof Box;
+` as React.ComponentType<ButtonPropsI>;
 
 export default ButtonStyledContainer;

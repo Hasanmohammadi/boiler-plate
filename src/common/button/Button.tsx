@@ -10,6 +10,8 @@ interface ButtonPropsI {
   children: React.ReactElement | string;
   className?: string;
   type?: ButtonType;
+  primaryColor?: string;
+  secondaryColor?: string;
   color?:
     | 'primary'
     | 'ghost'
@@ -34,6 +36,8 @@ export default function Buttons({
   containerClassName,
   loading,
   size = 'md',
+  primaryColor,
+  secondaryColor,
 }: ButtonPropsI) {
   return (
     <>
@@ -51,6 +55,8 @@ export default function Buttons({
           className={clsx(containerClassName, {
             'disabled cursor-default': disabled,
           })}
+          primary={primaryColor}
+          secondary={secondaryColor}
         >
           <ButtonCP
             type={type}

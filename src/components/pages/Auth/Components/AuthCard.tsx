@@ -1,6 +1,7 @@
 import logo from 'assets/image/Logo.png';
 import clsx from 'clsx';
 import { Button, Input } from 'common';
+import { useAppWebInfoContext } from 'context';
 import {
   Control,
   FieldValues,
@@ -53,6 +54,7 @@ export default function AuthCard<T extends FieldValues>({
   inputsErrors,
   isLoading,
 }: AuthCardPropsI<T>) {
+  const { siteColors } = useAppWebInfoContext();
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
@@ -101,6 +103,8 @@ export default function AuthCard<T extends FieldValues>({
           className="w-full py-3 flex flex-col-reverse"
           type="submit"
           loading={isLoading}
+          primaryColor={siteColors.primary}
+          secondaryColor={siteColors.secondary}
         >
           {btnText as string}
         </Button>

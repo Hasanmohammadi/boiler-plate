@@ -1,5 +1,6 @@
 import SwitchCp from '@mui/material/Switch';
 import { Button, Modal } from 'common';
+import { useAppWebInfoContext } from 'context';
 import { useState } from 'react';
 
 import SwitchStyledContainer from './Switch.style';
@@ -19,6 +20,8 @@ export default function Switch({
   onConfirm,
   confirmModalTitle,
 }: SwitchPropsI) {
+  const { siteColors } = useAppWebInfoContext();
+
   const [isOpen, setIsOpen] = useState(false);
 
   const onOk = () => {
@@ -51,7 +54,8 @@ export default function Switch({
             <div className="flex gap-3 w-full justify-between mt-8">
               <Button
                 className="w-full"
-                color="ghost"
+                primaryColor={siteColors.primary}
+                secondaryColor={siteColors.secondary}
                 onClick={closeModal}
                 containerClassName="w-full"
               >
@@ -59,7 +63,8 @@ export default function Switch({
               </Button>
               <Button
                 className="w-full"
-                color="primary"
+                primaryColor={siteColors.primary}
+                secondaryColor={siteColors.secondary}
                 onClick={onOk}
                 containerClassName="w-full"
               >

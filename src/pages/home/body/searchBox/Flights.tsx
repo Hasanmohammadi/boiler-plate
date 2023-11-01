@@ -3,6 +3,7 @@ import { AirplaneLanding, Swap } from 'assets/svg';
 import AirplaneTakeoff from 'assets/svg/AirplaneTakeoff';
 import clsx from 'clsx';
 import { Button, Checkbox, Menu, SelectSearch } from 'common';
+import { useAppWebInfoContext } from 'context';
 import {
   isDepartureDateBigger,
   todayDate,
@@ -39,6 +40,11 @@ interface SearchBoxFormI {
 }
 
 export default function Flights() {
+  const { siteColors } = useAppWebInfoContext();
+  console.log(
+    '🚀 ~ file: Flights.tsx:44 ~ Flights ~ siteColors:',
+    siteColors,
+  );
   const [wayType, setWayType] = useState<'Round-trip' | 'One Way'>(
     'One Way',
   );
@@ -426,6 +432,8 @@ export default function Flights() {
             containerClassName="w-1/2"
             className="w-full"
             type="submit"
+            primaryColor={siteColors.primary}
+            secondaryColor={siteColors.secondary}
           >
             Search
           </Button>

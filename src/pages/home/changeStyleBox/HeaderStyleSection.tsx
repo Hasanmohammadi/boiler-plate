@@ -15,7 +15,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { MenuItem } from '@mui/material';
 import { Button, Checkbox, Select } from 'common';
-import { useAppHeaderContext } from 'context';
+import { useAppHeaderContext, useAppWebInfoContext } from 'context';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
@@ -32,6 +32,8 @@ export default function HeaderStyleSection() {
     logoSize,
     btns,
   } = useAppHeaderContext();
+
+  const { siteColors } = useAppWebInfoContext();
 
   const onInputChange = (e: any) => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -249,7 +251,13 @@ export default function HeaderStyleSection() {
                 !btns.find(({ text }) => text === 'Sign In')?.hidden
               }
             />
-            <Button className="h-8">Sign In</Button>
+            <Button
+              primaryColor={siteColors.primary}
+              secondaryColor={siteColors.secondary}
+              className="h-8"
+            >
+              Sign In
+            </Button>
             <div className="flex gap-1">
               <span className="self-center">Size:</span>
               <Select
