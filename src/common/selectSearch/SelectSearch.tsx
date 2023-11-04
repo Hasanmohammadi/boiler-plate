@@ -41,6 +41,7 @@ export default function SelectSearch<T extends FieldValues, U>({
   hasBorder = true,
   initialValue,
 }: SelectSearchPropsI<T, U>) {
+  console.log('🚀 ~ file: SelectSearch.tsx:44 ~ loading:', loading);
   return (
     <Box className={className}>
       {!!label && (

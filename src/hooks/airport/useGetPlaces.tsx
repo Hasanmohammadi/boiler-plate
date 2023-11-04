@@ -14,7 +14,7 @@ export default function useGetPlaces({
   count,
   queryKey,
 }: GetPlacesArgsI) {
-  const { data, isLoading, refetch } = useQuery<PlacesI[]>(
+  const { data, isFetching, refetch } = useQuery<PlacesI[]>(
     queryKey || 'getPlaces',
     () =>
       getPlaces({
@@ -37,7 +37,7 @@ export default function useGetPlaces({
 
   return {
     getPlacesData: data as PlacesI[],
-    placesLoading: isLoading,
+    placesLoading: isFetching,
     getPlacesAction: refetch,
   };
 }

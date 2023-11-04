@@ -31,7 +31,7 @@ export default function About() {
           <div className="mt-20 border relative border-dashed border-gray-300 rounded-lg py-10 px-11">
             {title && (
               <Typography
-                className="absolute -top-5 left-4 bg-white px-4"
+                className="absolute -top-7 left-4 bg-white px-4"
                 sx={{
                   color: siteColors.primary,
                   fontSize: '30px',

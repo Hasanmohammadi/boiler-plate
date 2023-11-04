@@ -1,7 +1,17 @@
 import AirPlaneAboutUs from './AirPlaneAboutUs';
+import AirplaneIcon from './AirplaneIcon';
 import AirplaneLanding from './AirplaneLanding';
 import Bed from './Bed';
 import EmptyState from './EmptyState';
+import SuitcaseOutline from './SuitcaseOutline';
 import Swap from './Swap';
 
-export { EmptyState, Bed, Swap, AirplaneLanding, AirPlaneAboutUs };
+export {
+  EmptyState,
+  Bed,
+  Swap,
+  AirplaneLanding,
+  AirPlaneAboutUs,
+  AirplaneIcon,
+  SuitcaseOutline,
+};

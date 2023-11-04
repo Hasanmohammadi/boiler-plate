@@ -59,6 +59,7 @@ const convertApiToFrontData = (
           arrivalCityName: leg?.arrivalCityName,
           arrivalCountryName: leg?.arrivalCountryName,
           opratorName: leg?.opratorName,
+          marketerName: leg?.marketerName,
           stopTimeToNextLegMinute: leg?.stopTimeToNextLegMinute,
           stopTimeToNextLegText: leg?.stopTimeToNextLegText,
         })),

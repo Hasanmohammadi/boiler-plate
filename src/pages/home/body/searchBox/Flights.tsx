@@ -12,6 +12,7 @@ import { Calendar, MinusSquare, PlusSquare } from 'react-feather';
 import { useForm } from 'react-hook-form';
 import DatePicker, { DateObject } from 'react-multi-date-picker';
 import Toolbar from 'react-multi-date-picker/plugins/toolbar';
+import { useNavigate } from 'react-router-dom';
 
 export interface DateI {
   year: number;
@@ -35,7 +36,12 @@ interface SearchBoxFormI {
   };
 }
 
-export default function Flights() {
+interface FlightsPropsI {
+  isInHeader?: boolean;
+}
+
+export default function Flights({ isInHeader }: FlightsPropsI) {
+  const navigate = useNavigate();
   const { siteColors } = useAppWebInfoContext();
 
   const [wayType, setWayType] = useState<'Round-trip' | 'One Way'>(
@@ -71,13 +77,17 @@ export default function Flights() {
       },
     });
 
-  const { getPlacesData: originPlaces } = useGetPlaces({
-    count: 10,
-    name: originSearched,
-    queryKey: 'originPlaces',
-  });
+  const { getPlacesData: originPlaces, placesLoading: originLoading } =
+    useGetPlaces({
+      count: 10,
+      name: originSearched,
+      queryKey: 'originPlaces',
+    });
 
-  const { getPlacesData: destinationPlaces } = useGetPlaces({
+  const {
+    getPlacesData: destinationPlaces,
+    placesLoading: destinationLoading,
+  } = useGetPlaces({
     count: 10,
     name: arrivalSearched,
     queryKey: 'destinationPlaces',
@@ -85,6 +95,7 @@ export default function Flights() {
 
   const onSubmit = (data: SearchBoxFormI) => {
     console.log('🚀 ~ file: Flights.tsx:51 ~ onSubmit ~ data:', data);
+    navigate('/result');
   };
 
   function handleDepartureDate({
@@ -118,7 +129,14 @@ export default function Flights() {
   }
   return (
     <div className="w-full">
-      <div className="flex mt-2">
+      <div
+        style={{
+          transition: isInHeader ? 'height 0.7s' : 'height 0.3s',
+        }}
+        className={clsx('flex mt-2 h-12 overflow-hidden ', {
+          'h-0': isInHeader,
+        })}
+      >
         <Menu
           btnClassName="w-fit px-0"
           btnText={wayType}
@@ -168,12 +186,14 @@ export default function Flights() {
           ]}
         />
       </div>
+
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="w-full flex justify-between gap-2"
       >
         <div className="flex w-1/2 justify-between mt-3 border border-gray-300 rounded-lg">
           <SelectSearch
+            loading={originLoading}
             hasBorder={false}
             className="w-1/2 "
             control={control}
@@ -193,6 +213,7 @@ export default function Flights() {
             <Swap />
           </div>
           <SelectSearch
+            loading={destinationLoading}
             hasBorder={false}
             className="w-1/2 "
             control={control}
@@ -219,25 +240,59 @@ export default function Flights() {
               </div>
               <div className="w-full inline-grid self-center">
                 <p className="text-justify text-sm w-28">Departure Date</p>
-                <DatePicker
-                  plugins={[<Toolbar position="bottom" />]}
-                  minDate={todayDate()}
-                  value={
-                    new Date(
-                      departureDateInput.year,
-                      departureDateInput.month - 1,
-                      departureDateInput.day,
-                    )
-                  }
-                  onChange={(date) =>
-                    handleDepartureDate(date as DateObject)
-                  }
-                  numberOfMonths={1}
-                  inputMode="text"
-                  range={false}
-                  placeholder="dateHitPoint"
-                  className="cursor-pointer"
-                />
+                <Box
+                  sx={{
+                    '.rmdp-day.rmdp-selected span:not(.highlight)': {
+                      backgroundColor: siteColors.primary,
+                    },
+                    '.rmdp-toolbar div': {
+                      backgroundColor: siteColors.secondary,
+                    },
+                    '.rmdp-day.rmdp-today span': {
+                      backgroundColor: siteColors.secondary,
+                    },
+                    '.rmdp-week-day': {
+                      color: 'black',
+                    },
+                    '.rmdp-input': {
+                      border: 'none',
+                    },
+                    '.rmdp-input:focus': {
+                      border: 'none',
+                      boxShadow: 'none',
+                    },
+                    '.rmdp-day rmdp-selected': {
+                      backgroundColor: siteColors.primary,
+                    },
+                    '.rmdp-day:not(.rmdp-disabled,.rmdp-day-hidden) span:hover':
+                      {
+                        backgroundColor: siteColors.secondary,
+                      },
+                    '.rmdp-arrow-container:hover': {
+                      backgroundColor: siteColors.secondary,
+                    },
+                  }}
+                >
+                  <DatePicker
+                    plugins={[<Toolbar position="bottom" />]}
+                    minDate={todayDate()}
+                    value={
+                      new Date(
+                        departureDateInput.year,
+                        departureDateInput.month - 1,
+                        departureDateInput.day,
+                      )
+                    }
+                    onChange={(date) =>
+                      handleDepartureDate(date as DateObject)
+                    }
+                    numberOfMonths={1}
+                    inputMode="text"
+                    range={false}
+                    placeholder="dateHitPoint"
+                    className="cursor-pointer"
+                  />
+                </Box>
               </div>
             </div>
             <div className=" h-11  rounded-lg relative">
@@ -283,42 +338,69 @@ export default function Flights() {
                         : `${departureDateInput.year}/${departureDateInput.month}/${departureDateInput.day}`}
                     </p>
                   ) : (
-                    <DatePicker
-                      plugins={[<Toolbar position="bottom" />]}
-                      minDate={`${departureDateInput.year}-${departureDateInput.month}-${departureDateInput.day}`}
-                      ref={datePickerRef}
-                      render={() => (
-                        <Box
-                          className="cursor-pointer text-start"
-                          onClick={() =>
-                            datePickerRef?.current?.openCalendar()
-                          }
-                        >
-                          {returnDateInput.day
-                            ? `${returnDateInput.year}/${returnDateInput.month}/${returnDateInput.day}`
-                            : `${departureDateInput.year}/${departureDateInput.month}/${departureDateInput.day}`}{' '}
-                        </Box>
-                      )}
-                      value={[
-                        new Date(
-                          departureDateInput.year,
-                          departureDateInput.month - 1,
-                          departureDateInput.day,
-                        ),
-                        new Date(
-                          returnDateInput.year,
-                          returnDateInput.month - 1,
-                          returnDateInput.day,
-                        ),
-                      ]}
-                      onChange={(date) =>
-                        handleReturnDate(date as DateObject[])
-                      }
-                      numberOfMonths={1}
-                      inputMode="text"
-                      range
-                      placeholder="dateHitPoint"
-                    />
+                    <Box
+                      sx={{
+                        '.rmdp-range': {
+                          backgroundColor: siteColors.primary,
+                        },
+                        '.rmdp-day:not(.rmdp-disabled,.rmdp-day-hidden) span:hover':
+                          {
+                            backgroundColor: siteColors.secondary,
+                          },
+                        '.rmdp-week-day': {
+                          color: 'black',
+                        },
+                        '.rmdp-arrow-container:hover': {
+                          backgroundColor: siteColors.secondary,
+                        },
+                        '.rmdp-toolbar div': {
+                          backgroundColor: siteColors.secondary,
+                        },
+                        '.rmdp-day.rmdp-today span': {
+                          backgroundColor: siteColors.secondary,
+                        },
+                        '.rmdp-day.rmdp-selected span:not(.highlight)': {
+                          backgroundColor: siteColors.primary,
+                        },
+                      }}
+                    >
+                      <DatePicker
+                        plugins={[<Toolbar position="bottom" />]}
+                        minDate={`${departureDateInput.year}-${departureDateInput.month}-${departureDateInput.day}`}
+                        ref={datePickerRef}
+                        render={() => (
+                          <Box
+                            className="cursor-pointer text-start"
+                            onClick={() =>
+                              datePickerRef?.current?.openCalendar()
+                            }
+                          >
+                            {returnDateInput.day
+                              ? `${returnDateInput.year}/${returnDateInput.month}/${returnDateInput.day}`
+                              : `${departureDateInput.year}/${departureDateInput.month}/${departureDateInput.day}`}{' '}
+                          </Box>
+                        )}
+                        value={[
+                          new Date(
+                            departureDateInput.year,
+                            departureDateInput.month - 1,
+                            departureDateInput.day,
+                          ),
+                          new Date(
+                            returnDateInput.year,
+                            returnDateInput.month - 1,
+                            returnDateInput.day,
+                          ),
+                        ]}
+                        onChange={(date) =>
+                          handleReturnDate(date as DateObject[])
+                        }
+                        numberOfMonths={1}
+                        inputMode="text"
+                        range
+                        placeholder="dateHitPoint"
+                      />
+                    </Box>
                   )}
                 </div>
               </div>
