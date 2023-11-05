@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { STAY_URLS } from 'constants/urls';
-import Cookies from 'js-cookie';
 import { NullResultI } from 'types/common';
 
 interface DeleteStayPhotoArgsI {
@@ -19,9 +18,7 @@ const deleteStayPhoto = async ({
         stayId,
         photoId,
       },
-      headers: {
-        Authorization: `Bearer ${Cookies.get('userToken') as string}`,
-      },
+      headers: {},
     },
   );
 

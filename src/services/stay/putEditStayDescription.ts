@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { STAY_URLS } from 'constants/urls';
-import Cookies from 'js-cookie';
 import { NullResultI } from 'types/common';
 import { AddVendorDescriptionI } from 'types/stay/stay';
 
@@ -19,9 +18,7 @@ const putEditStayDescription = async ({
       hotelId,
     },
     {
-      headers: {
-        Authorization: `Bearer ${Cookies.get('userToken') as string}`,
-      },
+      headers: {},
     },
   );
 

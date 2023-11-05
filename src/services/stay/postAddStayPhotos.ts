@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { STAY_URLS } from 'constants/urls';
-import Cookies from 'js-cookie';
 import { NullResultI } from 'types/common';
 
 const postAddStayPhotos = async (formData: FormData) => {
@@ -15,7 +14,6 @@ const postAddStayPhotos = async (formData: FormData) => {
     },
     {
       headers: {
-        Authorization: `Bearer ${Cookies.get('userToken') as string}`,
         'Content-Type': 'multipart/form-data',
       },
     },

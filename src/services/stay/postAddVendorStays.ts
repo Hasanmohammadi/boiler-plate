@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { STAY_URLS } from 'constants/urls';
-import Cookies from 'js-cookie';
 import { Params } from 'react-router-dom';
 import { NullResultI } from 'types/common';
 
@@ -22,9 +21,7 @@ const postAddVendorStays = async ({
       addMode,
     },
     {
-      headers: {
-        Authorization: `Bearer ${Cookies.get('userToken') as string}`,
-      },
+      headers: {},
     },
   );
 

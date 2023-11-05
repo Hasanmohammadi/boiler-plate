@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { STAY_URLS } from 'constants/urls';
-import Cookies from 'js-cookie';
 import { AddBaseHotelI, ApiResponseI } from 'types/stay';
 
 const postAddBaseHotel = async ({
@@ -14,9 +13,7 @@ const postAddBaseHotel = async ({
       StayTypeId,
     },
     {
-      headers: {
-        Authorization: `Bearer ${Cookies.get('userToken') as string}`,
-      },
+      headers: {},
     },
   );
 

@@ -1,4 +1,3 @@
-import ForgotPassword from './auth/forgotPassword';
-import Login from './auth/login';
+import Home from './home';
 
-export { Login, ForgotPassword };
+export { Home };

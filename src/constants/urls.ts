@@ -1,5 +1,3 @@
-import Cookies from 'js-cookie';
-
 export const BASE_URL = 'http://172.31.30.228:8001/';
 
 export const VENDOR_URLS = {
@@ -96,5 +94,3 @@ export const SEARCH_URLS = {
 export const BOOK_URLS = {
   POST_BOOK_BY_ADMIN: `${BASE_URL}api/stay/BookByAdmin`,
 };
-
-export const token = Cookies.get('userToken');

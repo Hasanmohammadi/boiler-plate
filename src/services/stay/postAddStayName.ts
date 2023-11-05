@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { STAY_URLS } from 'constants/urls';
-import Cookies from 'js-cookie';
 import { NullResultI } from 'types/common';
 
 interface PostAddStayNameI {
@@ -23,9 +22,7 @@ const postAddStayName = async ({
       hotelNames,
     },
     {
-      headers: {
-        Authorization: `Bearer ${Cookies.get('userToken') as string}`,
-      },
+      headers: {},
     },
   );
 

@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { STAY_URLS } from 'constants/urls';
 import { calculateSkip } from 'helpers';
-import Cookies from 'js-cookie';
 import { ApiResponseI, StaysListResultI } from 'types/stay';
 
 const getStaysList = async ({
@@ -22,9 +21,7 @@ const getStaysList = async ({
   const response = await axios.get<ApiResponseI<StaysListResultI>>(
     STAY_URLS.GET_STAYS_LIST,
     {
-      headers: {
-        Authorization: `Bearer ${Cookies.get('userToken') as string}`,
-      },
+      headers: {},
       params: {
         skip: calculateSkip({ page, pageSize }),
         take: pageSize,

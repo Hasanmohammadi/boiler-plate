@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { STAY_URLS } from 'constants/urls';
-import Cookies from 'js-cookie';
 import { ApiResponseI, StayInformationResultI } from 'types/stay';
 
 interface HotelPropertyListI {
@@ -15,9 +14,7 @@ const getStayInformation = async ({
   const response = await axios.get<ApiResponseI<StayInformationResultI>>(
     STAY_URLS.GET_STAY_INFORMATION,
     {
-      headers: {
-        Authorization: `Bearer ${Cookies.get('userToken') as string}`,
-      },
+      headers: {},
       params: {
         id: hotelId,
         VendorId,

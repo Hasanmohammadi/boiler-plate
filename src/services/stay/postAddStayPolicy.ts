@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { STAY_URLS } from 'constants/urls';
-import Cookies from 'js-cookie';
 import { NullResultI } from 'types/common';
 
 export interface ChildPolicyI {
@@ -41,9 +40,7 @@ const postAddStayPolicy = async ({
       vendorId,
     },
     {
-      headers: {
-        Authorization: `Bearer ${Cookies.get('userToken') as string}`,
-      },
+      headers: {},
     },
   );
 
