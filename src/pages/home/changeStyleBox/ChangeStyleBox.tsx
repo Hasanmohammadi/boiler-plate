@@ -2,19 +2,39 @@ import Box from '@mui/material/Box';
 import clsx from 'clsx';
 import { useEffect, useState } from 'react';
 import { ArrowLeft, ArrowRight } from 'react-feather';
-import { useSearchParams } from 'react-router-dom';
+import {
+  useLocation,
+  useNavigate,
+  useRoutes,
+  useSearchParams,
+} from 'react-router-dom';
 
-import BodyStyleSection from './BodyStyleSection';
-import HeaderStyleSection from './HeaderStyleSection';
+import AboutStyleSection from './sections/AboutStyleSection';
+import BodyStyleSection from './sections/BodyStyleSection';
+import ContactSection from './sections/ContactSections';
+import HeaderStyleSection from './sections/HeaderStyleSection';
+import SiteInfoSections from './sections/SiteInfoSections';
 
 const sidBarItems = [
-  { text: 'Header', value: 'header', id: 0 },
-  { text: 'Body', value: 'body', id: 1 },
+  { text: 'Header', value: 'header', id: 0, url: '?section=header' },
+  {
+    text: 'Main page',
+    value: 'main-page',
+    id: 1,
+    url: '/main-page',
+  },
+  { text: 'About', value: 'about-us', id: 2, url: '/about-us' },
+  { text: 'Contact', value: 'contact-us', id: 3, url: '/contact-us' },
+  { text: 'Site info', value: 'site-info', id: 4, url: '/site-info' },
 ];
 
 export default function ChangeStyleBox() {
   const [containerWidth, setContainerWidth] = useState('0%');
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
+  const { pathname } = useLocation();
+  const [itemSelected, setItemSelected] = useState('');
+
+  const navigate = useNavigate();
 
   const onMinimize = () => {
     if (containerWidth === '30%') {
@@ -24,16 +44,9 @@ export default function ChangeStyleBox() {
     }
   };
 
-  useEffect(() => {
-    if (!searchParams.get('section')) {
-      searchParams.append('section', 'header');
-      setSearchParams(searchParams);
-    }
-  }, []);
-
   return (
     <div
-      className="bg-gray-100 border-2 border-gray-800 w-1/5 h-full min-h-screen fixed right-0 top-0 flex"
+      className="bg-gray-100 border-2 border-gray-800 w-1/5 h-full min-h-screen fixed right-0 top-0 flex z-20"
       style={{
         transition: 'width 0.5s',
         width: containerWidth,
@@ -46,29 +59,32 @@ export default function ChangeStyleBox() {
         {containerWidth === '30%' ? <ArrowRight /> : <ArrowLeft />}
       </button>
 
-      <div className="flex w-5/6 px-4">
-        <Box>
-          {searchParams.get('section') === 'header' && (
-            <HeaderStyleSection />
+      <div className="flex w-5/6 px-4 overflow-auto">
+        <div className="w-full">
+          {itemSelected === 'header' && <HeaderStyleSection />}
+          {itemSelected === 'main-page' && <BodyStyleSection />}
+          {pathname === '/about-us' && itemSelected === 'about-us' && (
+            <AboutStyleSection />
           )}
-          {searchParams.get('section') === 'body' && <BodyStyleSection />}
-        </Box>
+          {itemSelected === 'site-info' && <SiteInfoSections />}
+          {itemSelected === 'contact-us' && <ContactSection />}
+        </div>
       </div>
-      <div className="h-full bg-blue-900-700 w-1/6 text-center bg-gray-800">
-        {sidBarItems.map(({ id, text, value }) => (
+      <div className="h-full bg-blue-900-700 w-1/5 text-center bg-gray-800 z-10">
+        {sidBarItems.map(({ id, text, value, url }) => (
           <Box
             key={id}
             className={clsx(
               'text-white py-3 border-b-2 border-b-white cursor-pointer',
               {
-                'text-blue-400  border-b-blue-400':
-                  searchParams.get('section') === value,
+                'text-blue-400  border-b-blue-400': itemSelected === value,
               },
             )}
             onClick={() => {
-              searchParams.delete('section');
-              searchParams.append('section', value);
-              setSearchParams(searchParams);
+              if (value !== 'site-info') {
+                navigate(url);
+              }
+              setItemSelected(value);
             }}
           >
             {text}

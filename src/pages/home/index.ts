@@ -1,6 +1,6 @@
-import Home from './Home';
+import MainPage from './MainPage';
 import Header from './header';
 
-export default Home;
+export default MainPage;
 
 export { Header };

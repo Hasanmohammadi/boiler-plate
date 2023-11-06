@@ -1,6 +1,7 @@
 import About from './about';
-import Home from './home';
+import Contact from './contact';
+import MainPage from './home';
 import Result from './result';
 import SiteInformation from './siteInformation';
 
-export { Home, SiteInformation, About, Result };
+export { Contact, MainPage, SiteInformation, About, Result };

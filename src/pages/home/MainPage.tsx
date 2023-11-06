@@ -4,10 +4,9 @@
 import { useTranslation } from 'react-i18next';
 
 import Body from './body/Body';
-import ChangeStyleBox from './changeStyleBox/ChangeStyleBox';
 import Header from './header/Header';
 
-export default function Home() {
+export default function MainPage() {
   const { t, i18n } = useTranslation();
 
   const changeLanguage = (lng: string) => {
@@ -33,9 +32,7 @@ export default function Home() {
           french
         </button>
       </header> */}
-      <Header />
       <Body />
-      <ChangeStyleBox />
     </div>
   );
 }

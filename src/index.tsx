@@ -6,6 +6,7 @@ import {
   WebInfoContextContainer,
 } from 'context';
 import Cookies from 'js-cookie';
+import ChangeStyleBox from 'pages/home/changeStyleBox/ChangeStyleBox';
 import ReactDOM from 'react-dom/client';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { RouterProvider } from 'react-router-dom';

@@ -2,9 +2,9 @@
 import { Button, Input, Modal, TextArea } from 'common';
 import { useAppWebInfoContext } from 'context';
 import { AboutI, ContactI, SiteColorsI } from 'context/WebsiteInfoContext';
-import { useEffect, useState } from 'react';
-import { Delete, PlusCircle, Trash } from 'react-feather';
-import { useFieldArray, useForm } from 'react-hook-form';
+import { useState } from 'react';
+import { Delete } from 'react-feather';
+import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 
 interface SiteInformationFormI {
@@ -21,12 +21,9 @@ export default function SiteInformation() {
   const {
     setOtherPhoneNumbers,
     otherPhoneNumbers,
-    about,
     contactInfo,
     generalAbout,
-    setAbout,
     setContactInfo,
-    setGeneralAbout,
     setSiteColors,
     setSiteName,
     setSiteUrl,
@@ -43,7 +40,6 @@ export default function SiteInformation() {
   const { control, handleSubmit, register } =
     useForm<SiteInformationFormI>({
       defaultValues: {
-        about,
         contactInfo,
         generalAbout,
         siteColors,
@@ -51,11 +47,6 @@ export default function SiteInformation() {
         siteUrl,
       },
     });
-
-  const { append, fields, remove } = useFieldArray<SiteInformationFormI>({
-    control,
-    name: 'about',
-  });
 
   const otherNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setOtherNumberInput(e.target.value);
@@ -90,9 +81,7 @@ export default function SiteInformation() {
     setSiteUrl(data.siteUrl);
     setSiteName(data.siteName);
     setSiteColors(data.siteColors);
-    setGeneralAbout(data.generalAbout);
     setContactInfo(data.contactInfo);
-    setAbout(data.about);
   };
 
   return (
@@ -197,52 +186,11 @@ export default function SiteInformation() {
                 />
               </div>
             </div>
-            <div className="mt-2">
-              <p className="font-medium text-lg">General About:</p>
-              <TextArea control={control} name="generalAbout" />
-              <div className="flex gap-2 place-items-center mt-4">
-                <p className="font-medium text-lg">Detail About</p>
-                <PlusCircle
-                  className="cursor-pointer"
-                  color="green"
-                  size={20}
-                  onClick={() => append({ description: '', title: '' })}
-                />
-              </div>
-              {fields.map(({ description, id, title }, index) => (
-                <div key={id} className="w-full mt-2">
-                  <div className="mt-2">
-                    <p className="text-xs">Title</p>
-                    <div className="flex gap-4 place-items-center">
-                      <input
-                        className="h-8 mt-1 border-gray-300 border rounded-lg outline-none px-4"
-                        {...register(`about.${index}.title`)}
-                      />
-                      {!!index && (
-                        <Trash
-                          size={16}
-                          className="cursor-pointer"
-                          onClick={() => remove(index)}
-                          color="red"
-                        />
-                      )}
-                    </div>
-                  </div>
-                  <div className="mt-2">
-                    <p className="text-xs">Description</p>
-                    <textarea
-                      className="mt-1 border-gray-300 border rounded-lg w-full outline-none px-4 py-2"
-                      {...register(`about.${index}.description`)}
-                    />
-                  </div>
-                </div>
-              ))}
-            </div>
           </div>
           <div className="mt-2 flex justify-end">
-            <button color="success" type="submit">
+            <Button className="h-10" color="success" type="submit">
               Save
-            </button>
+            </Button>
           </div>
           <Modal open={modalIsOpen} onClose={() => setModalIsOpen(false)}>
             <div className="h-80">

@@ -864,7 +864,6 @@ export default function Results() {
 
   return (
     <>
-      <Header />
       <div className="absolute w-full ">
         <div
           className={clsx(

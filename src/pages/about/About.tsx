@@ -1,7 +1,6 @@
 import { Typography } from '@mui/material';
 import { AirPlaneAboutUs } from 'assets/svg';
 import { useAppWebInfoContext } from 'context/WebsiteInfoContext';
-import { Header } from 'pages/home';
 
 import AirplaneDashed from './AirplaneDashed';
 
@@ -10,7 +9,6 @@ export default function About() {
 
   return (
     <>
-      <Header />
       <div className="px-32 pb-12">
         <div className="px-32 flex pt-36">
           <div className="w-1/2">
