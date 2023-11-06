@@ -8,13 +8,7 @@ import { AirplaneIcon, SuitcaseOutline } from 'assets/svg';
 import { Button } from 'common';
 import { useAppWebInfoContext } from 'context';
 import { useState } from 'react';
-import {
-  Airplay,
-  ArrowDown,
-  ArrowUp,
-  ChevronDown,
-  ChevronUp,
-} from 'react-feather';
+import { Airplay, ChevronDown, ChevronUp } from 'react-feather';
 
 import { FrontDataFlightsI, GroupFareI } from '../../../types/search';
 

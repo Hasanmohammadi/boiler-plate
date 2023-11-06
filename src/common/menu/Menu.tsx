@@ -1,8 +1,10 @@
+import { Box } from '@mui/material';
 import MenuCP from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import clsx from 'clsx';
 import { Button } from 'common';
 import { useAppWebInfoContext } from 'context';
+import { setFontColor } from 'helpers';
 import * as React from 'react';
 import { Check, ChevronDown, ChevronUp } from 'react-feather';
 
@@ -76,7 +78,16 @@ export default function Menu({
               }
             }}
             sx={{
-              background: text === btnText ? siteColors.secondary : '',
+              backgroundColor:
+                text === btnText ? siteColors.secondary : '',
+              '&:hover': {
+                backgroundColor:
+                  text === btnText ? siteColors.secondary : '',
+              },
+              color:
+                text === btnText
+                  ? setFontColor(siteColors.secondary)
+                  : 'black',
             }}
           >
             <div className="flex gap-2 w-full">
