@@ -1,7 +1,7 @@
 import 'flag-icons/css/flag-icons.min.css';
 import { Header } from 'pages/home';
 import ChangeStyleBox from 'pages/home/changeStyleBox/ChangeStyleBox';
-import { Link, Outlet, useNavigate } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
 
 import './App.css';

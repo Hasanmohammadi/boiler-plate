@@ -2,6 +2,9 @@ import { Box } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
 const InputStyledContainer = styled(Box)`
+  .MuiInputBase-root {
+    background-color: white;
+  }
   .Mui-disabled {
     background: #efefef;
   }

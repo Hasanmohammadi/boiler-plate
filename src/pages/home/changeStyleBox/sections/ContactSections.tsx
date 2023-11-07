@@ -1,4 +1,4 @@
-import { Input, Modal, TextArea } from 'common';
+import { Button, Input, Modal, TextArea } from 'common';
 import {
   ContactI,
   useAppWebInfoContext,
@@ -61,8 +61,13 @@ export default function ContactSection() {
     setOtherPhoneNumbers(otherNumbers);
   };
 
+  const onSave = (data: ContactInfoI) => {
+    setContactInfo(data.contactInfo);
+    toast.success('Contact save successful');
+  };
+
   return (
-    <>
+    <form onSubmit={handleSubmit(onSave)}>
       <div className="mt-2 border-b border-gray-200 pb-2">
         <p className="font-medium text-lg">Contact</p>
         <div className="flex gap-4 mt-0.5">
@@ -162,6 +167,9 @@ export default function ContactSection() {
           </div>
         </div>
       </Modal>
-    </>
+      <Button color="success" type="submit">
+        Save
+      </Button>
+    </form>
   );
 }
