@@ -1,3 +1,4 @@
+import { SxProps, Theme } from '@mui/material';
 import FormControl from '@mui/material/FormControl';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormLabel from '@mui/material/FormLabel';
@@ -9,6 +10,7 @@ import RadioButtonStyled from './RadioButton.style';
 
 interface RadioButtonPropsI {
   className?: string;
+  sx?: SxProps<Theme>;
   defaultValue?: string;
   label?: string;
   grid?: boolean;
@@ -32,6 +34,7 @@ export default function RadioButton({
   defaultValue,
   onChange,
   grid,
+  sx,
 }: RadioButtonPropsI) {
   return (
     <RadioButtonStyled className={className}>
@@ -47,6 +50,7 @@ export default function RadioButton({
           name="radio-buttons-group"
           onChange={onChange}
           className={clsx('w-full', { grid })}
+          sx={sx}
         >
           {radios?.map(
             ({

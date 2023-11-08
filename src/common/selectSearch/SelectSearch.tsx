@@ -23,6 +23,7 @@ interface SelectSearchPropsI<T extends FieldValues, U> {
   icon?: React.ReactElement;
   initialValue: U[];
   hasBorder?: boolean;
+  direction?: 'rtl' | 'ltr';
 }
 
 export default function SelectSearch<T extends FieldValues, U>({
@@ -40,8 +41,8 @@ export default function SelectSearch<T extends FieldValues, U>({
   icon,
   hasBorder = true,
   initialValue,
+  direction = 'ltr',
 }: SelectSearchPropsI<T, U>) {
-  console.log('🚀 ~ file: SelectSearch.tsx:44 ~ loading:', loading);
   return (
     <Box className={className}>
       {!!label && (
@@ -64,6 +65,9 @@ export default function SelectSearch<T extends FieldValues, U>({
                 '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
                   border: '1px solid black',
                 },
+                '.MuiAutocomplete-endAdornment': {
+                  position: direction === 'rtl' ? 'initial' : 'absolute',
+                },
               }}
               renderInput={(params) => (
                 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -76,6 +80,7 @@ export default function SelectSearch<T extends FieldValues, U>({
                   className={clsx({
                     hasIcon: icon,
                     deleteBorder: !hasBorder,
+                    'direction-rtl': direction === 'rtl',
                   })}
                 />
               )}

@@ -11,6 +11,11 @@ const RadioButtonStyled = styled(Box)`
       '. . .';
     gap: 14px;
   }
+  .MuiFormControlLabel-root {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
 ` as typeof Box;
 
 export default RadioButtonStyled;

@@ -2,8 +2,8 @@ export default function AirplaneIcon({
   className,
   color = '#d6d6d6',
 }: {
-  className?: string
-  color?: string
+  className?: string;
+  color?: string;
 }) {
   return (
     <div className={className}>
@@ -20,5 +20,5 @@ export default function AirplaneIcon({
         />
       </svg>
     </div>
-  )
+  );
 }

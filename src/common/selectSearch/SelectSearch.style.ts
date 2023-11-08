@@ -7,7 +7,6 @@ const SelectSearchContainerStyled = styled(Box)`
     border-radius: 8px;
     padding-left: 8px;
   }
-
   .hasIcon > .MuiInputBase-root {
     padding-left: 40px;
   }
@@ -17,6 +16,9 @@ const SelectSearchContainerStyled = styled(Box)`
   .MuiAutocomplete-hasPopupIcon.MuiAutocomplete-hasClearIcon.MuiAutocomplete-root-fQzWHe
     .MuiOutlinedInput-root {
     padding-right: 45px;
+  }
+  .direction-rtl > div {
+    padding-right: 8px !important;
   }
 ` as typeof Box;
 

@@ -5,6 +5,7 @@ import {
   ContextContainer,
   WebInfoContextContainer,
 } from 'context';
+import ThemeContext from 'context/ThemeContext';
 import Cookies from 'js-cookie';
 import ChangeStyleBox from 'pages/home/changeStyleBox/ChangeStyleBox';
 import ReactDOM from 'react-dom/client';
@@ -71,12 +72,14 @@ root.render(
   <BodyContextContainer>
     <ContextContainer>
       <WebInfoContextContainer>
-        <QueryClientProvider client={queryClient}>
-          <ToastContainer hideProgressBar position="top-center" />
-          <ThemeProvider theme={theme}>
-            <RouterProvider router={Router} />
-          </ThemeProvider>
-        </QueryClientProvider>
+        <ThemeContext>
+          <QueryClientProvider client={queryClient}>
+            <ToastContainer hideProgressBar position="top-center" />
+            <ThemeProvider theme={theme}>
+              <RouterProvider router={Router} />
+            </ThemeProvider>
+          </QueryClientProvider>
+        </ThemeContext>
       </WebInfoContextContainer>
     </ContextContainer>
   </BodyContextContainer>,

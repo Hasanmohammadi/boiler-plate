@@ -2,8 +2,10 @@ import { Box, Typography } from '@mui/material';
 import clsx from 'clsx';
 import { useAppHeaderContext } from 'context';
 import { useAppBodyContext } from 'context/BodyContext';
+import { useAppThemeContext } from 'context/ThemeContext';
 
-import SearchBox from './searchBox/SearchBox';
+import AlphaSearchBox from './alpha';
+import FinotixSearchBox from './finotix';
 
 export default function Body() {
   const {
@@ -19,6 +21,7 @@ export default function Body() {
   } = useAppBodyContext();
 
   const { paddingY } = useAppHeaderContext();
+  const { theme } = useAppThemeContext();
 
   return (
     <Box
@@ -71,7 +74,8 @@ export default function Body() {
         // margin={`${marginY}px ${marginX}px`}
         width="100%"
       >
-        <SearchBox />
+        {theme === 'finotix' && <FinotixSearchBox />}
+        {theme === 'alpha' && <AlphaSearchBox />}
       </Box>
     </Box>
   );

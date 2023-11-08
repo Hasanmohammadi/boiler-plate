@@ -1,8 +1,6 @@
 import clsx from 'clsx';
-import { Header } from 'pages/home';
-import Flights from 'pages/home/body/searchBox/Flights';
+import Flights from 'pages/home/body/finotix/Flights';
 import { useEffect, useState } from 'react';
-import { FrontDataFlightsI, GroupFareI } from 'types/search';
 
 import FilterBox from './components/Filter';
 import PriceFilter from './components/PriceFilter';
@@ -851,8 +849,6 @@ export default function Results() {
     { label: 'Air France', value: 'airFrance' },
     { label: 'Air Serbia', value: 'airSerbia' },
   ];
-
-  const handleFilterChange = (selectedOptions: string[]) => {};
 
   useEffect(() => {
     if (typeof window !== 'undefined') {

@@ -14,6 +14,7 @@ import BodyStyleSection from './sections/BodyStyleSection';
 import ContactSection from './sections/ContactSections';
 import HeaderStyleSection from './sections/HeaderStyleSection';
 import SiteInfoSections from './sections/SiteInfoSections';
+import ThemeSection from './sections/ThemeSection';
 
 const sidBarItems = [
   { text: 'Header', value: 'header', id: 0, url: '?section=header' },
@@ -26,6 +27,7 @@ const sidBarItems = [
   { text: 'About', value: 'about-us', id: 2, url: '/about-us' },
   { text: 'Contact', value: 'contact-us', id: 3, url: '/contact-us' },
   { text: 'Site info', value: 'site-info', id: 4, url: '/site-info' },
+  { text: 'Theme', value: 'theme', id: 5, url: '#' },
 ];
 
 export default function ChangeStyleBox() {
@@ -68,6 +70,7 @@ export default function ChangeStyleBox() {
           )}
           {itemSelected === 'site-info' && <SiteInfoSections />}
           {itemSelected === 'contact-us' && <ContactSection />}
+          {itemSelected === 'theme' && <ThemeSection />}
         </div>
       </div>
       <div className="h-full bg-blue-900-700 w-1/5 text-center bg-gray-800 z-10">

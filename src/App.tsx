@@ -9,13 +9,14 @@ import './App.css';
 
 function App() {
   const { pathname } = useLocation();
+  console.log('🚀 ~ file: App.tsx:12 ~ App ~ pathname:', pathname);
   const navigate = useNavigate();
 
   useEffect(() => {
     if (pathname === '/') {
       navigate('/login');
     }
-  }, []);
+  }, [navigate, pathname]);
 
   return (
     <div className="h-full min-h-screen">
