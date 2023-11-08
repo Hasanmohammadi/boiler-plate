@@ -10,55 +10,29 @@ import { toast } from 'react-toastify';
 
 interface ContactInfoI {
   contactInfo: ContactI;
-  otherPhoneNumber: string[];
+  otherPhoneNumber: string;
 }
 
 export default function ContactSection() {
-  const {
-    setOtherPhoneNumbers,
-    otherPhoneNumbers,
-    contactInfo,
-    generalAbout,
-    setContactInfo,
-  } = useAppWebInfoContext();
+  const { setOtherPhoneNumber, contactInfo, setContactInfo } =
+    useAppWebInfoContext();
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [otherNumberInput, setOtherNumberInput] = useState<string>('');
-  const [otherNumbers, setOtherNumbers] =
-    useState<string[]>(otherPhoneNumbers);
 
-  const { control, handleSubmit, register } = useForm<ContactInfoI>({
+  const { control, handleSubmit, watch } = useForm<ContactInfoI>({
     defaultValues: {
       contactInfo,
     },
   });
 
-  const otherNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setOtherNumberInput(e.target.value);
-  };
+  const { otherPhoneNumber } = watch();
+  console.log(
+    '🚀 ~ file: ContactSections.tsx:28 ~ ContactSection ~ otherPhoneNumber:',
+    otherPhoneNumber,
+  );
 
   const onNumberAdd = () => {
-    if (otherNumbers.length <= 3) {
-      if (!otherNumbers.includes(otherNumberInput)) {
-        const x = [...otherNumbers];
-        x.push(otherNumberInput);
-        setOtherNumbers(x);
-        setOtherNumberInput('');
-      } else {
-        toast.error('This number already existed');
-      }
-    } else {
-      toast.warning('You can only add three phone numbers');
-    }
-  };
-
-  const onDeleteNumber = (number: string) => {
-    const x = [...otherNumbers];
-    const y = x.filter((n) => n !== number);
-    setOtherNumbers(y);
-  };
-
-  const onNumberSave = () => {
-    setOtherPhoneNumbers(otherNumbers);
+    setOtherPhoneNumber(otherPhoneNumber);
+    setModalIsOpen(false);
   };
 
   const onSave = (data: ContactInfoI) => {
@@ -122,48 +96,22 @@ export default function ContactSection() {
       </div>
 
       <Modal open={modalIsOpen} onClose={() => setModalIsOpen(false)}>
-        <div className="h-80">
+        <div>
           <div>
-            <p>Add more number</p>
-            <input
-              value={otherNumberInput}
-              onChange={otherNumberChange}
-              className="h-8 mt-2 border-gray-300 border rounded-lg outline-none px-4"
+            <p className="text-center">Add another number</p>
+            <Input
               type="number"
+              control={control}
+              name="otherPhoneNumber"
             />
-            <button
+            <Button
+              containerClassName="mt-6"
               className="w-full h-8"
-              // containerClassName="mt-4"
+              color="success"
               onClick={onNumberAdd}
             >
               Add
-            </button>
-          </div>
-          <div className="mt-4">
-            {otherNumbers.map(
-              (number) =>
-                !!number && (
-                  <div className="border border-gray-300 my-2 px-2 py-1 rounded-lg flex justify-between">
-                    <p>{number}</p>
-                    <Delete
-                      className="cursor-pointer self-center"
-                      color="red"
-                      size={18}
-                      onClick={() => onDeleteNumber(number)}
-                    />
-                  </div>
-                ),
-            )}
-          </div>
-          <div>
-            <button
-              color="success"
-              className="h-9"
-              // containerClassName="mt-4 text-end"
-              onClick={onNumberSave}
-            >
-              Save
-            </button>
+            </Button>
           </div>
         </div>
       </Modal>

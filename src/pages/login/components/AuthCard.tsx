@@ -1,7 +1,5 @@
-import logo from 'assets/image/Logo.png';
 import clsx from 'clsx';
 import { Button, Input } from 'common';
-import { useAppWebInfoContext } from 'context';
 import {
   Control,
   FieldValues,
@@ -13,7 +11,7 @@ import { Link } from 'react-router-dom';
 
 export interface AuthCardPropsI<T extends FieldValues> {
   title?: string;
-  subTitle?: string;
+  subTitle?: string | React.ReactNode;
   control?: Control<T>;
   inputsName?: {
     first: Path<T>;
@@ -54,30 +52,24 @@ export default function AuthCard<T extends FieldValues>({
   inputsErrors,
   isLoading,
 }: AuthCardPropsI<T>) {
-  const { siteColors } = useAppWebInfoContext();
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className=" pb-16 px-16 bg-gray-50 rounded-3xl w-[535px] m-auto flex flex-col items-center shadow-[rgba(0, 0, 0, 0.24] shadow-xl"
+      className="py-16 px-10 bg-gray-50 rounded-3xl gap-4 m-auto flex flex-col items-center shadow-[rgba(0, 0, 0, 0.24] shadow-xl"
     >
-      <img
-        src={logo}
-        alt="safarmarket logo"
-        className="m-auto mb-4 h-32"
-      />
       <h1 className="text-gray-900 text-3xl font-semibold m-auto">
         {title}
       </h1>
-      <p className="text-center text-gray-500 text-base font-normal mt-3 m-auto mb-8">
+      <p className="text-center text-gray-500 text-base font-normal m-auto">
         {subTitle}
       </p>
-      <div className=" flex flex-col gap-6 w-[360px]">
+      <div className=" flex flex-col gap-10 mt-6 w-[360px]">
         <Input
           name={inputsName?.first as Path<T>}
           placeholder={inputsPlaceholder?.first}
           control={control as Control<T>}
           label={inputsLabel?.first}
-          className="m-auto p-0 w-full"
+          className="m-auto p-0 h-11 w-full"
           errorMessage={inputsErrors?.first}
         />
         <Input
@@ -85,13 +77,13 @@ export default function AuthCard<T extends FieldValues>({
           placeholder={inputsPlaceholder?.second}
           control={control as Control<T>}
           label={inputsLabel?.second}
-          className={clsx('m-auto mt-4 p-0 w-full ', {
+          className={clsx('m-auto h-11 p-0 w-full ', {
             invisible: type === 'forgotPassword',
           })}
           errorMessage={inputsErrors?.second}
           type="password"
         />
-        <div className="w-full flex flex-row-reverse mt-2">
+        <div className="w-full flex flex-row-reverse">
           <Link
             to={type === 'login' ? '/forgot-password' : '/login'}
             className="text-sm font-semibold text-primary "
@@ -103,8 +95,7 @@ export default function AuthCard<T extends FieldValues>({
           className="w-full py-3 flex flex-col-reverse"
           type="submit"
           loading={isLoading}
-          primaryColor={siteColors.primary}
-          secondaryColor={siteColors.secondary}
+          color="secondary"
         >
           {btnText as string}
         </Button>

@@ -13,6 +13,7 @@ interface TextAreaPropsI<T extends FieldValues> {
   placeholder?: string;
   label?: string;
   errorMessage?: string;
+  hasBorder?: boolean;
 }
 
 function TextArea<T extends FieldValues>({
@@ -25,6 +26,7 @@ function TextArea<T extends FieldValues>({
   placeholder,
   label,
   errorMessage,
+  hasBorder = true,
 }: TextAreaPropsI<T>) {
   return (
     <div className={className}>
@@ -41,7 +43,8 @@ function TextArea<T extends FieldValues>({
             rows={rows}
             cols={cols}
             className={clsx(
-              'rounded-lg border border-gray-300 px-3 py-2 h-full w-full mt-2',
+              'rounded-lg px-3 py-2 h-full w-full mt-2 outline-none',
+              { 'border border-gray-300': hasBorder },
             )}
             onBlur={onBlur}
             onChange={onChange}

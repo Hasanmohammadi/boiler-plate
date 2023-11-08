@@ -9,7 +9,12 @@ interface ContactFormI {
   message: string;
 }
 export default function Contact() {
-  const { contactInfo, siteColors } = useAppWebInfoContext();
+  const { contactInfo, siteColors, otherPhoneNumber } =
+    useAppWebInfoContext();
+  console.log(
+    '🚀 ~ file: Contact.tsx:13 ~ Contact ~ otherPhoneNumber:',
+    otherPhoneNumber,
+  );
   const { control } = useForm<ContactFormI>();
 
   return (
@@ -33,7 +38,8 @@ export default function Contact() {
           <p className="font-semibold">
             Phone:
             <span className="font-normal text-gray-400 ml-3">
-              {contactInfo.mainPhoneNumber}
+              {contactInfo.mainPhoneNumber}{' '}
+              {otherPhoneNumber && `- ${otherPhoneNumber}`}
             </span>
           </p>
           <p className="font-semibold">
@@ -62,19 +68,22 @@ export default function Contact() {
             placeholder="Your Name"
             control={control}
             name="name"
-            className=" h-16"
+            className="h-14"
+            hasBorder={false}
           />
           <Input
             placeholder="Your Email Address"
             control={control}
             name="email"
-            className=" h-16"
+            className="h-14"
+            hasBorder={false}
           />
           <TextArea
             placeholder="Your message here"
             control={control}
             name="message"
-            className="h-44"
+            className="h-52"
+            hasBorder={false}
           />
           <Button
             type="submit"

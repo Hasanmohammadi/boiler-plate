@@ -18,8 +18,8 @@ interface SiteInformationFormI {
 
 export default function SiteInfoSections() {
   const {
-    setOtherPhoneNumbers,
-    otherPhoneNumbers,
+    setOtherPhoneNumber,
+    otherPhoneNumber,
     contactInfo,
     generalAbout,
     setContactInfo,
@@ -34,7 +34,7 @@ export default function SiteInfoSections() {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [otherNumberInput, setOtherNumberInput] = useState<string>('');
   const [otherNumbers, setOtherNumbers] =
-    useState<string[]>(otherPhoneNumbers);
+    useState<string>(otherPhoneNumber);
 
   const { control, handleSubmit, register } =
     useForm<SiteInformationFormI>({
@@ -51,29 +51,8 @@ export default function SiteInfoSections() {
     setOtherNumberInput(e.target.value);
   };
 
-  const onNumberAdd = () => {
-    if (otherNumbers.length <= 3) {
-      if (!otherNumbers.includes(otherNumberInput)) {
-        const x = [...otherNumbers];
-        x.push(otherNumberInput);
-        setOtherNumbers(x);
-        setOtherNumberInput('');
-      } else {
-        toast.error('This number already existed');
-      }
-    } else {
-      toast.warning('You can only add three phone numbers');
-    }
-  };
-
   const onNumberSave = () => {
-    setOtherPhoneNumbers(otherNumbers);
-  };
-
-  const onDeleteNumber = (number: string) => {
-    const x = [...otherNumbers];
-    const y = x.filter((n) => n !== number);
-    setOtherNumbers(y);
+    setOtherPhoneNumber(otherNumbers);
   };
 
   const onSubmit = (data: SiteInformationFormI) => {
@@ -141,39 +120,13 @@ export default function SiteInfoSections() {
               className="h-8 mt-2 border-gray-300 border rounded-lg outline-none px-4"
               type="number"
             />
-            <button
+            <Button
               className="w-full h-8"
-              // containerClassName="mt-4"
-              onClick={onNumberAdd}
-            >
-              Add
-            </button>
-          </div>
-          <div className="mt-4">
-            {otherNumbers.map(
-              (number) =>
-                !!number && (
-                  <div className="border border-gray-300 my-2 px-2 py-1 rounded-lg flex justify-between">
-                    <p>{number}</p>
-                    <Delete
-                      className="cursor-pointer self-center"
-                      color="red"
-                      size={18}
-                      onClick={() => onDeleteNumber(number)}
-                    />
-                  </div>
-                ),
-            )}
-          </div>
-          <div>
-            <button
               color="success"
-              className="h-9"
-              // containerClassName="mt-4 text-end"
               onClick={onNumberSave}
             >
-              Save
-            </button>
+              Add
+            </Button>
           </div>
         </div>
       </Modal>

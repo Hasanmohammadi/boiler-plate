@@ -14,8 +14,8 @@ interface ContextI {
   setAbout: (siteAbout: AboutI[]) => void;
   generalAbout: string;
   setGeneralAbout: (generalAbout: string) => void;
-  otherPhoneNumbers: string[];
-  setOtherPhoneNumbers: (otherPhoneNumbers: string[]) => void;
+  otherPhoneNumber: string;
+  setOtherPhoneNumber: (otherPhoneNumber: string) => void;
 }
 
 interface WebInfoContextPropsI {
@@ -62,8 +62,8 @@ const Context = createContext<ContextI>({
   setAbout: (siteUrl: AboutI[]) => {},
   generalAbout: '',
   setGeneralAbout: (generalAbout: string) => {},
-  otherPhoneNumbers: [],
-  setOtherPhoneNumbers: (otherPhoneNumbers: string[]) => {},
+  otherPhoneNumber: '',
+  setOtherPhoneNumber: (otherPhoneNumber: string) => {},
 });
 
 export default function WebInfoContextContainer({
@@ -72,7 +72,7 @@ export default function WebInfoContextContainer({
   const [siteName, setSiteName] = useState<string>('');
   const [siteUrl, setSiteUrl] = useState<string>('');
   const [generalAbout, setGeneralAbout] = useState<string>('');
-  const [otherPhoneNumbers, setOtherPhoneNumbers] = useState<string[]>([]);
+  const [otherPhoneNumber, setOtherPhoneNumber] = useState<string>('');
   const [siteColors, setSiteColors] = useState<SiteColorsI>({
     primary: '#000000',
     secondary: '#000000',
@@ -106,8 +106,8 @@ export default function WebInfoContextContainer({
       setAbout,
       generalAbout,
       setGeneralAbout,
-      otherPhoneNumbers,
-      setOtherPhoneNumbers,
+      otherPhoneNumber,
+      setOtherPhoneNumber,
     }),
     [
       siteName,
@@ -116,7 +116,7 @@ export default function WebInfoContextContainer({
       siteColors,
       about,
       generalAbout,
-      otherPhoneNumbers,
+      otherPhoneNumber,
     ],
   );
 
