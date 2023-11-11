@@ -27,6 +27,7 @@ interface SelectPropsI<T extends FieldValues> {
   disabled?: boolean;
   loading?: boolean;
   containerClassName?: string;
+  direction?: 'rtl' | 'ltr';
 }
 
 export default function Select<T extends FieldValues>({
@@ -43,6 +44,7 @@ export default function Select<T extends FieldValues>({
   value,
   containerClassName,
   loading,
+  direction,
 }: SelectPropsI<T>) {
   const [isOpen, setIsOpen] = useState(false);
   const arrowDownIcon: () => JSX.Element = useCallback(
@@ -83,6 +85,7 @@ export default function Select<T extends FieldValues>({
                 className={clsx('pr-3', className, {
                   ghost: type === 'ghost',
                   disabled,
+                  [direction === 'ltr' ? 'ltr' : 'rtl']: direction,
                 })}
                 defaultValue={defaultValue}
                 open={isOpen}

@@ -1,6 +1,11 @@
 import { Box, styled } from '@mui/material';
 
-const RadioButtonStyled = styled(Box)`
+interface RadioButtonPropsI {
+  primaryColor?: string;
+  secondaryColor?: string;
+}
+
+const RadioButtonStyled = styled(Box)<RadioButtonPropsI>`
   .grid {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -15,6 +20,12 @@ const RadioButtonStyled = styled(Box)`
     width: 100%;
     display: flex;
     justify-content: space-between;
+  }
+  .Mui-checked {
+    color: ${(props: RadioButtonPropsI) => props.primaryColor};
+  }
+  .MuiButtonBase-root:hover {
+    background-color: rgb(133 133 133 / 4%);
   }
 ` as typeof Box;
 

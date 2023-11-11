@@ -26,6 +26,11 @@ const SelectStyled = styled(Select)`
   &.disabled {
     background: #efefef;
   }
+
+  &.rtl > .MuiSelect-select {
+    padding: 0;
+    display: flex;
+  }
 ` as typeof Select;
 
 export default SelectStyled;

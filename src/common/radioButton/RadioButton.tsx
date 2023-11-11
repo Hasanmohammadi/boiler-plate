@@ -25,6 +25,8 @@ interface RadioButtonPropsI {
     event: React.ChangeEvent<HTMLInputElement>,
     value: string,
   ) => void;
+  primaryColor?: string;
+  secondaryColor?: string;
 }
 
 export default function RadioButton({
@@ -35,9 +37,22 @@ export default function RadioButton({
   onChange,
   grid,
   sx,
+  primaryColor,
+  secondaryColor,
 }: RadioButtonPropsI) {
+  console.log(
+    '🚀 ~ file: RadioButton.tsx:43 ~ primaryColor:',
+    primaryColor,
+  );
   return (
-    <RadioButtonStyled className={className}>
+    <RadioButtonStyled
+      className={className}
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      primaryColor={primaryColor}
+      secondaryColor={secondaryColor}
+      component="div"
+    >
       <FormControl className="w-full">
         {label && (
           <FormLabel id="demo-radio-buttons-group-label">
