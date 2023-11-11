@@ -1,23 +1,15 @@
 import { Box, MenuItem } from '@mui/material';
-import { AirplaneLanding, AlphaSwap, Swap } from 'assets/svg';
-import AirplaneTakeoff from 'assets/svg/AirplaneTakeoff';
-import clsx from 'clsx';
+import { AlphaSwap } from 'assets/svg';
 import { Menu, RadioButton, Select, SelectSearch } from 'common';
 import { useAppWebInfoContext } from 'context';
-import { setFontColor, todayDate, todayDateObject } from 'helpers';
+import { setFontColor, todayDateObject } from 'helpers';
 import defaultDate from 'helpers/defaultDate';
 import { useGetPlaces } from 'hooks/airport';
 import { useRef, useState } from 'react';
 import persian from 'react-date-object/calendars/persian';
+import gregorian_en from 'react-date-object/locales/gregorian_en';
 import persian_fa from 'react-date-object/locales/persian_fa';
-import {
-  Calendar,
-  MinusCircle,
-  MinusSquare,
-  PlusCircle,
-  PlusSquare,
-  Search,
-} from 'react-feather';
+import { Calendar, MinusCircle, PlusCircle, Search } from 'react-feather';
 import { useForm } from 'react-hook-form';
 import DatePicker, { DateObject } from 'react-multi-date-picker';
 import Toolbar from 'react-multi-date-picker/plugins/toolbar';
@@ -61,11 +53,13 @@ export default function AlphaSearchBox({ isInHeader }: FlightsPropsI) {
   const [departureDateInput, setDepartureDateInput] = useState<DateI>(
     todayDateObject(),
   );
+
   const [returnDateInput, setReturnDateInput] = useState<DateI>({
     day: 0,
     month: 0,
     year: 0,
   });
+
   const [originSearched, setOriginSearched] = useState<string>('');
   const [arrivalSearched, setArrivalSearched] = useState<string>('');
   const [adultCount, setAdultCount] = useState<number>(1);
@@ -245,14 +239,12 @@ export default function AlphaSearchBox({ isInHeader }: FlightsPropsI) {
                   calendar={persian}
                   locale={persian_fa}
                   plugins={[<Toolbar position="bottom" />]}
-                  minDate={todayDate()}
-                  value={
-                    new Date(
-                      departureDateInput.year,
-                      departureDateInput.month - 1,
-                      departureDateInput.day,
-                    )
-                  }
+                  minDate={new DateObject()
+                    .convert(persian, gregorian_en)
+                    .format()}
+                  value={new DateObject()
+                    .convert(persian, persian_fa)
+                    .format()}
                   onChange={(date) =>
                     handleDepartureDate(date as DateObject)
                   }
@@ -306,7 +298,7 @@ export default function AlphaSearchBox({ isInHeader }: FlightsPropsI) {
                     calendar={persian}
                     locale={persian_fa}
                     plugins={[<Toolbar position="bottom" />]}
-                    minDate={`${departureDateInput.year}-${departureDateInput.month}-${departureDateInput.day}`}
+                    minDate={`${departureDateInput.year}/${departureDateInput.month}/${departureDateInput.day}`}
                     ref={datePickerRef}
                     render={() => (
                       <Box
@@ -321,16 +313,8 @@ export default function AlphaSearchBox({ isInHeader }: FlightsPropsI) {
                       </Box>
                     )}
                     value={[
-                      new Date(
-                        departureDateInput.year,
-                        departureDateInput.month - 1,
-                        departureDateInput.day,
-                      ),
-                      new Date(
-                        returnDateInput.year,
-                        returnDateInput.month - 1,
-                        returnDateInput.day,
-                      ),
+                      `${departureDateInput.year}/${departureDateInput.month}/${departureDateInput.day}`,
+                      `${returnDateInput.year}/${returnDateInput.month}/${returnDateInput.day}`,
                     ]}
                     onChange={(date) =>
                       handleReturnDate(date as DateObject[])
