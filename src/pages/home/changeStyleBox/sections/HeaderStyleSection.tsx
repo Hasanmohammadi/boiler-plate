@@ -50,10 +50,10 @@ export default function HeaderStyleSection() {
     // @ts-ignore
     setLogoSize(e.target.value);
   };
-  const onCheckBoxSelect = (text: string) => {
+  const onCheckBoxSelect = (value: string) => {
     const x = [...btns];
     const newBtns = x.map((item) => {
-      if (item.text === text) {
+      if (item.value === value) {
         return { ...item, hidden: false };
       }
       return item;
@@ -62,10 +62,10 @@ export default function HeaderStyleSection() {
     setBtns(newBtns);
   };
 
-  const onUnCheckBoxSelect = (text: string) => {
+  const onUnCheckBoxSelect = (value: string) => {
     const x = [...btns];
     const newBtns = x.map((item) => {
-      if (item.text === text) {
+      if (item.value === value) {
         return { ...item, hidden: true };
       }
       return item;
@@ -74,8 +74,8 @@ export default function HeaderStyleSection() {
     setBtns(newBtns);
   };
 
-  const aboutUsInfo = btns.find(({ text }) => text === 'About us');
-  const contactUsInfo = btns.find(({ text }) => text === 'Contact us');
+  const aboutUsInfo = btns.find(({ value }) => value === 'About us');
+  const contactUsInfo = btns.find(({ value }) => value === 'Contact us');
 
   const { control, watch, register } = useForm({
     defaultValues: {
@@ -112,7 +112,7 @@ export default function HeaderStyleSection() {
   useEffect(() => {
     const x = [...btns];
     const newBtns = x.map((item) => {
-      if (item.text === 'Contact us') {
+      if (item.value === 'Contact us') {
         return { ...item, size: contactUsSize };
       }
       return item;
@@ -124,7 +124,7 @@ export default function HeaderStyleSection() {
   useEffect(() => {
     const x = [...btns];
     const newBtns = x.map((item) => {
-      if (item.text === 'About us') {
+      if (item.value === 'About us') {
         return { ...item, color: aboutUsColor };
       }
       return item;
@@ -136,7 +136,7 @@ export default function HeaderStyleSection() {
   useEffect(() => {
     const x = [...btns];
     const newBtns = x.map((item) => {
-      if (item.text === 'Contact us') {
+      if (item.value === 'Contact us') {
         return { ...item, color: contactUsColor };
       }
       return item;
@@ -148,7 +148,7 @@ export default function HeaderStyleSection() {
   useEffect(() => {
     const x = [...btns];
     const newBtns = x.map((item) => {
-      if (item.text === 'About us') {
+      if (item.value === 'About us') {
         return { ...item, size: aboutUsSize };
       }
       return item;
@@ -248,7 +248,7 @@ export default function HeaderStyleSection() {
               onChecked={() => onCheckBoxSelect('Sign In')}
               onUnChecked={() => onUnCheckBoxSelect('Sign In')}
               checked={
-                !btns.find(({ text }) => text === 'Sign In')?.hidden
+                !btns.find(({ value }) => value === 'Sign In')?.hidden
               }
             />
             <Button
@@ -278,7 +278,7 @@ export default function HeaderStyleSection() {
               onChecked={() => onCheckBoxSelect('Contact us')}
               onUnChecked={() => onUnCheckBoxSelect('Contact us')}
               checked={
-                !btns.find(({ text }) => text === 'Contact us')?.hidden
+                !btns.find(({ value }) => value === 'Contact us')?.hidden
               }
             />
             <p>Contact us</p>
@@ -290,7 +290,7 @@ export default function HeaderStyleSection() {
                 min={0}
                 {...register('contactUsSize')}
                 value={
-                  btns.find(({ text }) => text === 'Contact us')?.size
+                  btns.find(({ value }) => value === 'Contact us')?.size
                 }
               />
               px
@@ -307,7 +307,7 @@ export default function HeaderStyleSection() {
               onChecked={() => onCheckBoxSelect('About us')}
               onUnChecked={() => onUnCheckBoxSelect('About us')}
               checked={
-                !btns.find(({ text }) => text === 'About us')?.hidden
+                !btns.find(({ value }) => value === 'About us')?.hidden
               }
             />
             <p>About us</p>
@@ -317,7 +317,9 @@ export default function HeaderStyleSection() {
                 className="border-2 border-red-500 rounded-lg w-14 text-center"
                 type="number"
                 min={0}
-                value={btns.find(({ text }) => text === 'About us')?.size}
+                value={
+                  btns.find(({ value }) => value === 'About us')?.size
+                }
                 {...register('aboutUsSize')}
               />
               px

@@ -1,8 +1,13 @@
-import { Box, MenuItem } from '@mui/material';
+import { Box, MenuItem, Typography } from '@mui/material';
 import { AlphaSwap } from 'assets/svg';
+import clsx from 'clsx';
 import { Menu, RadioButton, Select, SelectSearch } from 'common';
 import { useAppWebInfoContext } from 'context';
-import { setFontColor, todayDateObject } from 'helpers';
+import {
+  convertToPersianNumbers,
+  setFontColor,
+  todayDateObject,
+} from 'helpers';
 import defaultDate from 'helpers/defaultDate';
 import { useGetPlaces } from 'hooks/airport';
 import { useRef, useState } from 'react';
@@ -50,8 +55,8 @@ export default function AlphaSearchBox({ isInHeader }: FlightsPropsI) {
     'One Way',
   );
   const [flightClass, setFightClass] = useState<string>('اکونومی');
-  const [departureDateInput, setDepartureDateInput] = useState<DateI>(
-    todayDateObject(),
+  const [departureDateInput, setDepartureDateInput] = useState(
+    new DateObject().convert(persian, gregorian_en).format(),
   );
 
   const [returnDateInput, setReturnDateInput] = useState<DateI>({
@@ -112,11 +117,7 @@ export default function AlphaSearchBox({ isInHeader }: FlightsPropsI) {
     year: number;
     month: { number: number };
   }) {
-    setDepartureDateInput({
-      day,
-      month: month?.number,
-      year,
-    });
+    setDepartureDateInput(`${year}/${month?.number}/${day}`);
   }
 
   function handleReturnDate(
@@ -135,34 +136,70 @@ export default function AlphaSearchBox({ isInHeader }: FlightsPropsI) {
   return (
     <Box
       sx={{ direction: 'rtl' }}
-      className=" w-4/5 m-auto rounded-lg py-4"
+      className={clsx(' w-4/5 m-auto rounded-lg py-4', {
+        'pt-0': isInHeader,
+      })}
     >
       <div>
         <div>
           <RadioButton
+            defaultValue={wayType}
+            value={wayType}
             primaryColor={siteColors.primary}
             sx={{ display: 'flex', flexDirection: 'row', gap: '18px' }}
+            onChange={(e) =>
+              setWayType(e.target.value as 'Round-trip' | 'One Way')
+            }
             radios={[
               {
-                radioText: 'یک طرفه',
-                value: 'one-way',
-                className: 'w-24',
+                radioText: (
+                  <Typography
+                    sx={{
+                      color:
+                        wayType === 'One Way'
+                          ? siteColors.primary
+                          : 'black',
+                    }}
+                  >
+                    یک طرفه
+                  </Typography>
+                ),
+                value: 'One Way',
+                className: 'w-22',
+                size: isInHeader ? 'small' : 'medium',
               },
               {
-                radioText: 'دو طرفه',
-                value: 'round-trip',
-                className: 'w-24',
+                radioText: (
+                  <Typography
+                    sx={{
+                      color:
+                        wayType === 'Round-trip'
+                          ? siteColors.primary
+                          : 'black',
+                    }}
+                  >
+                    دو طرفه
+                  </Typography>
+                ),
+                value: 'Round-trip',
+                className: 'w-22',
+                size: isInHeader ? 'small' : 'medium',
               },
             ]}
           />
         </div>
         <div className="flex bg-white w-full rounded-lg max-w-7xl ">
-          <div className="py-2 flex w-1/2 justify-between border flex-row border-gray-300 rounded-lg rounded-l-none">
+          <div
+            className={clsx(
+              'flex w-1/2 justify-between border flex-row border-gray-300 rounded-lg rounded-l-none',
+              { 'py-2': !isInHeader, 'h-11': isInHeader },
+            )}
+          >
             <SelectSearch
               direction="rtl"
               loading={originLoading}
               hasBorder={false}
-              className="w-1/2 "
+              className="w-1/2"
               control={control}
               name="departure"
               setTextSearched={setOriginSearched}
@@ -198,10 +235,17 @@ export default function AlphaSearchBox({ isInHeader }: FlightsPropsI) {
               initialValue={[{ id: '', label: '', isCity: false }]}
             />
           </div>
-          <div className="py-1 border border-gray-300 border-r-0 pr-2 w-1/6 flex gap-4">
+          <div
+            className={clsx(
+              'py-1 border border-gray-300 border-r-0 pr-2 w-1/6 flex gap-4',
+              {
+                'h-11 items-center': isInHeader,
+              },
+            )}
+          >
             <Calendar color="#A2A2A2" size={40} className="mt-1" />
             <div>
-              <p className="mr-2">تاریخ رفت</p>
+              {!isInHeader && <p className="mr-2">تاریخ رفت</p>}
               <Box
                 sx={{
                   '.rmdp-day.rmdp-selected span:not(.highlight)': {
@@ -251,21 +295,42 @@ export default function AlphaSearchBox({ isInHeader }: FlightsPropsI) {
                   numberOfMonths={1}
                   inputMode="text"
                   range={false}
-                  placeholder="dateHitPoint"
                   className="cursor-pointer"
                 />
               </Box>
             </div>
           </div>
-          <div className="py-1 border border-gray-300 border-r-0 pr-2 w-1/6 flex gap-4">
-            <Calendar color="#A2A2A2" size={24} className="mt-3" />
+          <Box
+            className={clsx(
+              'py-1 border border-gray-300 pr-2 w-1/6 flex gap-4',
+              {
+                'cursor-default opacity-30': wayType === 'One Way',
+                'h-11 items-center': isInHeader,
+              },
+            )}
+            onClick={() => {
+              setWayType('Round-trip');
+              if (wayType === 'One Way') {
+                setTimeout(() => {
+                  datePickerRef?.current?.openCalendar();
+                }, 0);
+              }
+            }}
+          >
+            <Calendar
+              color="#A2A2A2"
+              size={24}
+              className={clsx({ 'mt-3': !isInHeader })}
+            />
             <div>
-              <p className="text-center">تاریخ برگشت</p>
-              {wayType !== 'One Way' ? (
+              {!isInHeader && <p className="text-center">تاریخ برگشت</p>}
+              {wayType === 'One Way' ? (
                 <p>
                   {returnDateInput.day
-                    ? `${returnDateInput.year}/${returnDateInput.month}/${returnDateInput.day}`
-                    : `${departureDateInput.year}/${departureDateInput.month}/${departureDateInput.day}`}
+                    ? convertToPersianNumbers(
+                        `${returnDateInput.year}/${returnDateInput.month}/${returnDateInput.day}`,
+                      )
+                    : convertToPersianNumbers(departureDateInput)}
                 </p>
               ) : (
                 <Box
@@ -298,7 +363,7 @@ export default function AlphaSearchBox({ isInHeader }: FlightsPropsI) {
                     calendar={persian}
                     locale={persian_fa}
                     plugins={[<Toolbar position="bottom" />]}
-                    minDate={`${departureDateInput.year}/${departureDateInput.month}/${departureDateInput.day}`}
+                    minDate={departureDateInput}
                     ref={datePickerRef}
                     render={() => (
                       <Box
@@ -308,12 +373,14 @@ export default function AlphaSearchBox({ isInHeader }: FlightsPropsI) {
                         }
                       >
                         {returnDateInput.day
-                          ? `${returnDateInput.year}/${returnDateInput.month}/${returnDateInput.day}`
-                          : `${departureDateInput.year}/${departureDateInput.month}/${departureDateInput.day}`}{' '}
+                          ? convertToPersianNumbers(
+                              `${returnDateInput.year}/${returnDateInput.month}/${returnDateInput.day}`,
+                            )
+                          : convertToPersianNumbers(departureDateInput)}
                       </Box>
                     )}
                     value={[
-                      `${departureDateInput.year}/${departureDateInput.month}/${departureDateInput.day}`,
+                      departureDateInput,
                       `${returnDateInput.year}/${returnDateInput.month}/${returnDateInput.day}`,
                     ]}
                     onChange={(date) =>
@@ -322,19 +389,25 @@ export default function AlphaSearchBox({ isInHeader }: FlightsPropsI) {
                     numberOfMonths={1}
                     inputMode="text"
                     range
-                    placeholder="dateHitPoint"
                   />
                 </Box>
               )}
             </div>
-          </div>
+          </Box>
           <Menu
-            className="border border-gray-300 border-r-0 w-1/6 py-2"
+            className={clsx('border border-gray-300 w-1/6 py-2', {
+              'h-11 py-0': isInHeader,
+            })}
             btnClassName="h-[42px]"
             hasArrow={false}
             btnText={
               <div className="flex text-base items-center font-normal">
-                <p className="w-5">{adultCount + children + infants}</p>
+                <p className="w-5">
+                  {convertToPersianNumbers(
+                    String(adultCount + children + infants),
+                    false,
+                  )}
+                </p>
                 <p className="font-medium"> مسافر،</p>
                 <p className="mr-1">{flightClass}</p>
               </div>
@@ -388,7 +461,12 @@ export default function AlphaSearchBox({ isInHeader }: FlightsPropsI) {
                           }
                         }}
                       />
-                      <span className="w-4 text-center">{adultCount}</span>
+                      <span className="w-4 text-center">
+                        {convertToPersianNumbers(
+                          String(adultCount),
+                          false,
+                        )}
+                      </span>
                       <PlusCircle
                         color={siteColors.secondary}
                         onClick={() => setAdultCount((pre) => pre + 1)}
@@ -414,7 +492,9 @@ export default function AlphaSearchBox({ isInHeader }: FlightsPropsI) {
                           }
                         }}
                       />
-                      <span className="w-4 text-center">{children}</span>
+                      <span className="w-4 text-center">
+                        {convertToPersianNumbers(String(children), false)}
+                      </span>
                       <PlusCircle
                         color={siteColors.secondary}
                         onClick={() => setChildren((pre) => pre + 1)}
@@ -440,7 +520,9 @@ export default function AlphaSearchBox({ isInHeader }: FlightsPropsI) {
                           }
                         }}
                       />
-                      <span className="w-4 text-center">{infants}</span>
+                      <span className="w-4 text-center">
+                        {convertToPersianNumbers(String(infants), false)}
+                      </span>
                       <PlusCircle
                         color={siteColors.secondary}
                         onClick={() => setInfants((pre) => pre + 1)}

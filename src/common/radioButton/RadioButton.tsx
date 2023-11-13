@@ -27,6 +27,7 @@ interface RadioButtonPropsI {
   ) => void;
   primaryColor?: string;
   secondaryColor?: string;
+  value?: string;
 }
 
 export default function RadioButton({
@@ -39,11 +40,8 @@ export default function RadioButton({
   sx,
   primaryColor,
   secondaryColor,
+  value,
 }: RadioButtonPropsI) {
-  console.log(
-    '🚀 ~ file: RadioButton.tsx:43 ~ primaryColor:',
-    primaryColor,
-  );
   return (
     <RadioButtonStyled
       className={className}
@@ -66,10 +64,11 @@ export default function RadioButton({
           onChange={onChange}
           className={clsx('w-full', { grid })}
           sx={sx}
+          value={value}
         >
           {radios?.map(
             ({
-              value,
+              value: radioValue,
               radioText,
               size,
               children,
@@ -77,7 +76,7 @@ export default function RadioButton({
             }) => (
               <div className={radioClassName}>
                 <FormControlLabel
-                  value={value}
+                  value={radioValue}
                   control={<Radio size={size} />}
                   label={radioText}
                 />

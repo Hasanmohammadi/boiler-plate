@@ -70,10 +70,7 @@ export default function Body() {
           </Typography>
         </div>
       </Box>
-      <Box
-        // margin={`${marginY}px ${marginX}px`}
-        width="100%"
-      >
+      <Box width="100%">
         {theme === 'finotix' && <FinotixSearchBox />}
         {theme === 'alpha' && <AlphaSearchBox />}
       </Box>

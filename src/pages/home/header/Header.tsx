@@ -1,6 +1,7 @@
 import logo from 'assets/image/Logo.png';
 import { Button } from 'common';
 import { useAppHeaderContext, useAppWebInfoContext } from 'context';
+import { useAppThemeContext } from 'context/ThemeContext';
 import { Link, NavLink } from 'react-router-dom';
 
 import HeaderStyledContainer from './Header.style';
@@ -8,6 +9,7 @@ import HeaderStyledContainer from './Header.style';
 export default function Header() {
   const { paddingX, paddingY, bgColor, logoSize, btns } =
     useAppHeaderContext();
+  const { siteDirection } = useAppThemeContext();
 
   const { siteColors } = useAppWebInfoContext();
 
@@ -15,7 +17,7 @@ export default function Header() {
     <HeaderStyledContainer
       className="w-full flex justify-between"
       padding={`${paddingY}px ${paddingX}px`}
-      sx={{ backgroundColor: bgColor }}
+      sx={{ backgroundColor: bgColor, direction: siteDirection }}
     >
       <NavLink to="/" className="p-0 cursor-pointer">
         <img src={logo} width={logoSize} height={logoSize} alt="logo" />

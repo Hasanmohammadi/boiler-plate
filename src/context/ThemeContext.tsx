@@ -1,13 +1,24 @@
-import { createContext, useContext, useMemo, useState } from 'react';
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 
+export type ThemeType = 'finotix' | 'alpha';
 interface ContextI {
-  theme: string;
-  setTheme: (theme: string) => void;
+  theme: ThemeType;
+  setTheme: (theme: ThemeType) => void;
+  siteDirection: 'ltr' | 'rtl';
+  setSiteDirection: (siteDirection: 'ltr' | 'rtl') => void;
 }
 
 const Context = createContext<ContextI>({
-  theme: '',
-  setTheme: (theme: string) => {},
+  theme: 'finotix',
+  setTheme: (theme: ThemeType) => {},
+  siteDirection: 'ltr',
+  setSiteDirection: (siteDirection: 'ltr' | 'rtl') => {},
 });
 
 interface ThemeContextPropsI {
@@ -15,14 +26,25 @@ interface ThemeContextPropsI {
 }
 
 export default function ThemeContext({ children }: ThemeContextPropsI) {
-  const [theme, setTheme] = useState<string>('');
+  const [theme, setTheme] = useState<ThemeType>('finotix');
+  const [siteDirection, setSiteDirection] = useState<'ltr' | 'rtl'>('rtl');
+
+  useEffect(() => {
+    if (theme === 'alpha') {
+      setSiteDirection('rtl');
+    } else {
+      setSiteDirection('ltr');
+    }
+  }, [theme]);
 
   const value = useMemo(
     () => ({
       theme,
       setTheme,
+      siteDirection,
+      setSiteDirection,
     }),
-    [theme, setTheme],
+    [theme, siteDirection],
   );
 
   return <Context.Provider value={value}>{children}</Context.Provider>;

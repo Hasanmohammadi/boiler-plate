@@ -1,5 +1,6 @@
 import calculateSkip from './calculateSkip';
 import convertSecondToMinute from './convertSecondToMinute';
+import convertToPersianNumbers from './convertToPersianNumbers';
 import isDepartureDateBigger from './isDepartureDateBigger';
 import setFontColor from './setFontColor';
 import todayDate from './todayDate';
@@ -14,4 +15,5 @@ export {
   convertSecondToMinute,
   setFontColor,
   todayPersianDateObject,
+  convertToPersianNumbers,
 };

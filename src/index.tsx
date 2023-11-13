@@ -70,18 +70,18 @@ const root = ReactDOM.createRoot(
 root.render(
   // <React.StrictMode>
   <BodyContextContainer>
-    <ContextContainer>
-      <WebInfoContextContainer>
-        <ThemeContext>
+    <ThemeContext>
+      <ContextContainer>
+        <WebInfoContextContainer>
           <QueryClientProvider client={queryClient}>
             <ToastContainer hideProgressBar position="top-center" />
             <ThemeProvider theme={theme}>
               <RouterProvider router={Router} />
             </ThemeProvider>
           </QueryClientProvider>
-        </ThemeContext>
-      </WebInfoContextContainer>
-    </ContextContainer>
+        </WebInfoContextContainer>
+      </ContextContainer>
+    </ThemeContext>
   </BodyContextContainer>,
   // </React.StrictMode>,
 );
