@@ -41,7 +41,7 @@ export default function FinotixResult() {
         >
           <Flights isInHeader={small} />
         </div>
-        <div className="bg-gray-100 pb-10  w-full">
+        <div className="bg-gray-100 pb-10 w-full">
           <div className="flex w-4/5 m-auto pt-8 gap-7">
             <div className="w-1/5 sticky top-0">
               <div className="bg-white pb-8 rounded-lg">

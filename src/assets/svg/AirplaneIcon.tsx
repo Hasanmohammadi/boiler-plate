@@ -1,15 +1,19 @@
 export default function AirplaneIcon({
   className,
   color = '#d6d6d6',
+  height = '13',
+  width = '14',
 }: {
   className?: string;
   color?: string;
+  height?: string;
+  width?: string;
 }) {
   return (
     <div className={className}>
       <svg
-        width="14"
-        height="13"
+        width={width}
+        height={height}
         viewBox="0 0 14 13"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"

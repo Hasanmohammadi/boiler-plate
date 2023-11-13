@@ -4,6 +4,7 @@ import AirplaneLanding from './AirplaneLanding';
 import AlphaSwap from './AlphaSwap';
 import Bed from './Bed';
 import EmptyState from './EmptyState';
+import LongArrow from './LongArrow';
 import SuitcaseOutline from './SuitcaseOutline';
 import Swap from './Swap';
 
@@ -16,4 +17,5 @@ export {
   AirplaneIcon,
   SuitcaseOutline,
   AlphaSwap,
+  LongArrow,
 };

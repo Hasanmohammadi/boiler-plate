@@ -9,7 +9,6 @@ import './App.css';
 
 function App() {
   const { pathname } = useLocation();
-  console.log('🚀 ~ file: App.tsx:12 ~ App ~ pathname:', pathname);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -19,7 +18,7 @@ function App() {
   }, [navigate, pathname]);
 
   return (
-    <div className="h-full min-h-screen">
+    <div className="h-full min-h-screen bg-gray-100">
       <Header />
       <div className="w-full">
         <Outlet />
