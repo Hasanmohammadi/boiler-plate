@@ -173,7 +173,7 @@ export default function TicketCard({
               <ChevronDown
                 className="cursor-pointer"
                 color={siteColors.primary}
-                onClick={() => setCollapseHeight('200px')}
+                onClick={() => setCollapseHeight('auto')}
               />
             )}
             {collapseHeight !== '0px' && (

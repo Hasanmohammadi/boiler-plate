@@ -1,4 +1,7 @@
+import { Box } from '@mui/material';
 import { SuitcaseOutline } from 'assets/svg';
+import { useAppWebInfoContext } from 'context';
+import { convertToPersianNumbers } from 'helpers';
 import { FrontDataFlightsI, GroupFareI } from 'types/search';
 
 interface TicketResultPropsI {
@@ -18,13 +21,14 @@ export default function Collapseitem({
   returnFlight,
   totalFareAmount,
 }: TicketResultPropsI) {
+  const { siteColors } = useAppWebInfoContext();
   return (
     <div className="px-6 py-4" style={{ direction: 'rtl' }}>
       <p className="text-base font-semibold text-gray-400">پرواز رفت</p>
       <div>
         {departureFlight?.legs.map((leg) => (
           <>
-            <div className="">
+            <div>
               <div className="w-full flex justify-between">
                 <div className="w-full">
                   <div className="flex gap-2">
@@ -53,71 +57,94 @@ export default function Collapseitem({
                     Operated by {leg.opratorName}
                   </p>
                 </div>
-                <div className="flex">
-                  <div>
-                    <p className="">
-                      {departureFlight?.legs?.[0]?.arrivalTimeDateOnly} -
-                    </p>
+                <div>
+                  <div className="flex">
+                    <div className="flex">
+                      <p className="font-semibold text-base">
+                        {convertToPersianNumbers(
+                          leg?.departureTimeTimeOnly,
+                        )}
+                      </p>
+                      <span className="px-1">-</span>
+                    </div>
+                    <div>
+                      <p className="w-28">
+                        {departureFlight?.legs?.[0]?.arrivalTimeDateOnly} -
+                      </p>
+                    </div>
+                    <div className="font-normal  flex mt-0.5">
+                      <span>{leg?.departureCityName}</span>
+                      <span>({leg?.departureAirport})</span>
+                    </div>
                   </div>
-                  <div className="font-normal text-sm text-gray-400 flex mt-0.5">
-                    <span>{leg?.departureCityName}</span>
-                    <span>({leg?.departureAirport})</span>
-                  </div>
+                  <p className="font-normal text-xs text-end mt-1 text-gray-400">
+                    {leg?.departureAirportName}
+                  </p>
                 </div>
               </div>
-              <div className="text-center w-1/4">
-                <p className="font-semibold text-base">
-                  {leg?.departureTimeTimeOnly}
-                </p>
-                <p>
-                  <span className="font-semibold text-xs">
-                    {leg?.departureAirport} ,
-                  </span>
-                  <span className="font-normal text-xs">
-                    {leg?.departureAirportName}
-                  </span>
-                </p>
-                <p className="font-normal text-sm text-gray-400">
-                  {leg?.departureCityName}
-                </p>
-              </div>
-              <p className="self-center font-normal text-center w-1/4">
-                {leg?.flightDurationText}
-              </p>
-              <div className="text-center w-1/4">
-                <p className="font-semibold text-base">
-                  {leg?.arrivalTimeTimeOnly}
-                </p>
-                <p>
-                  <span className="font-semibold text-xs">
-                    {leg?.arrivalAirport} ,
-                  </span>
-                  <span className="font-normal text-xs">
-                    {leg?.arrivalAirportName}
-                  </span>
-                </p>
-                <p className="font-normal text-sm text-gray-400">
-                  {leg?.arrivalCityName}
-                </p>
-              </div>
-              <div className="self-center flex items-center gap-1 w-1/4 justify-end">
-                <SuitcaseOutline />
+              <div className="w-full flex justify-between mt-6">
+                <div className="w-full ">
+                  <div className="flex gap-6">
+                    <div className="text-center">
+                      <p className="text-gray-500">کلاس نرخی </p>
+                      <p>N/A</p>
+                    </div>
+                    <div className="text-center">
+                      <p className="text-gray-500">شماره پرواز</p>
+                      <p>{leg?.flightNumberDisplay}</p>
+                    </div>
+                    <div className="text-center">
+                      <p className="text-gray-500">مقدار بار مجاز</p>
+                      <p>{leg?.baggageItems?.[0].displayText_Short}</p>
+                    </div>
+                    <div className="text-center">
+                      <p className="text-gray-500">نوع هواپیما</p>
+                      <p>N/A</p>
+                    </div>
+                  </div>
+                </div>
                 <div>
-                  <p className="font-normal text-xs text-gray-600">
-                    Baggage:
-                  </p>
-                  <p className="font-normal text-xs text-gray-600">
-                    {' '}
-                    {leg?.baggageItems?.[0].displayText_Short}
+                  <div className="flex">
+                    <div className="flex">
+                      <p className="font-semibold text-base">
+                        {convertToPersianNumbers(leg?.arrivalTimeTimeOnly)}
+                      </p>
+                      <span className="px-1">-</span>
+                    </div>
+                    <div>
+                      <p className="w-28">
+                        {departureFlight?.legs?.[0]?.arrivalTimeDateOnly} -
+                      </p>
+                    </div>
+                    <div className="font-normal  flex mt-0.5">
+                      <span>{leg?.arrivalCityName}</span>
+                      <span>({leg?.arrivalAirport})</span>
+                    </div>
+                  </div>
+                  <p className="font-normal text-xs text-end mt-1 text-gray-400">
+                    {leg?.arrivalAirportName}
                   </p>
                 </div>
               </div>
             </div>
             {!!leg?.stopTimeToNextLegMinute && (
-              <div className=" py-1 my-2 border-t border-t-gray-400 text-center ml-14 w-28  border-b border-b-gray-400 bg-gray-100  rounded-md ">
-                <p className="font-medium text-xs">
-                  Stop: {leg?.stopTimeToNextLegText}
-                </p>
+              <div className="w-full flex justify-end">
+                <div className=" py-1 my-2 px-3 items-center flex justify-end gap-2 w-56 bg-gray-300  rounded-full">
+                  <p className="font-medium text-red-600">
+                    مدت زمان توقف :{' '}
+                    {convertToPersianNumbers(leg?.stopTimeToNextLegText)}
+                  </p>
+                  <Box
+                    sx={{
+                      borderRadius: '100px',
+                      width: '14px',
+                      height: '14px',
+                      backgroundColor: siteColors.primary,
+                    }}
+                  >
+                    {' '}
+                  </Box>
+                </div>
               </div>
             )}
           </>
