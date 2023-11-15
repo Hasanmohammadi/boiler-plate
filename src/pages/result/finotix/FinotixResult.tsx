@@ -80,13 +80,11 @@ export default function FinotixResult() {
                 <div className="px-6 pt-4 rounded-lg">
                   <FilterBox
                     options={airLineOptions}
-                    // onFilterChange={handleFilterChange}
                     filterName="airline"
                   />
                 </div>
               </div>
             </div>
-
             <div className="w-4/5">
               <TopBar />
               {flightGroups?.map((flightGroup) => (

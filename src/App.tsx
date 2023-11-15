@@ -18,7 +18,7 @@ function App() {
   }, [navigate, pathname]);
 
   return (
-    <div className="h-full min-h-screen bg-gray-100">
+    <div className="h-full min-h-screen">
       <Header />
       <div className="w-full">
         <Outlet />

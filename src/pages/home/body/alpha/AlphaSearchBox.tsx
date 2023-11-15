@@ -395,9 +395,12 @@ export default function AlphaSearchBox({ isInHeader }: FlightsPropsI) {
             </div>
           </Box>
           <Menu
-            className={clsx('border border-gray-300 w-1/6 py-2', {
-              'h-11 py-0': isInHeader,
-            })}
+            className={clsx(
+              'border border-l-0 border-gray-300 w-1/6 py-2',
+              {
+                'h-11 py-0': isInHeader,
+              },
+            )}
             btnClassName="h-[42px]"
             hasArrow={false}
             btnText={

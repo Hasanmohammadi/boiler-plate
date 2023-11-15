@@ -1,6 +1,7 @@
 import AirPlaneAboutUs from './AirPlaneAboutUs';
 import AirplaneIcon from './AirplaneIcon';
 import AirplaneLanding from './AirplaneLanding';
+import AlphaFilterIcon from './AlphaFilterIcon';
 import AlphaSwap from './AlphaSwap';
 import Bed from './Bed';
 import EmptyState from './EmptyState';
@@ -18,4 +19,5 @@ export {
   SuitcaseOutline,
   AlphaSwap,
   LongArrow,
+  AlphaFilterIcon,
 };

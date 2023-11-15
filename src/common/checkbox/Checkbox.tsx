@@ -1,19 +1,21 @@
 import CheckboxCp from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import clsx from 'clsx';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, ReactElement, useState } from 'react';
 
 import CheckBoxStyledContainer from './Checkbox.Style';
 
 interface CheckboxPropsI {
   className?: string;
-  label?: string;
+  label?: string | ReactElement;
   checked?: boolean;
   onChecked?: (e?: ChangeEvent<HTMLInputElement>) => void;
   onUnChecked?: (e?: ChangeEvent<HTMLInputElement>) => void;
   disable?: boolean;
   hasBorder?: boolean;
   size?: 'medium' | 'small';
+  primaryColor?: string;
+  secondaryColor?: string;
 }
 
 export default function Checkbox({
@@ -25,10 +27,18 @@ export default function Checkbox({
   disable,
   hasBorder = true,
   size,
+  primaryColor,
+  secondaryColor,
 }: CheckboxPropsI) {
   const [isCheck, setIsCheck] = useState(checked);
   return (
-    <CheckBoxStyledContainer>
+    <CheckBoxStyledContainer
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      primary={primaryColor}
+      secondary={secondaryColor}
+      component="div"
+    >
       <div
         className={clsx(
           {

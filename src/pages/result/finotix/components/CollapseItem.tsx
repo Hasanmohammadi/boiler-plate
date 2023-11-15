@@ -79,7 +79,7 @@ export default function CollapseItem({
           >
             <CardContent className="border-b border-b-gray-500">
               <div className="flex items-center gap-3">
-                <Airplay color="#1e1e1e" />
+                <AirplaneIcon color="#1e1e1e" />
                 <p className="font-semibold">
                   Departure flight
                   <span className="text-sm font-normal ml-2">

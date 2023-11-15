@@ -6,7 +6,7 @@ import {
   convertToPersianNumbers,
   setFontColor,
 } from 'helpers';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { ChevronDown, ChevronUp } from 'react-feather';
 import { FrontDataFlightsI, GroupFareI } from 'types/search';
 
@@ -40,18 +40,30 @@ export default function TicketCard({
   totalFareAmount,
 }: TicketCardPropsI) {
   const { siteColors } = useAppWebInfoContext();
+  const [isCollapsed, setIsCollapsed] = useState(true);
+  const [contentHeight, setContentHeight] = useState(0);
 
-  const [collapseHeight, setCollapseHeight] = useState('0px');
+  const contentRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (contentRef.current) {
+      setContentHeight(contentRef.current.scrollHeight);
+    }
+  }, [isCollapsed]);
+
+  const toggleCollapse = () => {
+    setIsCollapsed(!isCollapsed);
+  };
 
   const onBook = () => {};
 
   return (
     <div className="my-4 ">
       <div
-        className=" px-10 flex bg-white rounded-lg h-32"
+        className=" px-5 flex bg-white rounded-lg h-32 justify-between"
         style={{ direction: 'rtl' }}
       >
-        <div className="w-1/4 h-full flex flex-col  place-content-center">
+        <div className=" h-full flex flex-col  place-content-center">
           <div>
             <img
               src={departureFlight?.legs?.[0]?.airLineLogoUrl}
@@ -65,7 +77,7 @@ export default function TicketCard({
           </div>
         </div>
 
-        <div className="w-2/4 h-full flex flex-col items-center">
+        <div className=" h-full flex flex-col items-center">
           <div className="flex gap-5 mt-10">
             <div>
               <div className="flex gap-1">
@@ -135,7 +147,7 @@ export default function TicketCard({
           </div>
           <div> </div>
         </div>
-        <div className="w-1/4  h-full border-r-2 border-r-[#DDD] border-dashed flex justify-evenly">
+        <div className=" h-full border-r-2 border-r-[#DDD] border-dashed flex pr-4 gap-4">
           <div className="flex flex-col justify-around items-center h-full">
             <div className="flex gap-2">
               <p className="font-bold text-lg">
@@ -169,18 +181,18 @@ export default function TicketCard({
             </div>
           </div>
           <div className="h-full flex items-center">
-            {collapseHeight === '0px' && (
+            {isCollapsed && (
               <ChevronDown
                 className="cursor-pointer"
                 color={siteColors.primary}
-                onClick={() => setCollapseHeight('auto')}
+                onClick={toggleCollapse}
               />
             )}
-            {collapseHeight !== '0px' && (
+            {!isCollapsed && (
               <ChevronUp
                 className="cursor-pointer"
                 color={siteColors.primary}
-                onClick={() => setCollapseHeight('0px')}
+                onClick={toggleCollapse}
               />
             )}
           </div>
@@ -188,22 +200,25 @@ export default function TicketCard({
       </div>
       <Box
         sx={{
-          height: collapseHeight,
+          height: isCollapsed ? '0px' : `${contentHeight}px`,
           backgroundColor: 'white',
           borderRadius: '12px',
-          borderTop: '2px dashed #DDD',
+          borderTop: isCollapsed ? 'none' : '2px dashed #DDD',
           overflow: 'hidden',
           transition: 'height 0.4s',
         }}
+        className="shadow-xl"
       >
-        <Collapseitem
-          departureFlight={departureFlight}
-          returnFlight={returnFlight}
-          groupFares={groupFares}
-          oneAdultTotalFare={oneAdultTotalFare}
-          totalFareAmount={totalFareAmount}
-          onBook={onBook}
-        />
+        <div ref={contentRef}>
+          <Collapseitem
+            departureFlight={departureFlight}
+            returnFlight={returnFlight}
+            groupFares={groupFares}
+            oneAdultTotalFare={oneAdultTotalFare}
+            totalFareAmount={totalFareAmount}
+            onBook={onBook}
+          />
+        </div>
       </Box>
     </div>
   );
