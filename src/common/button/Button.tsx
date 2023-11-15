@@ -1,6 +1,7 @@
 import { CircularProgress } from '@mui/material';
 import ButtonCP from '@mui/material/Button';
 import clsx from 'clsx';
+import { useAppWebInfoContext } from 'context';
 
 import ButtonStyledContainer from './Button.style';
 
