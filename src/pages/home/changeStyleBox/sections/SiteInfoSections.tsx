@@ -109,11 +109,12 @@ export default function SiteInfoSections() {
           </div>
         </div>
         <div className="mt-6">
+          <p>Website Font:</p>
           <Select
             name="font"
             control={control}
             className="h-8 w-40"
-            containerClassName="bg-white w-fit"
+            containerClassName="bg-white w-fit mt-4"
           >
             <MenuItem value="IRANSansX">Iran sans x</MenuItem>
             <MenuItem value="Peyda">Peyda</MenuItem>
