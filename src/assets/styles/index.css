@@ -4,13 +4,8 @@
 
 body {
   margin: 0;
-  font-family: 'PoppinsFont' !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-code {
-  font-family: 'PoppinsFont' !important;
 }
 
 @font-face {
@@ -22,6 +17,28 @@ code {
   font-family: 'PoppinsFont';
 }
 
-html * {
-  font-family: 'PoppinsFont' !important;
+@font-face {
+  src: url('../fonts/iranSans/IRANSansXFaNum-Regular.woff'),
+    url('../fonts/iranSans/IRANSansXFaNum-Medium.woff'),
+    url('../fonts/iranSans/IRANSansXFaNum-Black.woff'),
+    url('../fonts/iranSans/IRANSansXFaNum-Bold.woff'),
+    url('../fonts/iranSans/IRANSansXFaNum-DemiBold.woff'),
+    url('../fonts/iranSans/IRANSansXFaNum-ExtraBold.woff'),
+    url('../fonts/iranSans/IRANSansXFaNum-Light.woff'),
+    url('../fonts/iranSans/IRANSansXFaNum-Thin.woff'),
+    url('../fonts/iranSans/IRANSansXFaNum-UltraLight.woff');
+  font-family: 'IRANSansX';
+}
+
+@font-face {
+  src: url('../fonts/fontPeyda/Peyda-Regular.ttf'),
+    url('../fonts/fontPeyda/Peyda-Medium.ttf'),
+    url('../fonts/fontPeyda/Peyda-Black.ttf'),
+    url('../fonts/fontPeyda/Peyda-Bold.ttf'),
+    url('../fonts/fontPeyda/Peyda-ExtraBold.ttf'),
+    url('../fonts/fontPeyda/peyda-light.ttf'),
+    url('../fonts/fontPeyda/Peyda-SemiBold.ttf'),
+    url('../fonts/fontPeyda/Peyda-Thin.ttf'),
+    url('../fonts/fontPeyda/peyda-extralight.ttf');
+  font-family: 'Peyda';
 }

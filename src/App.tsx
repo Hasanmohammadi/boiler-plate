@@ -1,3 +1,4 @@
+import { useAppWebInfoContext } from 'context';
 import 'flag-icons/css/flag-icons.min.css';
 import { Header } from 'pages/home';
 import ChangeStyleBox from 'pages/home/changeStyleBox/ChangeStyleBox';
@@ -10,6 +11,7 @@ import './App.css';
 function App() {
   const { pathname } = useLocation();
   const navigate = useNavigate();
+  const { font } = useAppWebInfoContext();
 
   useEffect(() => {
     if (pathname === '/') {
@@ -18,7 +20,7 @@ function App() {
   }, [navigate, pathname]);
 
   return (
-    <div className="h-full min-h-screen">
+    <div className="h-full min-h-screen" style={{ fontFamily: font }}>
       <Header />
       <div className="w-full">
         <Outlet />

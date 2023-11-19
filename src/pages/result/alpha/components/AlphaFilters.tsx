@@ -1,6 +1,5 @@
 import { Checkbox } from 'common';
 import { useAppWebInfoContext } from 'context';
-import PriceFilter from 'pages/result/finotix/components/PriceFilter';
 import { useState } from 'react';
 import { XSquare } from 'react-feather';
 

@@ -16,6 +16,8 @@ interface ContextI {
   setGeneralAbout: (generalAbout: string) => void;
   otherPhoneNumber: string;
   setOtherPhoneNumber: (otherPhoneNumber: string) => void;
+  font: string;
+  setFont: (font: string) => void;
 }
 
 interface WebInfoContextPropsI {
@@ -64,6 +66,8 @@ const Context = createContext<ContextI>({
   setGeneralAbout: (generalAbout: string) => {},
   otherPhoneNumber: '',
   setOtherPhoneNumber: (otherPhoneNumber: string) => {},
+  font: '',
+  setFont: (font: string) => {},
 });
 
 export default function WebInfoContextContainer({
@@ -72,6 +76,7 @@ export default function WebInfoContextContainer({
   const [siteName, setSiteName] = useState<string>('');
   const [siteUrl, setSiteUrl] = useState<string>('');
   const [generalAbout, setGeneralAbout] = useState<string>('');
+  const [font, setFont] = useState<string>('');
   const [otherPhoneNumber, setOtherPhoneNumber] = useState<string>('');
   const [siteColors, setSiteColors] = useState<SiteColorsI>({
     primary: '#000000',
@@ -108,6 +113,8 @@ export default function WebInfoContextContainer({
       setGeneralAbout,
       otherPhoneNumber,
       setOtherPhoneNumber,
+      font,
+      setFont,
     }),
     [
       siteName,
@@ -117,6 +124,7 @@ export default function WebInfoContextContainer({
       about,
       generalAbout,
       otherPhoneNumber,
+      font,
     ],
   );
 

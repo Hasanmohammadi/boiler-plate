@@ -1,11 +1,10 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import { Button, Input, Modal, TextArea } from 'common';
+import { MenuItem } from '@mui/material';
+import { Button, Input, Modal, Select } from 'common';
 import { useAppWebInfoContext } from 'context';
 import { ContactI, SiteColorsI } from 'context/WebsiteInfoContext';
 import { useState } from 'react';
-import { Delete } from 'react-feather';
 import { useForm } from 'react-hook-form';
-import { toast } from 'react-toastify';
 
 interface SiteInformationFormI {
   siteName: string;
@@ -14,6 +13,7 @@ interface SiteInformationFormI {
   contactInfo: ContactI;
   otherPhoneNumber: string[];
   generalAbout: string;
+  font: string;
 }
 
 export default function SiteInfoSections() {
@@ -29,6 +29,8 @@ export default function SiteInfoSections() {
     siteColors,
     siteName,
     siteUrl,
+    font,
+    setFont,
   } = useAppWebInfoContext();
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -44,6 +46,7 @@ export default function SiteInfoSections() {
         siteColors,
         siteName,
         siteUrl,
+        font,
       },
     });
 
@@ -60,6 +63,7 @@ export default function SiteInfoSections() {
     setSiteName(data.siteName);
     setSiteColors(data.siteColors);
     setContactInfo(data.contactInfo);
+    setFont(data.font);
   };
 
   return (
@@ -103,6 +107,17 @@ export default function SiteInfoSections() {
               />
             </div>
           </div>
+        </div>
+        <div className="mt-6">
+          <Select
+            name="font"
+            control={control}
+            className="h-8 w-40"
+            containerClassName="bg-white w-fit"
+          >
+            <MenuItem value="IRANSansX">Iran sans x</MenuItem>
+            <MenuItem value="Peyda">Peyda</MenuItem>
+          </Select>
         </div>
       </div>
       <div className="mt-2 flex justify-end">
