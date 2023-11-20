@@ -1,6 +1,7 @@
 import CheckboxCp from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import clsx from 'clsx';
+import { useAppWebInfoContext } from 'context';
 import { ChangeEvent, ReactElement, useState } from 'react';
 
 import CheckBoxStyledContainer from './Checkbox.Style';
@@ -31,12 +32,14 @@ export default function Checkbox({
   secondaryColor,
 }: CheckboxPropsI) {
   const [isCheck, setIsCheck] = useState(checked);
+  const { font } = useAppWebInfoContext();
   return (
     <CheckBoxStyledContainer
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       primary={primaryColor}
       secondary={secondaryColor}
+      font={font}
       component="div"
     >
       <div

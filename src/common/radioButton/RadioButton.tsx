@@ -5,6 +5,7 @@ import FormLabel from '@mui/material/FormLabel';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import clsx from 'clsx';
+import { useAppWebInfoContext } from 'context';
 
 import RadioButtonStyled from './RadioButton.style';
 
@@ -42,6 +43,8 @@ export default function RadioButton({
   secondaryColor,
   value,
 }: RadioButtonPropsI) {
+  const { font } = useAppWebInfoContext();
+
   return (
     <RadioButtonStyled
       className={className}
@@ -49,6 +52,7 @@ export default function RadioButton({
       // @ts-ignore
       primaryColor={primaryColor}
       secondaryColor={secondaryColor}
+      font={font}
       component="div"
     >
       <FormControl className="w-full">

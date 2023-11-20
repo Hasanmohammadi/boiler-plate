@@ -1,6 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { Box, Skeleton, Stack } from '@mui/material';
 import clsx from 'clsx';
+import { useAppWebInfoContext } from 'context';
 import React, { useCallback, useState } from 'react';
 import { ChevronDown } from 'react-feather';
 import {
@@ -47,6 +48,7 @@ export default function Select<T extends FieldValues>({
   direction,
 }: SelectPropsI<T>) {
   const [isOpen, setIsOpen] = useState(false);
+  const { font } = useAppWebInfoContext();
   const arrowDownIcon: () => JSX.Element = useCallback(
     () => (
       <Box>
@@ -76,6 +78,9 @@ export default function Select<T extends FieldValues>({
           <Controller
             render={({ field }) => (
               <SelectStyled
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                // @ts-ignore
+                font={font}
                 {...field}
                 value={value || field.value}
                 disabled={disabled}
@@ -96,6 +101,7 @@ export default function Select<T extends FieldValues>({
                   '&.MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline':
                     {
                       border: '1px solid black',
+                      fontFamily: font,
                       ...(type === 'ghost' && {
                         border: 'none',
                       }),
@@ -104,6 +110,9 @@ export default function Select<T extends FieldValues>({
                   ...(type === 'ghost' && {
                     '.MuiOutlinedInput-notchedOutline': { border: 0 },
                   }),
+                  '&.MuiSelect-select': {
+                    fontFamily: font,
+                  },
                 }}
               >
                 {children}

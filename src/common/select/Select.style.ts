@@ -1,10 +1,14 @@
 import { Select } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
-const SelectStyled = styled(Select)`
+interface SelectPropsI {
+  font?: string;
+}
+
+const SelectStyled = styled(Select)<SelectPropsI>`
   border-radius: 8px;
 
-  .MuiPaper-root-jrVkwW {
+  .MuiPaper-root {
     max-height: 300px;
   }
 
@@ -14,6 +18,10 @@ const SelectStyled = styled(Select)`
     z-index: 1;
     width: fit-content;
     left: 10px;
+  }
+
+  .MuiSelect-select {
+    font-family: ${(props: SelectPropsI) => props.font};
   }
 
   &.ghost > .MuiSelect-select-ktaPne {

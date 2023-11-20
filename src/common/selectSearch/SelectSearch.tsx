@@ -3,6 +3,7 @@ import { Box } from '@mui/material';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import clsx from 'clsx';
+import { useAppWebInfoContext } from 'context';
 import { ChevronDown } from 'react-feather';
 import { Control, Controller, FieldValues, Path } from 'react-hook-form';
 
@@ -43,6 +44,7 @@ export default function SelectSearch<T extends FieldValues, U>({
   initialValue,
   direction = 'ltr',
 }: SelectSearchPropsI<T, U>) {
+  const { font } = useAppWebInfoContext();
   return (
     <Box className={className}>
       {!!label && (
@@ -67,6 +69,9 @@ export default function SelectSearch<T extends FieldValues, U>({
                 },
                 '.MuiAutocomplete-endAdornment': {
                   position: direction === 'rtl' ? 'initial' : 'absolute',
+                },
+                '.MuiInputBase-input': {
+                  fontFamily: font,
                 },
               }}
               renderInput={(params) => (

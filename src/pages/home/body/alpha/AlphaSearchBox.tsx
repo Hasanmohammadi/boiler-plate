@@ -49,7 +49,7 @@ interface FlightsPropsI {
 
 export default function AlphaSearchBox({ isInHeader }: FlightsPropsI) {
   const navigate = useNavigate();
-  const { siteColors } = useAppWebInfoContext();
+  const { siteColors, font } = useAppWebInfoContext();
 
   const [wayType, setWayType] = useState<'Round-trip' | 'One Way'>(
     'One Way',
@@ -280,6 +280,7 @@ export default function AlphaSearchBox({ isInHeader }: FlightsPropsI) {
                 }}
               >
                 <DatePicker
+                  style={{ fontFamily: font }}
                   calendar={persian}
                   locale={persian_fa}
                   plugins={[<Toolbar position="bottom" />]}
@@ -357,9 +358,13 @@ export default function AlphaSearchBox({ isInHeader }: FlightsPropsI) {
                     '.rmdp-day.rmdp-selected span:not(.highlight)': {
                       backgroundColor: siteColors.primary,
                     },
+                    span: {
+                      fontFamily: font,
+                    },
                   }}
                 >
                   <DatePicker
+                    style={{ fontFamily: font }}
                     calendar={persian}
                     locale={persian_fa}
                     plugins={[<Toolbar position="bottom" />]}
@@ -431,14 +436,22 @@ export default function AlphaSearchBox({ isInHeader }: FlightsPropsI) {
                     >
                       <MenuItem
                         value="economy"
-                        sx={{ display: 'flex', justifyContent: 'end' }}
+                        sx={{
+                          display: 'flex',
+                          justifyContent: 'end',
+                          fontFamily: font,
+                        }}
                         onClick={() => setFightClass('اکونومی')}
                       >
                         <p>اکونومی</p>
                       </MenuItem>
                       <MenuItem
                         value="business"
-                        sx={{ display: 'flex', justifyContent: 'end' }}
+                        sx={{
+                          display: 'flex',
+                          justifyContent: 'end',
+                          fontFamily: font,
+                        }}
                         onClick={() => setFightClass('بیزنس')}
                       >
                         <p>بیزنس</p>

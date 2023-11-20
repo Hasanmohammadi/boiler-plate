@@ -1,4 +1,3 @@
-import { Box } from '@mui/material';
 import MenuCP from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import clsx from 'clsx';
@@ -28,7 +27,7 @@ export default function Menu({
   btnClassName,
   hasArrow = true,
 }: MenuPropsI) {
-  const { siteColors } = useAppWebInfoContext();
+  const { siteColors, font } = useAppWebInfoContext();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -51,7 +50,7 @@ export default function Menu({
         color="ghost-just-text"
       >
         <>
-          <span>{btnText}</span>
+          <span style={{ fontFamily: font }}>{btnText}</span>
           {hasArrow &&
             (open ? (
               <ChevronUp className="ml-1" />
@@ -67,6 +66,11 @@ export default function Menu({
         onClose={handleClose}
         MenuListProps={{
           'aria-labelledby': 'basic-button',
+        }}
+        sx={{
+          span: {
+            fontFamily: font,
+          },
         }}
       >
         {menuItems.map(({ onClick, text }) => (

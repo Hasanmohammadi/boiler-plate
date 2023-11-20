@@ -1,13 +1,8 @@
 import Box from '@mui/material/Box';
 import clsx from 'clsx';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { ArrowLeft, ArrowRight } from 'react-feather';
-import {
-  useLocation,
-  useNavigate,
-  useRoutes,
-  useSearchParams,
-} from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import AboutStyleSection from './sections/AboutStyleSection';
 import BodyStyleSection from './sections/BodyStyleSection';
@@ -28,11 +23,11 @@ const sidBarItems = [
   { text: 'Contact', value: 'contact-us', id: 3, url: '/contact-us' },
   { text: 'Site info', value: 'site-info', id: 4, url: '/site-info' },
   { text: 'Theme', value: 'theme', id: 5, url: '#' },
+  { text: 'Result page', value: 'result-page', id: 6, url: '/result' },
 ];
 
 export default function ChangeStyleBox() {
   const [containerWidth, setContainerWidth] = useState('0%');
-  const [searchParams] = useSearchParams();
   const { pathname } = useLocation();
   const [itemSelected, setItemSelected] = useState('');
 

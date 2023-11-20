@@ -3,6 +3,7 @@ import { Box, styled } from '@mui/material';
 interface RadioButtonPropsI {
   primaryColor?: string;
   secondaryColor?: string;
+  font?: string;
 }
 
 const RadioButtonStyled = styled(Box)<RadioButtonPropsI>`
@@ -26,6 +27,9 @@ const RadioButtonStyled = styled(Box)<RadioButtonPropsI>`
   }
   .MuiButtonBase-root:hover {
     background-color: rgb(133 133 133 / 4%);
+  }
+  .MuiTypography-root {
+    font-family: ${(props: RadioButtonPropsI) => props.font};
   }
 ` as typeof Box;
 
